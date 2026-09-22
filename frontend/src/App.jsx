@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -6,6 +6,14 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [apiStatus, setApiStatus] = useState('Loading...')
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/health')
+      .then((res) => res.json())
+      .then((data) => setApiStatus(JSON.stringify(data)))
+      .catch((err) => setApiStatus('Error: ' + err.message))
+  }, [])
 
   return (
     <>
@@ -20,6 +28,7 @@ function App() {
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
+          <p>Backend says: {apiStatus}</p>
         </div>
         <button
           type="button"
