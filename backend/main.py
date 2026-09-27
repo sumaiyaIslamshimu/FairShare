@@ -4,6 +4,9 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
 
+# This tells Python to read your new router
+from app.routers import products
+
 load_dotenv()
 
 app = FastAPI()
@@ -17,7 +20,10 @@ app.add_middleware(
 )
 
 client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
-db = client["fairshare"]
+app.mongodb = client["fairshare"]
+
+# This attaches the /products/search URL to your API
+app.include_router(products.router)
 
 @app.get("/health")
 async def health_check():
