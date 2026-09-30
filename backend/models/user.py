@@ -1,15 +1,10 @@
 from datetime import datetime, timezone
-from typing import Optional
-
-from pydantic import BaseModel, EmailStr, Field
 
 
-class UserModel(BaseModel):
+
     """
-    User model for MongoDB documents.
     """
 
-    id: Optional[str] = Field(default=None, alias="_id")
     name: str
     email: EmailStr
     hashed_password: str
