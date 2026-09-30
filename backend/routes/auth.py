@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from config.database import db
@@ -26,8 +26,10 @@ router = APIRouter(
     tags=["Authentication"],
 )
 
+
+# OAuth2 token endpoint for Swagger Authorize
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="/auth/login",
+    tokenUrl="/auth/token",
 )
 
 
@@ -85,6 +87,10 @@ async def get_current_user(
     return user
 
 
+# --------------------------------------------------
+# Shopper Registration
+# --------------------------------------------------
+
 @router.post(
     "/register",
     response_model=UserResponse,
@@ -111,6 +117,10 @@ async def register(
         is_active=user.is_active,
     )
 
+
+# --------------------------------------------------
+# Seller Registration
+# --------------------------------------------------
 
 @router.post(
     "/seller/register",
@@ -139,6 +149,10 @@ async def register_seller_account(
     )
 
 
+# --------------------------------------------------
+# Normal JSON Login
+# --------------------------------------------------
+
 @router.post(
     "/login",
     response_model=TokenResponse,
@@ -148,7 +162,7 @@ async def login(
     database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
-    Login an existing user.
+    Login an existing user using JSON request body.
     """
 
     access_token = await login_user(
@@ -161,6 +175,42 @@ async def login(
         token_type="bearer",
     )
 
+
+# --------------------------------------------------
+# OAuth2 Login for Swagger Authorize
+# --------------------------------------------------
+
+@router.post(
+    "/token",
+    response_model=TokenResponse,
+)
+async def token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    database: AsyncIOMotorDatabase = Depends(get_database),
+):
+    """
+    OAuth2 login endpoint used by Swagger Authorize.
+    """
+
+    data = LoginRequest(
+        email=form_data.username,
+        password=form_data.password,
+    )
+
+    access_token = await login_user(
+        database,
+        data,
+    )
+
+    return TokenResponse(
+        access_token=access_token,
+        token_type="bearer",
+    )
+
+
+# --------------------------------------------------
+# Get Current User
+# --------------------------------------------------
 
 @router.get(
     "/me",

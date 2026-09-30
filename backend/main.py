@@ -9,7 +9,9 @@ from routes.auth import router as auth_router
 from routes.seller import router as seller_router
 
 
-app = FastAPI()
+app = FastAPI(
+    swagger_ui_persist_authorization=True
+)
 
 
 app.add_middleware(

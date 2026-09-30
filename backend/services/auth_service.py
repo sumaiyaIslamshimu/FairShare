@@ -2,6 +2,7 @@ from typing import Optional
 
 from fastapi import HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from bson import ObjectId
 
 from config.security import (
     create_access_token,
@@ -14,7 +15,6 @@ from schemas.auth import (
     RegisterRequest,
     SellerRegisterRequest,
 )
-
 
 USERS_COLLECTION = "users"
 
@@ -146,8 +146,6 @@ async def get_user_by_id(
     """
     Get a user by MongoDB ID.
     """
-
-    from bson import ObjectId
 
     try:
         object_id = ObjectId(user_id)
