@@ -1,6 +1,5 @@
 from typing import Optional
 
-from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -10,12 +9,14 @@ from config.security import decode_access_token
 from schemas.auth import (
     LoginRequest,
     RegisterRequest,
+    SellerRegisterRequest,
     TokenResponse,
     UserResponse,
 )
 from services.auth_service import (
     get_user_by_id,
     login_user,
+    register_seller,
     register_user,
 )
 
@@ -94,10 +95,37 @@ async def register(
     database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
-    Register a new user.
+    Register a new shopper.
     """
 
     user = await register_user(
+        database,
+        data,
+    )
+
+    return UserResponse(
+        id=user.id,
+        name=user.name,
+        email=user.email,
+        role=user.role,
+        is_active=user.is_active,
+    )
+
+
+@router.post(
+    "/seller/register",
+    response_model=UserResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def register_seller_account(
+    data: SellerRegisterRequest,
+    database: AsyncIOMotorDatabase = Depends(get_database),
+):
+    """
+    Register a new seller.
+    """
+
+    user = await register_seller(
         database,
         data,
     )
@@ -149,6 +177,6 @@ async def get_me(
         id=str(current_user["_id"]),
         name=current_user["name"],
         email=current_user["email"],
-        role=current_user.get("role", "buyer"),
+        role=current_user.get("role", "shopper"),
         is_active=current_user.get("is_active", True),
     )

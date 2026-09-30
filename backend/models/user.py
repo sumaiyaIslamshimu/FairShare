@@ -13,7 +13,7 @@ class UserModel(BaseModel):
     name: str
     email: EmailStr
     hashed_password: str
-    role: str = "buyer"
+    role: str = "shopper"
     is_active: bool = True
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)

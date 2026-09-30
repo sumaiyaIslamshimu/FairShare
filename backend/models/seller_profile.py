@@ -13,8 +13,8 @@ class SellerProfileModel(BaseModel):
     user_id: str
     shop_name: str
     shop_description: Optional[str] = None
-    phone: Optional[str] = None
-    address: Optional[str] = None
+    phone: str
+    address: str
     is_verified: bool = False
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
