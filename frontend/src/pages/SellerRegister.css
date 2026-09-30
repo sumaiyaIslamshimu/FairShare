@@ -1,0 +1,196 @@
+.seller-register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.seller-register-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.seller-register-card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+  color: #0f172a;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0f172a;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.register-btn:hover {
+  background-color: #1e293b;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.login-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .seller-register-card {
+    padding: 24px;
+  }
+}
+.field-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.server-error {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-page-alt);
+  padding: 24px;
+}
+
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.auth-brand {
+  margin-bottom: 24px;
+}
+
+.auth-brand .logo-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-label);
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--navy);
+}
+
+.full-width {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+.server-error {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  <p className="auth-footer">
+  Not a seller? <Link to="/user/register">Register as a Shopper</Link>
+</p>
+}
+
+.auth-footer a {
+  color: var(--link-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .auth-card { padding: 24px; }
+  .form-row { grid-template-columns: 1fr; }
+}

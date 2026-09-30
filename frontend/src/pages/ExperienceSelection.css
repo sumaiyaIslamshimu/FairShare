@@ -1,0 +1,211 @@
+.experience-page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.experience-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+
+.experience-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.experience-logo-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.experience-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.experience-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hero */
+.experience-hero {
+  text-align: center;
+  padding: 56px 24px 40px;
+}
+
+.experience-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 14px 0;
+}
+
+.experience-subtitle {
+  font-size: 15px;
+  color: #64748b;
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Role cards grid */
+.role-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  box-sizing: border-box;
+}
+
+.role-card {
+  flex: 1 1 320px;
+  max-width: 360px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.role-card:hover {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  transform: translateY(-2px);
+}
+
+.role-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background-color: #eef2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.role-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+}
+
+.role-description {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+/* Fixed action area for equal button alignment */
+.role-actions {
+  margin-top: auto;
+  min-height: 78px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Buttons */
+.role-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.experience-nav-actions .role-button {
+  width: auto;
+  height: auto;
+}
+
+.role-button-dark {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.role-button-dark:hover {
+  background-color: #1e293b;
+}
+
+.role-button-outline {
+  background-color: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.role-button-outline:hover {
+  background-color: #f8fafc;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .role-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .role-card {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-navbar {
+    padding: 14px 16px;
+  }
+
+  .experience-hero {
+    padding: 40px 16px 32px;
+  }
+
+  .experience-title {
+    font-size: 26px;
+  }
+
+  .role-grid {
+    padding: 0 16px 56px;
+  }
+}
