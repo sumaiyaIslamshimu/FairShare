@@ -1,8 +1,7 @@
 from typing import Optional
 
-from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from config.database import db
@@ -10,12 +9,14 @@ from config.security import decode_access_token
 from schemas.auth import (
     LoginRequest,
     RegisterRequest,
+    SellerRegisterRequest,
     TokenResponse,
     UserResponse,
 )
 from services.auth_service import (
     get_user_by_id,
     login_user,
+    register_seller,
     register_user,
 )
 
@@ -25,8 +26,10 @@ router = APIRouter(
     tags=["Authentication"],
 )
 
+
+# OAuth2 token endpoint for Swagger Authorize
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="/auth/login",
+    tokenUrl="/auth/token",
 )
 
 
@@ -84,6 +87,10 @@ async def get_current_user(
     return user
 
 
+# --------------------------------------------------
+# Shopper Registration
+# --------------------------------------------------
+
 @router.post(
     "/register",
     response_model=UserResponse,
@@ -94,7 +101,7 @@ async def register(
     database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
-    Register a new user.
+    Register a new shopper.
     """
 
     user = await register_user(
@@ -111,6 +118,41 @@ async def register(
     )
 
 
+# --------------------------------------------------
+# Seller Registration
+# --------------------------------------------------
+
+@router.post(
+    "/seller/register",
+    response_model=UserResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def register_seller_account(
+    data: SellerRegisterRequest,
+    database: AsyncIOMotorDatabase = Depends(get_database),
+):
+    """
+    Register a new seller.
+    """
+
+    user = await register_seller(
+        database,
+        data,
+    )
+
+    return UserResponse(
+        id=user.id,
+        name=user.name,
+        email=user.email,
+        role=user.role,
+        is_active=user.is_active,
+    )
+
+
+# --------------------------------------------------
+# Normal JSON Login
+# --------------------------------------------------
+
 @router.post(
     "/login",
     response_model=TokenResponse,
@@ -120,7 +162,7 @@ async def login(
     database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
-    Login an existing user.
+    Login an existing user using JSON request body.
     """
 
     access_token = await login_user(
@@ -133,6 +175,42 @@ async def login(
         token_type="bearer",
     )
 
+
+# --------------------------------------------------
+# OAuth2 Login for Swagger Authorize
+# --------------------------------------------------
+
+@router.post(
+    "/token",
+    response_model=TokenResponse,
+)
+async def token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    database: AsyncIOMotorDatabase = Depends(get_database),
+):
+    """
+    OAuth2 login endpoint used by Swagger Authorize.
+    """
+
+    data = LoginRequest(
+        email=form_data.username,
+        password=form_data.password,
+    )
+
+    access_token = await login_user(
+        database,
+        data,
+    )
+
+    return TokenResponse(
+        access_token=access_token,
+        token_type="bearer",
+    )
+
+
+# --------------------------------------------------
+# Get Current User
+# --------------------------------------------------
 
 @router.get(
     "/me",
@@ -149,6 +227,6 @@ async def get_me(
         id=str(current_user["_id"]),
         name=current_user["name"],
         email=current_user["email"],
-        role=current_user.get("role", "buyer"),
+        role=current_user.get("role", "shopper"),
         is_active=current_user.get("is_active", True),
     )
