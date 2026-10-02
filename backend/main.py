@@ -4,14 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from config.database import (
     close_database_connection,
     connect_to_database,
+    db,
 )
 from routes.auth import router as auth_router
 from routes.seller import router as seller_router
 
-# This tells Python to read your new router
 from app.routers import products
-
-load_dotenv()
 
 app = FastAPI()
 
@@ -24,10 +22,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
-app.mongodb = client["fairshare"]
+app.mongodb = db
 
-# This attaches the /products/search URL to your API
 app.include_router(products.router)
 
 app.include_router(auth_router)
