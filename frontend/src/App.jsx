@@ -2,7 +2,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ExperienceSelection from "./pages/ExperienceSelection";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import SellerRegister from "./pages/SellerRegister";
+import BusinessProfile from "./pages/BusinessProfile";
+import ProductSearchPage from "./pages/ProductSearchPage";
 import "./App.css";
+import "./index.css";
 
 function App() {
   return (
@@ -11,6 +15,18 @@ function App() {
         <Route path="/" element={<ExperienceSelection />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/products" element={<ProductSearchPage />} />
+
+        <Route
+          path="/seller/profile"
+          element={<BusinessProfile />}
+        />
+
+        <Route
+          path="/seller/register"
+          element={<SellerRegister />}
+        />
       </Routes>
     </BrowserRouter>
   );

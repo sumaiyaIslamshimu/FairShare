@@ -1,0 +1,97 @@
+:root {
+  --navy: #0f172a;
+  --navy-hover: #1e293b;
+  --bg-page: #f8fafc;
+  --bg-page-alt: #f1f5f9;
+  --border: #e2e8f0;
+  --border-input: #cbd5e1;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-label: #334155;
+  --link-blue: #2563eb;
+  --green-badge-bg: #dcfce7;
+  --green-badge-text: #16a34a;
+  --error: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-page-alt);
+  color: var(--text-main);
+}
+
+/* Reusable logo mark used on every page */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo .logo-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--navy);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.brand-logo .logo-text {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.brand-logo .logo-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Reusable buttons */
+.btn-primary {
+  background-color: var(--navy);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-primary:hover { background-color: var(--navy-hover); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-secondary:hover { background-color: #f1f5f9; }
+
+/* Reusable form field styling */
+.field-error {
+  color: var(--error);
+  font-size: 0.78rem;
+  margin-top: 4px;
+}
+
+.status-text {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+}
+.status-text.error { color: var(--error); }
