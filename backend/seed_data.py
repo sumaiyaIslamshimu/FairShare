@@ -10,6 +10,9 @@ base_products = [
     {"name": "Lotto BLACK SUPERLIGHT Shoes", "brand": "Lotto", "category": "Footwear", "price": 2150, "rating": 4.4, "marketplace_name": "Daraz", "in_stock": True},
     {"name": "Bata Formal Slip-on Sandals", "brand": "Bata", "category": "Footwear", "price": 1500, "rating": 4.2, "marketplace_name": "Bata", "in_stock": True},
     {"name": "Bata Formal Slip-on Sandals", "brand": "Bata", "category": "Footwear", "price": 1450, "rating": 4.1, "marketplace_name": "Daraz", "in_stock": False},
+    {"name": "Sony WH-1000XM5 Wireless Headphones", "brand": "Sony", "category": "Electronics", "price": 299, "original_price": 379, "rating": 4.8, "marketplace_name": "AudioWorld", "in_stock": True},
+    {"name": "Apple AirPods Pro 2nd Gen", "brand": "Apple", "category": "Electronics", "price": 189, "original_price": 249, "rating": 4.9, "marketplace_name": "TechVision Store", "in_stock": True},
+    {"name": "Samsung 65\" QLED 4K TV", "brand": "Samsung", "category": "Electronics", "price": 1199, "original_price": 1499, "rating": 4.7, "marketplace_name": "ElectroBuy", "in_stock": True},
 ]
 
 categories = ["Footwear", "Electronics", "Accessories"]
