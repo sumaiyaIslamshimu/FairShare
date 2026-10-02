@@ -1,10 +1,9 @@
-import './index.css';
+import './App.css';
+import MainLayout from './components/MainLayout';
 import ProductSearchPage from './pages/ProductSearchPage';
 
 function App() {
-  return (
-    <ProductSearchPage />
-  )
+  return <MainLayout>{(onSearchChange) => <ProductSearchPage onSearchChange={onSearchChange} />}</MainLayout>;
 }
 
 export default App;
