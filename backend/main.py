@@ -1,12 +1,21 @@
-import os
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
-from motor.motor_asyncio import AsyncIOMotorClient
-from dotenv import load_dotenv
+from typing import Optional
 
-load_dotenv()
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
+
+from config.database import (
+    close_database_connection,
+    connect_to_database,
+)
+
+from routes.auth import router as auth_router
+from routes.seller import router as seller_router
+
+from app.routers import products
+
 
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,8 +25,62 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
-db = client["fairshare"]
+
+SAMPLE_PRODUCTS = [
+    {
+        "id": 1,
+        "name": "Sony WH-1000XM5",
+        "brand": "Sony",
+        "category": "Headphones",
+        "price": 299,
+        "rating": 4.8,
+        "marketplace": "AudioWorld",
+    },
+    {
+        "id": 2,
+        "name": "Apple AirPods Pro 2nd Gen",
+        "brand": "Apple",
+        "category": "Earbuds",
+        "price": 189,
+        "rating": 4.9,
+        "marketplace": "TechVision Store",
+    },
+    {
+        "id": 3,
+        "name": "Samsung 65 QLED 4K TV",
+        "brand": "Samsung",
+        "category": "TV",
+        "price": 1199,
+        "rating": 4.7,
+        "marketplace": "ElectroBuy",
+    },
+    {
+        "id": 4,
+        "name": "Bose QC Ultra Earbuds",
+        "brand": "Bose",
+        "category": "Earbuds",
+        "price": 249,
+        "rating": 4.7,
+        "marketplace": "AudioWorld",
+    },
+]
+
+
+app.include_router(products.router)
+
+app.include_router(auth_router)
+app.include_router(seller_router)
+
+
+@app.on_event("startup")
+async def startup():
+    await connect_to_database()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await close_database_connection()
+
 
 from routers.auth_routes import router as auth_router
 
@@ -26,13 +89,15 @@ app.include_router(auth_router)
 
 @app.get("/health")
 async def health_check():
-    try:
-        await client.admin.command("ping")
-        return {"status": "ok", "database": "connected"}
-    except Exception as e:
-        return {"status": "error", "detail": str(e)}
+    return {
+        "status": "ok",
+        "database": "connected",
+    }
+
 
 
 @app.get("/")
 async def root():
-    return {"message": "FairShare API is running"}
+    return {
+        "message": "FairShare API is running"
+    }
