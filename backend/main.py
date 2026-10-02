@@ -19,6 +19,11 @@ app.add_middleware(
 client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
 db = client["fairshare"]
 
+from routers.auth_routes import router as auth_router
+
+app.include_router(auth_router)
+
+
 @app.get("/health")
 async def health_check():
     try:
@@ -26,6 +31,7 @@ async def health_check():
         return {"status": "ok", "database": "connected"}
     except Exception as e:
         return {"status": "error", "detail": str(e)}
+
 
 @app.get("/")
 async def root():
