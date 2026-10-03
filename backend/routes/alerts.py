@@ -12,6 +12,7 @@ from services.alert_service import (
     delete_price_alert,
     get_user_price_alerts,
 )
+from services.alert_checker import check_alerts
 
 
 router = APIRouter(
@@ -40,7 +41,6 @@ async def create_alert(
     """
     Create a price alert for the authenticated user.
     """
-
     alert = await create_price_alert(
         database,
         str(current_user["_id"]),
@@ -71,7 +71,6 @@ async def get_alerts(
     """
     Get all price alerts belonging to the authenticated user.
     """
-
     alerts = await get_user_price_alerts(
         database,
         str(current_user["_id"]),
@@ -95,7 +94,6 @@ async def delete_alert(
     """
     Delete an alert belonging to the authenticated user.
     """
-
     await delete_price_alert(
         database,
         str(current_user["_id"]),
@@ -103,3 +101,18 @@ async def delete_alert(
     )
 
     return None
+
+
+@router.post("/check")
+async def run_alert_checker(
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Run the alert checker manually for testing.
+    """
+    triggered_count = await check_alerts(db)
+
+    return {
+        "message": "Alert check completed.",
+        "triggered_count": triggered_count,
+    }
