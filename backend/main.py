@@ -10,6 +10,9 @@ from config.database import (
 
 from routes.auth import router as auth_router
 from routes.seller import router as seller_router
+from routes.alerts import router as alerts_router
+from routes.products import router as products_router
+
 
 from app.routers import products
 
@@ -72,6 +75,7 @@ app.include_router(products.router)
 
 app.include_router(auth_router)
 app.include_router(seller_router)
+app.include_router(alerts_router)
 
 
 @app.on_event("startup")
