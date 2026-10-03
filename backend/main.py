@@ -14,7 +14,9 @@ from routes.seller import router as seller_router
 from app.routers import products
 
 
-app = FastAPI()
+app = FastAPI(
+    swagger_ui_persist_authorization=True
+)
 
 
 app.add_middleware(
