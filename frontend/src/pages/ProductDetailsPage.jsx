@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import RecommendationsSection from "../components/RecommendationsSection";
 const MOCK_PRODUCT = {
   name: "Apple iPhone 15",
   brand: "Apple",
@@ -30,7 +30,14 @@ const MOCK_SELLERS = [
 ];
 
 export default function ProductDetailsPage() {
-  const product = MOCK_PRODUCT;
+    const product = MOCK_PRODUCT;
+
+  const storedBudget = sessionStorage.getItem("fairshare_budget");
+  const budget = storedBudget ? Number(storedBudget) : null;
+
+  const currentPrice = Math.min(
+    ...MOCK_SELLERS.map((seller) => seller.price)
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -177,7 +184,13 @@ export default function ProductDetailsPage() {
               </div>
             ))}
           </div>
+
         </div>
+          <RecommendationsSection
+          productId={product._id || "mock-product"}
+          budget={budget}
+          currentPrice={currentPrice}
+        />
       </div>
     </div>
   );
