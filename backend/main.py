@@ -84,12 +84,18 @@ async def shutdown():
     await close_database_connection()
 
 
+from routers.auth_routes import router as auth_router
+
+app.include_router(auth_router)
+
+
 @app.get("/health")
 async def health_check():
     return {
         "status": "ok",
         "database": "connected",
     }
+
 
 
 @app.get("/")
