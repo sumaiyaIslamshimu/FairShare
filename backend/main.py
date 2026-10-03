@@ -11,10 +11,8 @@ from config.database import (
 from routes.auth import router as auth_router
 from routes.seller import router as seller_router
 from routes.alerts import router as alerts_router
-from routes.products import router as products_router
 
-
-from app.routers import products
+from routes.product import router as product_router
 
 
 app = FastAPI(
@@ -71,7 +69,8 @@ SAMPLE_PRODUCTS = [
 ]
 
 
-app.include_router(products.router)
+
+app.include_router(product_router)
 
 app.include_router(auth_router)
 app.include_router(seller_router)
