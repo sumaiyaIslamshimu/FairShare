@@ -1,8 +1,11 @@
 from datetime import datetime, timezone
 
+from pydantic import BaseModel, EmailStr, Field
 
 
+class UserModel(BaseModel):
     """
+    User model for FairShare.
     """
 
     name: str
