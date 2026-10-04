@@ -1,5 +1,6 @@
 import TrackProductForm from "../components/TrackProductForm";
 import { useState, useEffect } from "react";
+import SuggestedForYou from "../components/SuggestedForYou";
 
 const ProductSearchPage = () => {
   const [products, setProducts] = useState([]);
@@ -236,7 +237,7 @@ const ProductSearchPage = () => {
                 Discover the best deals across all sellers
               </p>
             </div>
-
+            <SuggestedForYou />
             {/* SEARCH BAR */}
             <form onSubmit={handleSearchSubmit} className="mb-8">
               <div className="flex items-center bg-white border border-gray-300 rounded-lg p-1.5 shadow-sm">

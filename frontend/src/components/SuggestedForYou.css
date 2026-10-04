@@ -1,0 +1,155 @@
+.suggested-section {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+}
+
+.suggested-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.suggested-header h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.suggested-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.suggested-view-all {
+  padding: 8px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.suggested-view-all:hover {
+  background: #f9fafb;
+}
+
+.suggested-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.suggested-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+.suggested-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.suggested-image {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.suggested-content {
+  padding: 14px;
+}
+
+.suggested-category {
+  margin: 0 0 5px;
+  color: #6b7280;
+  font-size: 10px;
+}
+
+.suggested-content h3 {
+  min-height: 38px;
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.suggested-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.suggested-rating span:first-child {
+  color: #fbbf24;
+}
+
+.suggested-price {
+  margin-bottom: 3px;
+  color: #111827;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.suggested-marketplace {
+  margin: 0 0 12px;
+  color: #6b7280;
+  font-size: 10px;
+}
+
+.suggested-button {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 7px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.suggested-button:hover {
+  background: #374151;
+}
+
+@media (max-width: 1024px) {
+  .suggested-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .suggested-section {
+    padding: 16px;
+  }
+
+  .suggested-products {
+    grid-template-columns: 1fr;
+  }
+
+  .suggested-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
