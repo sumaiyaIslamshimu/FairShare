@@ -1,0 +1,53 @@
+.budget-widget {
+  max-width: 220px;
+}
+
+.budget-widget label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-label);
+  margin-bottom: 6px;
+}
+
+.budget-input-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.budget-input-row:focus-within {
+  border-color: var(--navy);
+}
+
+.currency-prefix {
+  background-color: #f1f5f9;
+  padding: 9px 10px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.budget-input-row input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 9px 10px;
+  font-size: 0.88rem;
+  min-width: 0;
+}
+
+.budget-clear-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 0.85rem;
+}
+
+.budget-clear-btn:hover {
+  color: var(--error);
+}
