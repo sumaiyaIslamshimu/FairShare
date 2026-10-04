@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProductRanking } from "../api/productsApi";
+import RecommendationsSection from "../components/RecommendationsSection";
 
 export default function ProductDetailsPage() {
   const { productId } = useParams();
@@ -13,6 +14,8 @@ export default function ProductDetailsPage() {
 
   const [sortMode, setSortMode] = useState("best_value"); // "best_value" | "lowest_price"
   const [expandedListingId, setExpandedListingId] = useState(null);
+  const storedBudget = sessionStorage.getItem("fairshare_budget");
+  const budget = storedBudget ? Number(storedBudget) : null;
 
   useEffect(() => {
     let isCancelled = false;
@@ -50,7 +53,10 @@ export default function ProductDetailsPage() {
   // highest-scoring listing is always listings[0] — captured once,
   // before any local toggle-sort, so the badge stays attached to it.
   const bestValueListingId = listings.length > 0 ? listings[0].id : null;
-
+  const currentPrice =
+  listings.length > 0
+    ? Math.min(...listings.map((listing) => listing.price))
+    : null;
   const displayedListings =
     sortMode === "lowest_price"
       ? [...listings].sort((a, b) => a.price - b.price)
@@ -350,6 +356,14 @@ export default function ProductDetailsPage() {
                 })}
               </div>
             </div>
+             </div>
+
+            <RecommendationsSection
+              productId={product._id || product.id}
+              budget={budget}
+              currentPrice={currentPrice}
+            />
+          </>
           </>
         )}
       </div>
