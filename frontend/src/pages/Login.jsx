@@ -61,7 +61,7 @@ function Login() {
 
       <div className="auth-card">
         <div className="auth-card-header">
-          <div className="auth-icon">👤</div>
+          <div className="auth-icon">🛍️</div>
           <div>
             <h1 className="auth-title">Welcome back</h1>
             <p className="auth-subtitle">Sign in to your shopper account</p>
