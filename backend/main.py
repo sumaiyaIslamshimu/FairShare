@@ -10,8 +10,9 @@ from config.database import (
 
 from routes.auth import router as auth_router
 from routes.seller import router as seller_router
-
-from app.routers import products
+from routes.alerts import router as alerts_router
+from routes.views import router as views_router
+from routes.recommendations import router as recommendations_router
 
 
 app = FastAPI(
@@ -68,10 +69,11 @@ SAMPLE_PRODUCTS = [
 ]
 
 
-app.include_router(products.router)
-
 app.include_router(auth_router)
 app.include_router(seller_router)
+app.include_router(alerts_router)
+app.include_router(views_router)
+app.include_router(recommendations_router)
 
 
 @app.on_event("startup")
