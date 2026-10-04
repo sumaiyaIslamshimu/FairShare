@@ -1,5 +1,7 @@
 import TrackProductForm from "../components/TrackProductForm";
 import { useState, useEffect } from "react";
+import BudgetInput from "../components/BudgetInput";
+import SuggestedForYou from "../components/SuggestedForYou";
 
 const ProductSearchPage = () => {
   const [products, setProducts] = useState([]);
@@ -7,6 +9,7 @@ const ProductSearchPage = () => {
   const [error, setError] = useState(null);
 
   // Filter States
+
   const [searchQuery, setSearchQuery] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -236,7 +239,7 @@ const ProductSearchPage = () => {
                 Discover the best deals across all sellers
               </p>
             </div>
-
+            <SuggestedForYou />
             {/* SEARCH BAR */}
             <form onSubmit={handleSearchSubmit} className="mb-8">
               <div className="flex items-center bg-white border border-gray-300 rounded-lg p-1.5 shadow-sm">
@@ -277,6 +280,7 @@ const ProductSearchPage = () => {
               {/* FILTER SIDEBAR */}
               <div className="w-full lg:w-64 shrink-0 bg-white p-5 rounded-xl border border-gray-200 shadow-sm h-fit">
                 {/* Price */}
+                <BudgetInput />
                 <div className="mb-6">
                   <h3 className="font-semibold text-gray-900 mb-3 text-sm">
                     Price Range
