@@ -4,21 +4,29 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class SellerProfileModel(BaseModel):
+class PriceAlertModel(BaseModel):
     """
-    Seller profile model for MongoDB documents.
+    Price alert model for MongoDB documents.
     """
 
-    id: Optional[str] = Field(default=None, alias="_id")
+    id: Optional[str] = Field(
+        default=None,
+        alias="_id",
+    )
+
     user_id: str
-    shop_name: str
-    shop_description: Optional[str] = None
-    phone: str
-    address: str
-    is_verified: bool = False
+
+    product_id: str
+
+    target_price: float
+
+    status: str = "active"
+
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
+
+    triggered_at: Optional[datetime] = None
 
     class Config:
         populate_by_name = True

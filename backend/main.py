@@ -10,11 +10,16 @@ from config.database import (
 
 from routes.auth import router as auth_router
 from routes.seller import router as seller_router
+from routes.alerts import router as alerts_router
+from routes.views import router as views_router
+from routes.recommendations import router as recommendations_router
 
 from app.routers import products
 
 
-app = FastAPI()
+app = FastAPI(
+    swagger_ui_persist_authorization=True
+)
 
 
 app.add_middleware(
@@ -66,10 +71,13 @@ SAMPLE_PRODUCTS = [
 ]
 
 
+# Include all routers from both branches
 app.include_router(products.router)
-
 app.include_router(auth_router)
 app.include_router(seller_router)
+app.include_router(alerts_router)
+app.include_router(views_router)
+app.include_router(recommendations_router)
 
 
 @app.on_event("startup")
