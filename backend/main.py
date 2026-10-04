@@ -14,6 +14,8 @@ from routes.alerts import router as alerts_router
 from routes.views import router as views_router
 from routes.recommendations import router as recommendations_router
 
+from app.routers import products
+
 
 app = FastAPI(
     swagger_ui_persist_authorization=True
@@ -69,6 +71,8 @@ SAMPLE_PRODUCTS = [
 ]
 
 
+# Include all routers from both branches
+app.include_router(products.router)
 app.include_router(auth_router)
 app.include_router(seller_router)
 app.include_router(alerts_router)
