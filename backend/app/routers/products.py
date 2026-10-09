@@ -1,4 +1,9 @@
 import re
+from fastapi import Request, HTTPException, APIRouter
+from bson import ObjectId
+from bson.errors import InvalidId
+from config.database import db # Assuming db is exported from your config
+
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query, Request
@@ -90,4 +95,47 @@ async def get_product_rankings(product_id: str, request: Request):
         "product_id": product_id,
         "total_listings": len(ranked_listings),
         "rankings": ranked_listings
+    }
+
+
+#  Product Comparison Endpoint ---
+
+@router.get("/{product_id}/compare")
+async def compare_products(product_id: str):
+    """
+    Finds a product by ID, then returns all products in the same matching group
+    to be compared across marketplaces.
+    """
+    # 1. Validate and convert the ID to a MongoDB ObjectId
+    try:
+        obj_id = ObjectId(product_id)
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid product ID format.")
+
+    # 2. Find the requested base product
+    base_product = await db.products.find_one({"_id": obj_id})
+
+    if not base_product:
+        raise HTTPException(status_code=404, detail="Product not found.")
+
+    # Safely convert the base ObjectId to string
+    base_product["_id"] = str(base_product["_id"])
+    group_id = base_product.get("group_id")
+
+    # 3. Find all products sharing this group_id
+    if group_id:
+        cursor = db.products.find({"group_id": group_id})
+        matching_products = await cursor.to_list(length=100)
+    else:
+        # Fallback if the grouping script hasn't run on this product yet
+        matching_products = [base_product]
+
+    # Convert ObjectIds to strings for the response list
+    for p in matching_products:
+        p["_id"] = str(p["_id"])
+
+    # 4. Return the base product details AND the full comparison list
+    return {
+        "base_product": base_product,
+        "comparisons": matching_products
     }
