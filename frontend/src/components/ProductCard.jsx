@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import VerifiedBadge from "./VerifiedBadge";
 // Your custom sample photos for each category
 const categoryImages = {
   Fashion:
@@ -39,11 +39,8 @@ export default function ProductCard({ product }) {
             {product.name}
           </h3>
 
-          {product.is_verified && (
-            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full whitespace-nowrap ml-2">
-              Verified
-            </span>
-          )}
+          {/* Verified seller badge */}
+         <VerifiedBadge verified={product.is_verified} />
         </div>
 
         <p className="text-sm text-gray-500 mb-3">

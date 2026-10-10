@@ -1,6 +1,7 @@
 import TrackProductForm from "../components/TrackProductForm";
 import { useState, useEffect } from "react";
 import SuggestedForYou from "../components/SuggestedForYou";
+import VerifiedBadge from "../components/VerifiedBadge";
 
 const ProductSearchPage = () => {
   const [products, setProducts] = useState([]);
@@ -515,6 +516,12 @@ const ProductSearchPage = () => {
                               </span>
                             )}
                           </div>
+
+                        <div className="text-xs text-gray-600 mb-5 flex items-center gap-2">
+                          <span>{product.marketplace_name}</span>
+                             <VerifiedBadge verified={product.is_verified} />
+                        </div>
+
 
                           {/* SUBTASK 1: PRICE TRACKING */}
                           <TrackProductForm
