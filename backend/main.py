@@ -12,6 +12,8 @@ from routes.auth import router as auth_router
 from routes.seller import router as seller_router
 from routes.alerts import router as alerts_router
 
+from app.routers import products
+from routes.rentals import router as rentals_router
 from routes.product import router as product_router
 
 
@@ -74,6 +76,7 @@ app.include_router(product_router)
 
 app.include_router(auth_router)
 app.include_router(seller_router)
+app.include_router(rentals_router)
 app.include_router(alerts_router)
 
 

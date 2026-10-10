@@ -1,0 +1,67 @@
+.rental-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.rental-card-image {
+  position: relative;
+  background-color: #f1f5f9;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rental-emoji {
+  font-size: 2.6rem;
+}
+
+.unavailable-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #475569;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.rental-card-body {
+  padding: 14px 16px 16px;
+}
+
+.rental-card-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.rental-card-location {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.rental-card-price {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.rental-card-unit {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.rental-card-btn {
+  width: 100%;
+}
