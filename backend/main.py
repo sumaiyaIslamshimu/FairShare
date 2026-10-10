@@ -13,6 +13,9 @@ from routes.seller import router as seller_router
 from routes.alerts import router as alerts_router
 from routes.views import router as views_router
 from routes.recommendations import router as recommendations_router
+from routes.rentals import router as rentals_router
+from routes.rental_requests import router as rental_requests_router
+
 
 
 app = FastAPI(
@@ -74,6 +77,9 @@ app.include_router(seller_router)
 app.include_router(alerts_router)
 app.include_router(views_router)
 app.include_router(recommendations_router)
+app.include_router(rentals_router)
+app.include_router(rental_requests_router)
+
 
 
 @app.on_event("startup")
