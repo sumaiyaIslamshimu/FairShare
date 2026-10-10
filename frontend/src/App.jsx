@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import SellerRegister from "./pages/SellerRegister";
 import BusinessProfile from "./pages/BusinessProfile";
 import ProductSearchPage from "./pages/ProductSearchPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
+import Rentals from "./pages/Rentals";
 
 import "./App.css";
 import "./index.css";
@@ -34,6 +36,12 @@ function App() {
           path="/seller/register"
           element={<SellerRegister />}
         />
+
+        <Route
+          path="/product/:productId"
+          element={<ProductDetailsPage />}
+        />
+        <Route path="/shopper/rentals" element={<Rentals />} />
       </Routes>
     </BrowserRouter>
   );
