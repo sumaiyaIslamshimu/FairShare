@@ -17,5 +17,6 @@ class Product(BaseModel):
     marketplace_name: str
     product_link: Optional[str] = None
     in_stock: bool = True
+    is_verified: bool = False
 
     model_config = ConfigDict(populate_by_name=True)

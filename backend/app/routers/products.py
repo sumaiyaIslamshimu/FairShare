@@ -42,4 +42,18 @@ async def search_products(
         cursor = cursor.sort("rating", -1)
 
     products = await cursor.to_list(length=100)
+    seller_names = [
+        product.get("businessName")
+        for product in products
+        if product.get("businessName")
+    ]
+
+    from utils.verification import verified_map
+
+    verification = await verified_map(db, seller_names)
+
+    for product in products:
+        name = product.get("businessName")
+        product["is_verified"] = verification.get(name, False)
+
     return products
