@@ -1,7 +1,9 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SellerRegister from "./pages/SellerRegister";
 import BusinessProfile from "./pages/BusinessProfile";
 import ProductSearchPage from "./pages/ProductSearchPage";
+import RentalDetails from "./pages/RentalDetails";
 import "./App.css";
 import "./index.css";
 
@@ -19,6 +21,11 @@ function App() {
         <Route
           path="/seller/register"
           element={<SellerRegister />}
+        />
+
+        <Route
+          path="/rentals/:productId"
+          element={<RentalDetails />}
         />
       </Routes>
     </BrowserRouter>

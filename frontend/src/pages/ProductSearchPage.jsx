@@ -1,10 +1,25 @@
 import TrackProductForm from "../components/TrackProductForm";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 const ProductSearchPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [comparedProducts, setComparedProducts] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("fairshare_compare_products") || "[]");
+    } catch {
+      return [];
+    }
+  });
+  const [savedProducts, setSavedProducts] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("fairshare_saved_products") || "[]");
+    } catch {
+      return [];
+    }
+  });
 
   // Filter States
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +39,8 @@ const ProductSearchPage = () => {
 
   // Fetch products whenever a filter changes
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchFilteredProducts = async () => {
       setLoading(true);
       setError(null);
@@ -35,16 +52,20 @@ const ProductSearchPage = () => {
 
         const params = new URLSearchParams();
 
-        if (searchQuery) {
-          params.append("q", searchQuery);
+        if (searchQuery.trim()) {
+          params.append("q", searchQuery.trim());
         }
 
-        if (minPrice) {
+        if (minPrice !== "") {
           params.append("min_price", minPrice);
         }
 
-        if (maxPrice) {
+        if (maxPrice !== "") {
           params.append("max_price", maxPrice);
+        }
+
+        if (minPrice !== "" && maxPrice !== "" && Number(minPrice) > Number(maxPrice)) {
+          throw new Error("Minimum price cannot be greater than maximum price.");
         }
 
         if (activeBrands) {
@@ -55,8 +76,10 @@ const ProductSearchPage = () => {
           params.append("sort", sort);
         }
 
+        const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000").replace(/\/$/, "");
         const response = await fetch(
-          `http://localhost:8000/products/search?${params.toString()}`
+          `${apiBaseUrl}/products/search?${params.toString()}`,
+          { signal: controller.signal }
         );
 
         if (!response.ok) {
@@ -64,25 +87,84 @@ const ProductSearchPage = () => {
         }
 
         const data = await response.json();
-        setProducts(data);
+        // The API currently returns an array. This also supports a wrapped { products: [] } response.
+        const resultList = Array.isArray(data) ? data : data?.products;
+        if (!Array.isArray(resultList)) {
+          throw new Error("The server returned an unexpected product list format.");
+        }
+        setProducts(resultList);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== "AbortError") {
+          setError(err.message || "Unable to load products. Please try again.");
+          setProducts([]);
+        }
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
-    // Debounce API requests while typing/filtering
-    const delayDebounceFn = setTimeout(() => {
-      fetchFilteredProducts();
-    }, 300);
+    // Debounce API requests while typing/filtering.
+    const delayDebounceFn = setTimeout(fetchFilteredProducts, 300);
 
-    return () => clearTimeout(delayDebounceFn);
+    return () => {
+      clearTimeout(delayDebounceFn);
+      controller.abort();
+    };
   }, [searchQuery, minPrice, maxPrice, sort, selectedBrands]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("fairshare_saved_products", JSON.stringify(savedProducts));
+    } catch (err) {
+      console.error("Unable to save products in this browser:", err);
+    }
+  }, [savedProducts]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("fairshare_compare_products", JSON.stringify(comparedProducts));
+    } catch (err) {
+      console.error("Unable to save comparison list in this browser:", err);
+    }
+  }, [comparedProducts]);
+
+  const displayedProducts = useMemo(() => {
+    if (!selectedRating) return products;
+    return products.filter((product) => Number(product.rating || 0) >= selectedRating);
+  }, [products, selectedRating]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    // Search runs automatically with a short debounce; prevent the page from reloading.
   };
+
+  const handleSaveProduct = (product) => {
+    setSavedProducts((previous) => {
+      const alreadySaved = previous.some((item) => String(item.id) === String(product.id));
+      if (alreadySaved) {
+        return previous.filter((item) => String(item.id) !== String(product.id));
+      }
+      return [...previous, product];
+    });
+  };
+
+  const isProductSaved = (product) =>
+    savedProducts.some((item) => String(item.id) === String(product.id));
+
+  const handleCompare = (product) => {
+    setComparedProducts((previous) => {
+      const alreadyAdded = previous.some((item) => String(item.id) === String(product.id));
+      if (alreadyAdded) {
+        return previous.filter((item) => String(item.id) !== String(product.id));
+      }
+      return [...previous, product];
+    });
+  };
+
+  const isProductCompared = (product) =>
+    comparedProducts.some((item) => String(item.id) === String(product.id));
 
   const handleBrandChange = (brand) => {
     setSelectedBrands((prev) => ({
@@ -301,6 +383,20 @@ const ProductSearchPage = () => {
                       className="w-full p-2 border border-gray-200 rounded text-sm outline-none focus:border-gray-400"
                     />
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setMinPrice("");
+                      setMaxPrice("");
+                      setSort("Most Relevant");
+                      setSelectedRating(0);
+                      setSelectedBrands(Object.fromEntries(Object.keys(selectedBrands).map((brand) => [brand, false])));
+                    }}
+                    className="mt-3 text-xs font-medium text-gray-500 hover:text-gray-900 underline"
+                  >
+                    Clear all filters
+                  </button>
                 </div>
 
                 {/* Brand */}
@@ -345,6 +441,8 @@ const ProductSearchPage = () => {
                         <input
                           type="radio"
                           name="rating"
+                          checked={selectedRating === stars}
+                          onChange={() => setSelectedRating(stars)}
                           className="w-4 h-4 text-gray-900 focus:ring-gray-900 border-gray-300"
                         />
 
@@ -359,6 +457,15 @@ const ProductSearchPage = () => {
                       </label>
                     ))}
                   </div>
+                  {selectedRating > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedRating(0)}
+                      className="mt-3 text-xs font-medium text-gray-500 hover:text-gray-900 underline"
+                    >
+                      Clear rating filter
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -366,11 +473,11 @@ const ProductSearchPage = () => {
               <div className="flex-1">
                 <div className="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
                   <span className="text-sm text-gray-500">
-                    {products.length} products found
+                    {displayedProducts.length} {displayedProducts.length === 1 ? "product" : "products"} found
                   </span>
 
                   <div className="flex items-center gap-3">
-                    <button className="text-gray-400 hover:text-gray-600">
+                    <div className="text-gray-400" aria-hidden="true">
                       <svg
                         className="w-5 h-5"
                         fill="none"
@@ -384,7 +491,7 @@ const ProductSearchPage = () => {
                           d="M4 6h16M4 12h16M4 18h16"
                         />
                       </svg>
-                    </button>
+                    </div>
 
                     <select
                       value={sort}
@@ -421,16 +528,18 @@ const ProductSearchPage = () => {
                 )}
 
                 {/* Empty */}
-                {!loading && products.length === 0 && !error && (
+                {!loading && displayedProducts.length === 0 && !error && (
                   <div className="py-12 text-center text-gray-500 text-sm border border-dashed border-gray-300 rounded-xl bg-white">
-                    No products found.
+                    {products.length > 0 && selectedRating > 0
+                      ? `No products have a rating of ${selectedRating} stars or higher.`
+                      : "No products found. Try changing your search or filters."}
                   </div>
                 )}
 
                 {/* Product Cards */}
-                {!loading && products.length > 0 && (
+                {!loading && displayedProducts.length > 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {products.map((product, index) => (
+                    {displayedProducts.map((product, index) => (
                       <div
                         key={product.id || index}
                         className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition"
@@ -441,11 +550,13 @@ const ProductSearchPage = () => {
                             index
                           )}`}
                         >
-                          <span className="absolute top-3 left-3 bg-[#E53935] text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
-                            -20%
-                          </span>
-
-                          <button className="absolute top-3 right-3 bg-white/90 p-1.5 rounded-full text-gray-500 hover:text-gray-900 shadow-sm">
+                          <button
+                            type="button"
+                            onClick={() => handleSaveProduct(product)}
+                            aria-label={isProductSaved(product) ? "Remove saved product" : "Save product"}
+                            title={isProductSaved(product) ? "Remove saved product" : "Save product"}
+                            className={`absolute top-3 right-3 bg-white/90 p-1.5 rounded-full shadow-sm ${isProductSaved(product) ? "text-red-600" : "text-gray-500 hover:text-gray-900"}`}
+                          >
                             <svg
                               className="w-3.5 h-3.5"
                               fill="none"
@@ -461,19 +572,32 @@ const ProductSearchPage = () => {
                             </svg>
                           </button>
 
-                          <svg
-                            className="w-16 h-16 text-black/20"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          {product.image_link ? (
+                            <img
+                              src={product.image_link}
+                              alt={product.name || "Product"}
+                              loading="lazy"
+                              className="h-full w-full object-contain p-4 bg-white"
+                              onError={(event) => {
+                                event.currentTarget.style.display = "none";
+                              }}
                             />
-                          </svg>
+                          ) : (
+                            <svg
+                              className="w-16 h-16 text-black/20"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                          )}
                         </div>
 
                         <div className="p-5">
@@ -487,26 +611,25 @@ const ProductSearchPage = () => {
 
                           <div className="flex items-end gap-2 mb-2">
                             <span className="text-lg font-bold text-gray-900">
-                              ৳{product.price}
-                            </span>
-
-                            <span className="text-xs text-gray-400 line-through mb-1">
-                              ৳{(product.price * 1.25).toFixed(0)}
+                              {Number.isFinite(Number(product.price))
+                                ? `৳${Number(product.price).toLocaleString("en-BD")}`
+                                : "Price unavailable"}
                             </span>
                           </div>
 
                           <div className="flex items-center gap-1.5 mb-4">
-                            <div className="flex text-yellow-400 text-xs">
-                              ★★★★☆
+                            <div className="flex text-yellow-400 text-xs" aria-label={`Rating ${Number(product.rating || 0).toFixed(1)} out of 5`}>
+                              {"★".repeat(Math.max(0, Math.min(5, Math.round(Number(product.rating || 0)))))}
+                              {"☆".repeat(5 - Math.max(0, Math.min(5, Math.round(Number(product.rating || 0)))))}
                             </div>
 
                             <span className="text-xs text-gray-500">
-                              {Number(product.rating || 0).toFixed(1)} (2,847)
+                              {Number(product.rating || 0).toFixed(1)} / 5
                             </span>
                           </div>
 
                           <div className="text-xs text-gray-600 mb-5 flex items-center gap-1">
-                            {product.marketplace_name}
+                            {product.marketplace_name || "Seller information unavailable"}
 
                             {product.is_verified && (
                               <span className="text-green-600 font-semibold">
@@ -523,7 +646,11 @@ const ProductSearchPage = () => {
 
                           {/* Compare + Save */}
                           <div className="flex gap-3">
-                            <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-md text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                            <button
+                              type="button"
+                              onClick={() => handleCompare(product)}
+                              className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-md text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                            >
                               <svg
                                 className="w-3.5 h-3.5"
                                 fill="none"
@@ -537,10 +664,14 @@ const ProductSearchPage = () => {
                                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
                                 />
                               </svg>
-                              Compare
+                              {isProductCompared(product) ? "Added to Compare" : "Compare"}
                             </button>
 
-                            <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-md text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                            <button
+                              type="button"
+                              onClick={() => handleSaveProduct(product)}
+                              className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-md text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                            >
                               <svg
                                 className="w-3.5 h-3.5"
                                 fill="none"
@@ -554,7 +685,7 @@ const ProductSearchPage = () => {
                                   d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
                                 />
                               </svg>
-                              Save
+                              {isProductSaved(product) ? "Saved" : "Save"}
                             </button>
                           </div>
                         </div>
