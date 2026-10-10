@@ -12,7 +12,7 @@ from routes.auth import router as auth_router
 from routes.seller import router as seller_router
 
 from app.routers import products
-
+from routes.rentals import router as rentals_router
 
 app = FastAPI(
     swagger_ui_persist_authorization=True
@@ -72,7 +72,7 @@ app.include_router(products.router)
 
 app.include_router(auth_router)
 app.include_router(seller_router)
-
+app.include_router(rentals_router)
 
 @app.on_event("startup")
 async def startup():
