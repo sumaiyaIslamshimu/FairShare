@@ -1,0 +1,50 @@
+.rental-filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rental-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+}
+
+.rental-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 11px 0;
+  font-size: 0.9rem;
+  min-width: 0;
+}
+
+.rental-filter-bar select,
+.rental-max-price {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  height: 42px;
+}
+
+.rental-max-price {
+  width: 140px;
+}
+
+@media (max-width: 700px) {
+  .rental-filter-bar {
+    flex-direction: column;
+  }
+
+  .rental-max-price {
+    width: 100%;
+  }
+}

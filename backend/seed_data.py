@@ -52,6 +52,17 @@ base_products = [
     },
 ]
 
+RENTAL_INFO = {
+    "ThinkPad L14 Gen 3": (1200, "Dhaka"),
+    "Sony WH-1000XM4 Noise Cancelling": (500, "Dhaka"),
+    "Logitech MX Master 3S Mouse": (200, "Chattogram"),
+    "Samsung Galaxy S23 Ultra": (2500, "Dhaka"),
+    "Walton Blender Machine": (150, "Dhaka"),
+    "Vision Microwave Oven 20L": (300, "Chattogram"),
+    "Philips Steam Iron": (100, "Sylhet"),
+    "FS Canvas Everyday Backpack": (80, "Dhaka"),
+}
+
 categories = ["Footwear", "Electronics", "Accessories"]
 marketplaces = ["Bata", "Lotto", "Daraz"]
 
@@ -99,6 +110,15 @@ def prepare_product(product: dict, seller_id: str) -> dict:
 
     return prepared
 
+
+# Add rental information to each product
+for product in base_products:
+    price_per_day, location = RENTAL_INFO.get(
+        product["name"], (None, None)
+    )
+    product["is_rentable"] = price_per_day is not None
+    product["price_per_day"] = price_per_day
+    product["location"] = location
 
 async def seed_db():
     mongo_uri = os.getenv("MONGO_URI")

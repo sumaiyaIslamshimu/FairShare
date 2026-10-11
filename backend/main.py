@@ -72,8 +72,12 @@ SAMPLE_PRODUCTS = [
 ]
 
 
+
+app.include_router(product_router)
+
 app.include_router(auth_router)
 app.include_router(seller_router)
+app.include_router(rentals_router)
 app.include_router(alerts_router)
 app.include_router(views_router)
 app.include_router(recommendations_router)
