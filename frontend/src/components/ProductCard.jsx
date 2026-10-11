@@ -11,88 +11,98 @@ const categoryImages = {
   Groceries:
     "https://thumbs.dreamstime.com/b/shopping-cart-filled-groceries-essentials-460220048.jpg",
 };
+function ProductArtwork({ product }) {
+  const category = product.category?.toLowerCase() || '';
+  const name = product.name?.toLowerCase() || '';
 
-export default function ProductCard({ product }) {
-  // 1. Try DB image
-  // 2. Try Category sample photo
-  // 3. Fallback to generic placeholder
-  const imageUrl =
-    product.image_url ||
-    categoryImages[product.category] ||
-    `https://placehold.co/400x300/f3f4f6/a1a1aa?text=${product.category}`;
+  if (name.includes('headphone') || name.includes('headset')) {
+    return (
+      <svg className="product-artwork" viewBox="0 0 160 100" aria-hidden="true">
+        <path d="M44 57V46a36 36 0 0 1 72 0v11" />
+        <path d="M42 51h11v26H42a7 7 0 0 1-7-7V58a7 7 0 0 1 7-7Zm76 0h-11v26h11a7 7 0 0 0 7-7V58a7 7 0 0 0-7-7Z" />
+      </svg>
+    );
+  }
 
-  const cardContent = (
-    <>
-      {/* Product Image Section */}
-      <div className="h-48 w-full bg-gray-100 border-b border-gray-100 relative">
-        <img
-          src={imageUrl}
-          alt={product.name}
-          className="w-full h-full object-cover"
-        />
-      </div>
+  if (name.includes('airpod') || name.includes('earbud')) {
+    return (
+      <svg className="product-artwork product-artwork-light" viewBox="0 0 160 100" aria-hidden="true">
+        <path d="M40 46 28 35m12 11-12 12m12-12h9m63 0 12-12m-12 12 12 12m-12-12h-9" />
+        <rect x="40" y="39" width="39" height="18" rx="9" />
+        <rect x="81" y="39" width="39" height="18" rx="9" />
+      </svg>
+    );
+  }
 
-      {/* Product Details Section */}
-      <div className="p-4 flex flex-col flex-1">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-semibold text-lg text-gray-900 line-clamp-2">
-            {product.name}
-          </h3>
+  if (name.includes('tv') || name.includes('monitor') || name.includes('display')) {
+    return (
+      <svg className="product-artwork product-artwork-blue" viewBox="0 0 160 100" aria-hidden="true">
+        <rect x="24" y="19" width="84" height="51" rx="4" />
+        <path d="M66 71v10m-14 0h28" />
+        <rect x="116" y="23" width="15" height="55" rx="3" />
+      </svg>
+    );
+  }
+
+  const artClass = category.includes('electronic') ? 'product-artwork product-artwork-blue' : 'product-artwork';
+  return (
+    <svg className={artClass} viewBox="0 0 160 100" aria-hidden="true">
+      <rect x="40" y="20" width="80" height="58" rx="8" />
+      <path d="M52 68h56M57 31h46" />
+      <circle cx="80" cy="86" r="2" />
+    </svg>
+  );
+}
+
+function formatPrice(value) {
+  return new Intl.NumberFormat('en-BD', {
+    style: 'currency',
+    currency: 'BDT',
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function ProductCard({ product, isCompared, isSaved, onCompare, onSave }) {
+  const image = product.image_url || product.image_link;
+  const discount = product.original_price > product.price
+    ? Math.round((1 - product.price / product.original_price) * 100)
+    : null;
 
           {/* Verified seller badge */}
          <VerifiedBadge verified={product.is_verified} />
         </div>
-
-        <p className="text-sm text-gray-500 mb-3">
-          {product.brand} • {product.category}
-        </p>
-
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-yellow-500">★</span>
-          <span className="text-sm font-medium">{product.rating}</span>
-          <span className="text-sm text-gray-400">
-            | {product.marketplace_name}
-          </span>
-        </div>
-
-        <div className="mt-auto flex justify-between items-end pt-4 border-t border-gray-100">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Price</p>
-            <p className="font-bold text-xl text-gray-900">
-              ৳{product.price.toLocaleString()}
-            </p>
-          </div>
-
-          <span
-            className={`px-4 py-2 rounded font-medium text-sm ${
-              product.in_stock
-                ? "bg-gray-900 text-white hover:bg-gray-800"
-                : "bg-gray-200 text-gray-500 cursor-not-allowed"
-            }`}
+        <div className="product-actions">
+          <button
+            className={isCompared ? 'selected' : ''}
+            type="button"
+            aria-pressed={isCompared}
+            onClick={onCompare}
           >
-            {product.in_stock ? "View Deal" : "Out of Stock"}
-          </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 7h13m0 0-4-4m4 4-4 4M17 17H4m0 0 4 4m-4-4 4-4" />
+            </svg>
+            {isCompared ? 'Added' : 'Compare'}
+          </button>
+          <button
+            className={isSaved ? 'selected' : ''}
+            type="button"
+            aria-pressed={isSaved}
+            onClick={onSave}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" />
+            </svg>
+            {isSaved ? 'Saved' : 'Save'}
+          </button>
         </div>
+        {product.product_link && (
+          <a className="product-link" href={product.product_link} target="_blank" rel="noreferrer">
+            View seller offer
+          </a>
+        )}
       </div>
-    </>
-  );
-
-  // In-stock products are clickable
-  if (product.in_stock) {
-    return (
-      <Link
-        to={`/product/${product._id}`}
-        className="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition bg-white flex flex-col h-full overflow-hidden"
-      >
-        {cardContent}
-      </Link>
-    );
-  }
-
-  // Out-of-stock products are not clickable
-  return (
-    <div className="border border-gray-200 rounded-lg shadow-sm bg-white flex flex-col h-full overflow-hidden">
-      {cardContent}
-    </div>
+    </article>
   );
 }
+
+export default ProductCard;

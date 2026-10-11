@@ -174,15 +174,14 @@
   margin-bottom: 16px;
 }
 
+
 .auth-footer {
   text-align: center;
   margin-top: 18px;
   font-size: 0.85rem;
   color: var(--text-muted);
-  <p className="auth-footer">
-  Not a seller? <Link to="/user/register">Register as a Shopper</Link>
-</p>
 }
+
 
 .auth-footer a {
   color: var(--link-blue);
