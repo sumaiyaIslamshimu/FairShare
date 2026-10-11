@@ -1,0 +1,140 @@
+.shopper-shell {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-page-alt);
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #ffffff;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 12px;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  padding: 8px 10px 20px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.nav-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.nav-item:hover {
+  background-color: #f1f5f9;
+}
+
+.nav-item.active {
+  background-color: var(--navy);
+  color: #ffffff;
+}
+
+.sign-out {
+  padding: 10px 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+  padding-top: 16px;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+}
+
+.page-title {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 1.1rem;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.avatar-chip {
+  width: 32px;
+  height: 32px;
+  background: #e0e7ff;
+  color: var(--navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.user-role {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.content {
+  padding: 32px;
+}
+
+@media (max-width: 768px) {
+  .shopper-shell {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 12px;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sign-out {
+    display: none;
+  }
+
+  .content {
+    padding: 16px;
+  }
+}
