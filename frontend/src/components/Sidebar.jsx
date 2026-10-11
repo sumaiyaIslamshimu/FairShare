@@ -1,30 +1,41 @@
+import { Link, useLocation } from 'react-router-dom';
+
 const navigationItems = [
-  { label: 'Home', icon: '⌂' },
-  { label: 'Search & Browse', icon: '⌕', active: true },
-  { label: 'Compare', icon: '↔' },
-  { label: 'Recommendations', icon: '✧' },
-  { label: 'Price Tracking', icon: '↗' },
-  { label: 'Rentals', icon: '♙' },
-  { label: 'Messages', icon: '▱' },
-  { label: 'Notifications', icon: '♟' },
-  { label: 'Profile', icon: '♙' },
+  { label: 'Home', icon: '⌂', path: '/' },
+  { label: 'Search & Browse', icon: '⌕', path: '/products' },
+  { label: 'Create Listing', icon: '⊕', path: '/seller/listing/new' },
+  { label: 'Rental Requests', icon: '✉', path: '/seller/requests' },
+  { label: 'Profile', icon: '♙', path: '/seller/profile' },
+  // Placeholders for future pages
+  { label: 'Compare', icon: '↔', path: '/compare' },
+  { label: 'Recommendations', icon: '✧', path: '/recommendations' },
+  { label: 'Price Tracking', icon: '↗', path: '/price-tracking' },
+  { label: 'Rentals', icon: '♙', path: '/rentals' },
+  { label: 'Messages', icon: '▱', path: '/messages' },
+  { label: 'Notifications', icon: '♟', path: '/notifications' },
 ];
 
 function Sidebar() {
+  const location = useLocation(); // Gets current route path to highlight active menu item
+
   return (
     <aside className="sidebar">
       <nav className="sidebar-navigation" aria-label="Main navigation">
-        {navigationItems.map((item) => (
-          <a
-            className={`navigation-link${item.active ? ' active' : ''}`}
-            href={item.active ? '/' : `#${item.label.toLowerCase().replaceAll(' ', '-')}`}
-            aria-current={item.active ? 'page' : undefined}
-            key={item.label}
-          >
-            <span className="navigation-icon" aria-hidden="true">{item.icon}</span>
-            {item.label}
-          </a>
-        ))}
+        {navigationItems.map((item) => {
+          const isActive = location.pathname === item.path;
+
+          return (
+            <Link
+              className={`navigation-link${isActive ? ' active' : ''}`}
+              to={item.path}
+              aria-current={isActive ? 'page' : undefined}
+              key={item.label}
+            >
+              <span className="navigation-icon" aria-hidden="true">{item.icon}</span>
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
       <button className="sign-out-button" type="button" disabled>
         <span aria-hidden="true">↪</span>

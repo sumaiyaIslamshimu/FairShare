@@ -1,189 +1,127 @@
-import { useState } from "react";
-import { CATEGORIES, validateListingForm } from "../../utils/listingValidation";
+import { useState } from 'react';
+import BlockedDatesCalendar from './BlockedDatesCalendar';
 
-const EMPTY_VALUES = {
-  name: "",
-  brand: "",
-  category: "",
-  price: "",
-  stock: "",
-  description: "",
-  image_link: "",
-};
+export default function ListingForm({ onSubmit }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
-// One form for both Add (initialValues omitted) and Edit (initialValues provided).
-export default function ListingForm({
-  initialValues,
-  onSubmit,
-  onCancel,
-  isSubmitting,
-  serverError,
-}) {
-  const [values, setValues] = useState({ ...EMPTY_VALUES, ...(initialValues || {}) });
-  const [errors, setErrors] = useState({});
+  // Rental Settings State
+  const [isRentable, setIsRentable] = useState(false);
+  const [pricePerDay, setPricePerDay] = useState('');
+  const [rentalError, setRentalError] = useState('');
 
-  function handleChange(field, value) {
-    setValues((prev) => ({ ...prev, [field]: value }));
-  }
+  // New State for SCRUM-189: Blocked Dates Calendar
+  const [blockedDates, setBlockedDates] = useState([]);
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const validationErrors = validateListingForm(values);
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length > 0) {
-      return; // invalid data is never sent to the backend
+    if (isRentable && (Number(pricePerDay) <= 0 || pricePerDay === '')) {
+      setRentalError("Price per day must be greater than zero.");
+      return;
     }
 
-    onSubmit({
-      name: values.name.trim(),
-      brand: values.brand.trim(),
-      category: values.category,
-      price: Number(values.price),
-      stock: Number(values.stock),
-      description: values.description.trim(),
-      image_link: values.image_link.trim(),
-    });
-  }
+    setRentalError('');
 
-  const inputClass = (field) =>
-    `w-full border rounded-lg px-4 py-2 text-sm ${
-      errors[field] ? "border-red-500" : "border-gray-300"
-    }`;
+    const formData = {
+      title,
+      description,
+      isRentable,
+      pricePerDay: isRentable ? Number(pricePerDay) : null,
+      blockedDates: isRentable ? blockedDates : [], // Attach blocked dates to payload
+    };
+
+    if (onSubmit) {
+      onSubmit(formData);
+    } else {
+      console.log("Form Submitted:", formData);
+      alert("Listing saved successfully!");
+    }
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      noValidate
-      className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 space-y-5"
-    >
-      {serverError && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm">
-          {serverError}
-        </div>
-      )}
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Create New Listing</h2>
 
-      <div>
-        <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-1">
-          Product name
-        </label>
-        <input
-          id="name"
-          type="text"
-          value={values.name}
-          onChange={(e) => handleChange("name", e.target.value)}
-          className={inputClass("name")}
-        />
-        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="brand" className="block text-sm font-semibold text-gray-900 mb-1">
-          Brand
-        </label>
-        <input
-          id="brand"
-          type="text"
-          value={values.brand}
-          onChange={(e) => handleChange("brand", e.target.value)}
-          className={inputClass("brand")}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="category" className="block text-sm font-semibold text-gray-900 mb-1">
-          Category
-        </label>
-        <select
-          id="category"
-          value={values.category}
-          onChange={(e) => handleChange("category", e.target.value)}
-          className={inputClass("category")}
-        >
-          <option value="">Select a category</option>
-          {CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-        {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category}</p>}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="price" className="block text-sm font-semibold text-gray-900 mb-1">
-            Price (৳)
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
           <input
-            id="price"
-            type="number"
-            step="any"
-            value={values.price}
-            onChange={(e) => handleChange("price", e.target.value)}
-            className={inputClass("price")}
+            type="text"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Item name"
           />
-          {errors.price && <p className="text-red-500 text-xs mt-1">{errors.price}</p>}
         </div>
 
         <div>
-          <label htmlFor="stock" className="block text-sm font-semibold text-gray-900 mb-1">
-            Stock quantity
-          </label>
-          <input
-            id="stock"
-            type="number"
-            value={values.stock}
-            onChange={(e) => handleChange("stock", e.target.value)}
-            className={inputClass("stock")}
+          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <textarea
+            required
+            rows="3"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Describe your item"
           />
-          {errors.stock && <p className="text-red-500 text-xs mt-1">{errors.stock}</p>}
         </div>
-      </div>
 
-      <div>
-        <label htmlFor="description" className="block text-sm font-semibold text-gray-900 mb-1">
-          Description
-        </label>
-        <textarea
-          id="description"
-          rows={4}
-          value={values.description}
-          onChange={(e) => handleChange("description", e.target.value)}
-          className={inputClass("description")}
-        />
-      </div>
+        {/* --- Rental Settings Section --- */}
+        <div className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Rental Options</h3>
 
-      <div>
-        <label htmlFor="image_link" className="block text-sm font-semibold text-gray-900 mb-1">
-          Image link
-        </label>
-        <input
-          id="image_link"
-          type="text"
-          value={values.image_link}
-          onChange={(e) => handleChange("image_link", e.target.value)}
-          className={inputClass("image_link")}
-        />
-      </div>
+          <label className="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isRentable}
+              onChange={(e) => {
+                setIsRentable(e.target.checked);
+                if (!e.target.checked) setRentalError('');
+              }}
+              className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+            />
+            <span className="font-medium text-gray-700">Available for rent</span>
+          </label>
 
-      <div className="flex gap-3 pt-2">
+          {isRentable && (
+            <div className="mt-4 ml-8 animate-fade-in">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Price per day ($)
+              </label>
+              <input
+                type="number"
+                min="0.01"
+                step="0.01"
+                value={pricePerDay}
+                onChange={(e) => setPricePerDay(e.target.value)}
+                className={`w-full max-w-[200px] p-2 border rounded-md shadow-sm ${
+                  rentalError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                }`}
+                placeholder="0.00"
+              />
+              {rentalError && (
+                <p className="text-red-500 text-sm mt-1">{rentalError}</p>
+              )}
+
+              {/* Inject the SCRUM-189 Calendar Component here */}
+              <BlockedDatesCalendar
+                blockedDates={blockedDates}
+                setBlockedDates={setBlockedDates}
+              />
+
+            </div>
+          )}
+        </div>
+
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="px-5 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-60"
+          className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
         >
-          {isSubmitting ? "Saving..." : "Save"}
+          Save Listing
         </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="px-5 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
