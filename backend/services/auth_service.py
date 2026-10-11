@@ -2,6 +2,7 @@ from typing import Optional
 
 from fastapi import HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from bson import ObjectId
 
 from config.security import (
     create_access_token,
@@ -9,8 +10,11 @@ from config.security import (
     verify_password,
 )
 from models.user import UserModel
-from schemas.auth import LoginRequest, RegisterRequest
-
+from schemas.auth import (
+    LoginRequest,
+    RegisterRequest,
+    SellerRegisterRequest,
+)
 
 USERS_COLLECTION = "users"
 
@@ -20,7 +24,7 @@ async def register_user(
     data: RegisterRequest,
 ) -> UserModel:
     """
-    Register a new user.
+    Register a new shopper.
     """
 
     existing_user = await db[USERS_COLLECTION].find_one(
@@ -33,10 +37,43 @@ async def register_user(
             detail="Email is already registered.",
         )
 
-    if data.role not in {"buyer", "seller"}:
+    hashed_password = hash_password(data.password)
+
+    user = UserModel(
+        name=data.name,
+        email=data.email,
+        hashed_password=hashed_password,
+        role=data.role,
+    )
+
+    user_data = user.model_dump(
+        by_alias=True,
+        exclude_none=True,
+    )
+
+    result = await db[USERS_COLLECTION].insert_one(user_data)
+
+    user.id = str(result.inserted_id)
+
+    return user
+
+
+async def register_seller(
+    db: AsyncIOMotorDatabase,
+    data: SellerRegisterRequest,
+) -> UserModel:
+    """
+    Register a new seller.
+    """
+
+    existing_user = await db[USERS_COLLECTION].find_one(
+        {"email": data.email}
+    )
+
+    if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid user role.",
+            detail="Email is already registered.",
         )
 
     hashed_password = hash_password(data.password)
@@ -45,7 +82,7 @@ async def register_user(
         name=data.name,
         email=data.email,
         hashed_password=hashed_password,
-        role=data.role,
+        role="seller",
     )
 
     user_data = user.model_dump(
@@ -96,7 +133,7 @@ async def login_user(
     token_data = {
         "sub": str(user_data["_id"]),
         "email": user_data["email"],
-        "role": user_data.get("role", "buyer"),
+        "role": user_data.get("role", "shopper"),
     }
 
     return create_access_token(token_data)
@@ -109,8 +146,6 @@ async def get_user_by_id(
     """
     Get a user by MongoDB ID.
     """
-
-    from bson import ObjectId
 
     try:
         object_id = ObjectId(user_id)

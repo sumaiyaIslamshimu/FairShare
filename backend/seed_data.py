@@ -1,9 +1,17 @@
+
 import asyncio
-from motor.motor_asyncio import AsyncIOMotorClient
 import os
+
 from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+
 
 load_dotenv()
+
+DATABASE_NAME = "fairshare"
+PRODUCTS_COLLECTION = "products"
+USERS_COLLECTION = "users"
+
 
 base_products = [
     # --- EXTERNAL SELLERS (is_verified: False) ---

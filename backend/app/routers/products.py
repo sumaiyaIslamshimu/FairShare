@@ -11,13 +11,13 @@ router = APIRouter(prefix="/products", tags=["Products"])
 
 @router.get("/search", response_model=List[Product])
 async def search_products(
-        request: Request,
-        q: Optional[str] = None,
-        min_price: Optional[float] = Query(default=None, ge=0),
-        max_price: Optional[float] = Query(default=None, ge=0),
-        category: Optional[str] = None,
-        rating_min: Optional[float] = Query(default=None, ge=0, le=5),
-        sort: Optional[str] = None,
+    request: Request,
+    q: Optional[str] = None,
+    min_price: Optional[float] = Query(default=None, ge=0),
+    max_price: Optional[float] = Query(default=None, ge=0),
+    category: Optional[str] = None,
+    rating_min: Optional[float] = Query(default=None, ge=0, le=5),
+    sort: Optional[str] = None,
 ):
     if min_price is not None and max_price is not None and min_price > max_price:
         raise HTTPException(status_code=422, detail="Minimum price cannot exceed maximum price.")

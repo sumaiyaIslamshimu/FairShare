@@ -1,0 +1,191 @@
+.tracked-products-page {
+  min-height: 100vh;
+  background: #f8f7fc;
+  padding: 40px 20px;
+}
+
+.tracked-products-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tracked-products-header {
+  margin-bottom: 30px;
+}
+
+.tracked-products-header h1 {
+  margin: 0 0 8px;
+  color: #333333;
+  font-size: 32px;
+}
+
+.tracked-products-header p {
+  margin: 0;
+  color: #777777;
+  font-size: 15px;
+}
+
+.tracked-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tracked-product-card {
+  display: flex;
+  gap: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(139, 123, 200, 0.12);
+}
+
+.tracked-product-image {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #f5f3fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.tracked-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tracked-product-info {
+  flex: 1;
+}
+
+.tracked-product-info h2 {
+  margin: 0 0 8px;
+  color: #333333;
+  font-size: 21px;
+}
+
+.tracked-marketplace {
+  margin: 0 0 20px;
+  color: #777777;
+  font-size: 14px;
+}
+
+.price-details {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 16px;
+}
+
+.price-details div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.price-details span {
+  color: #888888;
+  font-size: 13px;
+}
+
+.price-details strong {
+  color: #8b7bc8;
+  font-size: 20px;
+}
+
+.target-reached {
+  margin: 0 0 16px;
+  color: #18864b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tracked-product-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.history-button,
+.remove-tracking-button,
+.browse-products-button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.history-button {
+  background: #8b7bc8;
+  color: #ffffff;
+}
+
+.history-button:hover {
+  background: #7565b5;
+}
+
+.remove-tracking-button {
+  background: #f1e4df;
+  color: #7a4c40;
+}
+
+.remove-tracking-button:hover {
+  background: #e9d5ce;
+}
+
+.tracked-products-empty {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 60px 30px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(139, 123, 200, 0.12);
+}
+
+.tracked-products-empty h2 {
+  margin: 0 0 10px;
+  color: #333333;
+}
+
+.tracked-products-empty p {
+  margin: 0 0 24px;
+  color: #777777;
+}
+
+.browse-products-button {
+  background: #8b7bc8;
+  color: #ffffff;
+}
+
+.browse-products-button:hover {
+  background: #7565b5;
+}
+
+.tracked-products-message {
+  text-align: center;
+  color: #777777;
+  padding: 50px;
+}
+
+@media (max-width: 700px) {
+  .tracked-product-card {
+    flex-direction: column;
+  }
+
+  .tracked-product-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .price-details {
+    gap: 25px;
+  }
+
+  .tracked-products-header h1 {
+    font-size: 26px;
+  }
+}
