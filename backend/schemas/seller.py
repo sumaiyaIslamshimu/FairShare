@@ -59,3 +59,12 @@ class SellerProfileResponse(BaseModel):
     phone: Optional[str] = None
     address: Optional[str] = None
     is_verified: bool
+
+
+class RentalSettingsUpdate(BaseModel):
+    """
+    Schema for updating rental settings on a listing.
+    """
+
+    is_rentable: bool
+    price_per_day: Optional[float] = Field(default=None, ge=0.0)

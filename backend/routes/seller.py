@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from bson import ObjectId
+from bson.errors import InvalidId
 
 from config.database import db
 from routes.auth import get_current_user
@@ -7,6 +9,7 @@ from schemas.seller import (
     SellerProfileCreate,
     SellerProfileResponse,
     SellerProfileUpdate,
+    RentalSettingsUpdate,
 )
 from services.seller_service import (
     create_seller_profile,
@@ -39,9 +42,9 @@ def get_database() -> AsyncIOMotorDatabase:
     status_code=status.HTTP_201_CREATED,
 )
 async def create_profile(
-    data: SellerProfileCreate,
-    current_user: dict = Depends(get_current_user),
-    database: AsyncIOMotorDatabase = Depends(get_database),
+        data: SellerProfileCreate,
+        current_user: dict = Depends(get_current_user),
+        database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
     Create a seller profile for the authenticated seller.
@@ -69,8 +72,8 @@ async def create_profile(
     response_model=SellerProfileResponse,
 )
 async def get_profile(
-    current_user: dict = Depends(get_current_user),
-    database: AsyncIOMotorDatabase = Depends(get_database),
+        current_user: dict = Depends(get_current_user),
+        database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
     Get the authenticated seller's profile.
@@ -103,9 +106,9 @@ async def get_profile(
     response_model=SellerProfileResponse,
 )
 async def update_profile(
-    data: SellerProfileUpdate,
-    current_user: dict = Depends(get_current_user),
-    database: AsyncIOMotorDatabase = Depends(get_database),
+        data: SellerProfileUpdate,
+        current_user: dict = Depends(get_current_user),
+        database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
     Update the authenticated seller's profile.
@@ -133,8 +136,8 @@ async def update_profile(
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_profile(
-    current_user: dict = Depends(get_current_user),
-    database: AsyncIOMotorDatabase = Depends(get_database),
+        current_user: dict = Depends(get_current_user),
+        database: AsyncIOMotorDatabase = Depends(get_database),
 ):
     """
     Delete the authenticated seller's profile.
@@ -148,64 +151,66 @@ async def delete_profile(
     return None
 
 
-
-async def find_group_listings(db, listing):
-    name = re.escape(listing["name"].strip())
-
-    cursor = db.products.find({
-        "_id": {"$ne": listing["_id"]},
-        "seller_id": {"$ne": listing.get("seller_id")},
-        "name": {"$regex": f"^{name}$", "$options": "i"},
-    })
-
-    return [doc async for doc in cursor]
-
-
-@router.get("/listings/{listing_id}/price-insights")
-async def price_insights(
-    listing_id: str,
-    request: Request,
-    seller=Depends(require_role("seller")),
+@router.patch(
+    "/listings/{id}/rental",
+    status_code=status.HTTP_200_OK,
+)
+async def update_rental_settings(
+        id: str,
+        data: RentalSettingsUpdate,
+        current_user: dict = Depends(get_current_user),
+        database: AsyncIOMotorDatabase = Depends(get_database),
 ):
-    db = get_database()
+    """
+    Update rental settings (is_rentable, price_per_day) for a specific listing.
+    Only the owning seller can modify these settings.
+    """
 
-    try:
-        oid = ObjectId(listing_id)
-    except InvalidId:
-        raise HTTPException(status_code=400, detail="Invalid listing id.")
-
-    listing = await db.products.find_one({"_id": oid})
-
-    if not listing:
-        raise HTTPException(status_code=404, detail="Listing not found.")
-
-    if str(listing.get("seller_id")) != str(seller.get("id") or seller.get("_id")):
+    # 1. Validate that price_per_day is greater than 0 if the item is rentable
+    if data.is_rentable and (data.price_per_day is None or data.price_per_day <= 0):
         raise HTTPException(
-            status_code=403,
-            detail="You can only view insights for your own listings.",
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="A valid price_per_day greater than 0 is required when making an item rentable."
         )
 
-    own_price = listing["price"]
-    others = await find_group_listings(db, listing)
+    try:
+        obj_id = ObjectId(id)
+    except InvalidId:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid listing ID format."
+        )
 
-    prices = [
-        item["price"]
-        for item in others
-        if isinstance(item.get("price"), (int, float))
-    ]
+    # 2. Fetch the listing to verify it exists and belongs to this seller
+    listing = await database.products.find_one({"_id": obj_id})
 
-    if not prices:
-        return {
-            "has_competitors": False,
-            "own_price": own_price,
-            "message": "No other sellers list this product.",
-        }
+    if not listing:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Listing not found."
+        )
+
+    # 3. Ownership check (returns 403 if it belongs to someone else)
+    listing_owner_id = str(listing.get("seller_id", listing.get("user_id")))
+    if listing_owner_id != str(current_user["_id"]):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to modify this listing's rental settings."
+        )
+
+    # 4. Save the changes
+    update_data = {
+        "is_rentable": data.is_rentable,
+        "price_per_day": data.price_per_day
+    }
+
+    await database.products.update_one(
+        {"_id": obj_id},
+        {"$set": update_data}
+    )
 
     return {
-        "has_competitors": True,
-        "own_price": own_price,
-        "lowest": min(prices),
-        "average": round(sum(prices) / len(prices), 2),
-        "highest": max(prices),
-        "count": len(prices),
+        "message": "Rental settings updated successfully",
+        "is_rentable": data.is_rentable,
+        "price_per_day": data.price_per_day
     }
