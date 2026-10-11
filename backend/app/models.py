@@ -6,6 +6,7 @@ from typing_extensions import Annotated
 # This safely converts MongoDB ObjectIds to strings for Pydantic V2
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
+
 class Product(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
     name: str
@@ -20,5 +21,9 @@ class Product(BaseModel):
     product_link: Optional[str] = None
     in_stock: bool = True
     is_verified: bool = False
+
+    # --- SCRUM-128: Product Matching Fields ---
+    group_id: Optional[str] = None
+    normalized_key: Optional[str] = None
 
     model_config = ConfigDict(populate_by_name=True)
