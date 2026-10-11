@@ -16,13 +16,13 @@ router = APIRouter(prefix="/products", tags=["Products"])
 
 @router.get("/search", response_model=List[Product])
 async def search_products(
-        request: Request,
-        q: Optional[str] = None,
-        min_price: Optional[float] = Query(default=None, ge=0),
-        max_price: Optional[float] = Query(default=None, ge=0),
-        category: Optional[str] = None,
-        rating_min: Optional[float] = Query(default=None, ge=0, le=5),
-        sort: Optional[str] = None,
+    request: Request,
+    q: Optional[str] = None,
+    min_price: Optional[float] = Query(default=None, ge=0),
+    max_price: Optional[float] = Query(default=None, ge=0),
+    category: Optional[str] = None,
+    rating_min: Optional[float] = Query(default=None, ge=0, le=5),
+    sort: Optional[str] = None,
 ):
     if min_price is not None and max_price is not None and min_price > max_price:
         raise HTTPException(status_code=422, detail="Minimum price cannot exceed maximum price.")
@@ -62,6 +62,20 @@ async def search_products(
         cursor = cursor.sort("rating", -1)
 
     products = await cursor.to_list(length=100)
+    seller_names = [
+        product.get("businessName")
+        for product in products
+        if product.get("businessName")
+    ]
+
+    from utils.verification import verified_map
+
+    verification = await verified_map(db, seller_names)
+
+    for product in products:
+        name = product.get("businessName")
+        product["is_verified"] = verification.get(name, False)
+
     return products
 
 

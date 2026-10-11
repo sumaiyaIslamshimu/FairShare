@@ -1,0 +1,61 @@
+.insights-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+
+.insights-card h2 {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin: 0 0 14px;
+}
+
+.insights-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.insight-box {
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+
+.insight-number {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.insight-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.insight-comparison {
+  display: inline-block;
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.insight-comparison.good { background: var(--green-badge-bg); color: var(--green-badge-text); }
+.insight-comparison.warn { background: #fef3c7; color: #92400e; }
+.insight-comparison.neutral { background: #f1f5f9; color: var(--text-label); }
+
+.insights-empty {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .insights-row { grid-template-columns: 1fr; }
+}

@@ -18,6 +18,11 @@ from services.seller_service import (
     update_seller_profile,
 )
 
+import re
+from bson import ObjectId
+from bson.errors import InvalidId
+from fastapi import Request
+from dependencies.roles import require_role
 router = APIRouter(
     prefix="/seller",
     tags=["Seller"],

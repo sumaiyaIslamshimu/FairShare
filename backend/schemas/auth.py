@@ -3,13 +3,52 @@ from pydantic import BaseModel, EmailStr, Field
 
 class RegisterRequest(BaseModel):
     """
-    Schema for user registration.
+    Schema for shopper registration.
     """
 
-    name: str = Field(..., min_length=2, max_length=100)
+    name: str = Field(
+        ...,
+        min_length=2,
+        max_length=100
+    )
+
     email: EmailStr
-    password: str = Field(..., min_length=6, max_length=128)
-    role: str = Field(default="buyer")
+
+    password: str = Field(
+        ...,
+        min_length=6,
+        max_length=128
+    )
+
+    role: str = Field(
+        default="shopper"
+    )
+
+
+class SellerRegisterRequest(BaseModel):
+    """
+    Schema for seller registration.
+    """
+
+    name: str = Field(
+        ...,
+        min_length=2,
+        max_length=100
+    )
+
+    email: EmailStr
+
+    password: str = Field(
+        ...,
+        min_length=6,
+        max_length=128
+    )
+
+    business_name: str = Field(
+        ...,
+        min_length=2,
+        max_length=150
+    )
 
 
 class LoginRequest(BaseModel):
@@ -18,6 +57,7 @@ class LoginRequest(BaseModel):
     """
 
     email: EmailStr
+
     password: str
 
 
@@ -27,6 +67,7 @@ class TokenResponse(BaseModel):
     """
 
     access_token: str
+
     token_type: str = "bearer"
 
 
@@ -36,7 +77,11 @@ class UserResponse(BaseModel):
     """
 
     id: str
+
     name: str
+
     email: EmailStr
+
     role: str
+
     is_active: bool

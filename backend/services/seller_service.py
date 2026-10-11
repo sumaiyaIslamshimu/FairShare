@@ -72,7 +72,7 @@ async def create_seller_profile(
         by_alias=True,
         exclude_none=True,
     )
-
+    profile_data["is_verified"] = False
     result = await db[
         SELLER_PROFILES_COLLECTION
     ].insert_one(profile_data)
