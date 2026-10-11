@@ -193,7 +193,6 @@ export default function ListingForm({
             onChange={(e) => {
               handleChange("isRentable", e.target.checked);
               if (!e.target.checked) {
-                // Clear any rental errors if they uncheck the box
                 setErrors((prev) => ({ ...prev, pricePerDay: null }));
               }
             }}
