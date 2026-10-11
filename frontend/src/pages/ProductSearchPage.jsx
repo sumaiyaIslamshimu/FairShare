@@ -2,6 +2,7 @@ import TrackProductForm from "../components/TrackProductForm";
 import { useState, useEffect } from "react";
 import SuggestedForYou from "../components/SuggestedForYou";
 import VerifiedBadge from "../components/VerifiedBadge";
+import { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';

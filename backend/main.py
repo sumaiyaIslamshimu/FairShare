@@ -18,8 +18,11 @@ from routes.rentals import router as rentals_router
 from routes.rental_requests import router as rental_requests_router
 
 from app.routers import products
+from routes.admin import router as admin_router
 
-app = FastAPI()
+app = FastAPI(
+    swagger_ui_persist_authorization=True
+)
 
 
 app.add_middleware(
@@ -36,6 +39,7 @@ app.include_router(products.router)
 
 app.include_router(auth_router)
 app.include_router(seller_router)
+app.include_router(admin_router)
 app.include_router(rentals_router)
 app.include_router(alerts_router)
 app.include_router(views_router)

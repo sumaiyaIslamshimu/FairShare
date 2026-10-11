@@ -50,7 +50,7 @@ async def register_user(
         by_alias=True,
         exclude_none=True,
     )
-
+    user_data["is_verified"] = False
     result = await db[USERS_COLLECTION].insert_one(user_data)
 
     user.id = str(result.inserted_id)
