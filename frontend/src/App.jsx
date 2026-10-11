@@ -1,4 +1,4 @@
-```jsx
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import ExperienceSelection from "./pages/ExperienceSelection";
@@ -8,9 +8,7 @@ import Login from "./pages/Login";
 import SellerRegister from "./pages/SellerRegister";
 import BusinessProfile from "./pages/BusinessProfile";
 import ProductSearchPage from "./pages/ProductSearchPage";
-import ProductDetailsPage from "./pages/ProductDetailsPage";
-import Rentals from "./pages/Rentals";
-
+import RentalDetails from "./pages/RentalDetails";
 import "./App.css";
 import "./index.css";
 
@@ -38,10 +36,9 @@ function App() {
         />
 
         <Route
-          path="/product/:productId"
-          element={<ProductDetailsPage />}
+          path="/rentals/:productId"
+          element={<RentalDetails />}
         />
-        <Route path="/shopper/rentals" element={<Rentals />} />
       </Routes>
     </BrowserRouter>
   );
