@@ -19,24 +19,22 @@ function ExperienceSelection() {
         </div>
       </nav>
 
-      <div className="experience-hero">
+      <header className="experience-hero">
         <h1 className="experience-title">Choose Your Experience</h1>
         <p className="experience-subtitle">
           Select how you'd like to use FairShare. Shoppers, sellers, and
           administrators each get a tailored experience built for their needs.
         </p>
-      </div>
+      </header>
 
-      <div className="role-grid">
+      <main className="role-grid">
         <div className="role-card">
-          <div className="role-card-body">
-            <div className="role-icon">👤</div>
-            <h2 className="role-title">User / Shopper</h2>
-            <p className="role-description">
-              Compare products, prices, ratings, and reviews across sellers to
-              make better, more informed buying decisions on FairShare.
-            </p>
-          </div>
+          <div className="role-icon">👤</div>
+          <h2 className="role-title">User / Shopper</h2>
+          <p className="role-description">
+            Compare products, prices, ratings, and reviews across sellers to
+            make better, more informed buying decisions on FairShare.
+          </p>
           <div className="role-actions">
             <Link to="/login" className="role-button role-button-dark">
               User Login
@@ -48,14 +46,12 @@ function ExperienceSelection() {
         </div>
 
         <div className="role-card">
-          <div className="role-card-body">
-            <div className="role-icon">🏬</div>
-            <h2 className="role-title">Seller</h2>
-            <p className="role-description">
-              Manage your products, pricing, and listings, and interact
-              directly with customers browsing the FairShare marketplace.
-            </p>
-          </div>
+          <div className="role-icon">🏬</div>
+          <h2 className="role-title">Seller</h2>
+          <p className="role-description">
+            Manage your products, pricing, and listings, and interact
+            directly with customers browsing the FairShare marketplace.
+          </p>
           <div className="role-actions">
             <button type="button" className="role-button role-button-dark">
               Seller Login
@@ -67,25 +63,27 @@ function ExperienceSelection() {
         </div>
 
         <div className="role-card">
-          <div className="role-card-body">
-            <div className="role-icon">🛡️</div>
-            <h2 className="role-title">Admin</h2>
-            <p className="role-description">
-              Manage and monitor the FairShare platform, including users,
-              sellers, listings, and overall marketplace integrity.
-            </p>
-          </div>
-          <div className="role-actions">
-            <button
-              type="button"
-              className="role-button role-button-restricted"
-              disabled
-            >
+          <div className="role-icon">🛡️</div>
+
+          <h2 className="role-title">
+            Admin{" "}
+            <span style={{ color: "#dc2626", fontSize: "11px" }}>
               🔒 Restricted
+            </span>
+          </h2>
+
+          <p className="role-description">
+            Manage and monitor the FairShare platform, including users,
+            sellers, listings, and overall marketplace integrity.
+          </p>
+
+          <div className="role-actions">
+            <button type="button" className="role-button role-button-dark">
+              Admin Login
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
