@@ -1,3 +1,16 @@
+import { Link } from "react-router-dom";
+import VerifiedBadge from "./VerifiedBadge";
+// Your custom sample photos for each category
+const categoryImages = {
+  Fashion:
+    "https://static.vecteezy.com/system/resources/thumbnails/086/444/130/small/tshirt-with-discount-tag-cartoon-vector.jpg",
+  Electronics:
+    "https://static.vecteezy.com/system/resources/previews/077/136/847/non_2x/electronic-devices-collection-featuring-a-laptop-headphones-smartphone-tablet-smartwatch-and-computer-mouse-vector.jpg",
+  Household:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR24OnABBE51EB9X9UpTLh6ipJXl3DxJ-fX8-fWWLHbXQ&s=10",
+  Groceries:
+    "https://thumbs.dreamstime.com/b/shopping-cart-filled-groceries-essentials-460220048.jpg",
+};
 function ProductArtwork({ product }) {
   const category = product.category?.toLowerCase() || '';
   const name = product.name?.toLowerCase() || '';
@@ -55,42 +68,8 @@ function ProductCard({ product, isCompared, isSaved, onCompare, onSave }) {
     ? Math.round((1 - product.price / product.original_price) * 100)
     : null;
 
-  return (
-    <article className="product-card">
-      <div className={`product-visual product-visual-${(product.category || 'default').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-        {image ? (
-          <img src={image} alt={product.name} loading="lazy" />
-        ) : (
-          <ProductArtwork product={product} />
-        )}
-        {discount && <span className="discount-badge">-{discount}%</span>}
-        <span className={`stock-badge${product.in_stock === false ? ' out-of-stock' : ''}`}>
-          {product.in_stock === false ? 'Out of stock' : 'In stock'}
-        </span>
-      </div>
-      <div className="product-details">
-        <p className="product-category">{product.brand} · {product.category}</p>
-        <h2 title={product.name}>{product.name}</h2>
-        <div className="product-prices">
-          <span className="current-price">{formatPrice(product.price)}</span>
-          {product.original_price > product.price && (
-            <span className="original-price">{formatPrice(product.original_price)}</span>
-          )}
-        </div>
-        <p className="product-rating">
-          <span aria-label={`${product.rating} out of 5 stars`}>★</span>
-          {Number(product.rating || 0).toFixed(1)}
-        </p>
-        <div className="marketplace-row">
-          <p className="marketplace-name">{product.marketplace_name}</p>
-          {product.is_verified && (
-            <span className="verified-badge" aria-label="Verified seller">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m12 2 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 2Z" />
-              </svg>
-              Verified
-            </span>
-          )}
+          {/* Verified seller badge */}
+         <VerifiedBadge verified={product.is_verified} />
         </div>
         <div className="product-actions">
           <button
