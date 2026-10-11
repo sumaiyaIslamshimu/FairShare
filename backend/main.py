@@ -14,6 +14,8 @@ from routes.alerts import router as alerts_router
 
 from routes.product import router as product_router
 
+from routes.seller_listings import router as seller_listings_router  # NEW
+
 
 app = FastAPI(
     swagger_ui_persist_authorization=True
@@ -75,6 +77,7 @@ app.include_router(product_router)
 app.include_router(auth_router)
 app.include_router(seller_router)
 app.include_router(alerts_router)
+app.include_router(seller_listings_router)  # NEW
 
 
 @app.on_event("startup")
