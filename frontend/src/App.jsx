@@ -1,35 +1,45 @@
-import { useState, useEffect } from 'react';
-import './App.css';
-import MainLayout from './components/MainLayout';
-import ProductSearchPage from './pages/ProductSearchPage';
-import RentalRequestsScreen from './pages/RentalRequestsScreen';
-import ListingForm from './components/ListingForm';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Existing Pages
+import ExperienceSelection from "./pages/ExperienceSelection";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import SellerRegister from "./pages/SellerRegister";
+import BusinessProfile from "./pages/BusinessProfile";
+import ProductSearchPage from "./pages/ProductSearchPage";
+import RentalDetails from "./pages/RentalDetails";
+
+// New Pages from our current Epic
+import RentalRequestsScreen from "./pages/RentalRequestsScreen";
+import ListingForm from "./components/ListingForm";
+
+import "./App.css";
+import "./index.css";
 
 function App() {
-  const [currentRoute, setCurrentRoute] = useState(window.location.hash || '');
-
-  useEffect(() => {
-    const handleHashChange = () => setCurrentRoute(window.location.hash);
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const renderContent = (onSearchChange) => {
-    switch (currentRoute) {
-      case '#rental-requests':
-        return <RentalRequestsScreen />;
-      case '#create-listing':
-        return <ListingForm />;
-      default:
-        // Defaults to Search & Browse
-        return <ProductSearchPage onSearchChange={onSearchChange} />;
-    }
-  };
-
   return (
-    <MainLayout>
-      {(onSearchChange) => renderContent(onSearchChange)}
-    </MainLayout>
+    <BrowserRouter>
+      <Routes>
+        {/* Shopper Authentication */}
+        <Route path="/" element={<ExperienceSelection />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Product Search */}
+        <Route path="/products" element={<ProductSearchPage />} />
+
+        {/* Seller Existing Routes */}
+        <Route path="/seller/profile" element={<BusinessProfile />} />
+        <Route path="/seller/register" element={<SellerRegister />} />
+
+        {/* NEW: Seller Dashboard Routes (SCRUM-188 & 190) */}
+        <Route path="/seller/requests" element={<RentalRequestsScreen />} />
+        <Route path="/seller/listing/new" element={<ListingForm />} />
+
+        {/* Rentals */}
+        <Route path="/rentals/:productId" element={<RentalDetails />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
