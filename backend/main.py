@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config.database import (
     close_database_connection,
     connect_to_database,
+    db,
 )
 
 from routes.auth import router as auth_router
@@ -16,11 +17,9 @@ from routes.recommendations import router as recommendations_router
 from routes.rentals import router as rentals_router
 from routes.rental_requests import router as rental_requests_router
 
+from app.routers import products
 
-
-app = FastAPI(
-    swagger_ui_persist_authorization=True
-)
+app = FastAPI()
 
 
 app.add_middleware(
@@ -31,49 +30,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mongodb = db
 
-SAMPLE_PRODUCTS = [
-    {
-        "id": 1,
-        "name": "Sony WH-1000XM5",
-        "brand": "Sony",
-        "category": "Headphones",
-        "price": 299,
-        "rating": 4.8,
-        "marketplace": "AudioWorld",
-    },
-    {
-        "id": 2,
-        "name": "Apple AirPods Pro 2nd Gen",
-        "brand": "Apple",
-        "category": "Earbuds",
-        "price": 189,
-        "rating": 4.9,
-        "marketplace": "TechVision Store",
-    },
-    {
-        "id": 3,
-        "name": "Samsung 65 QLED 4K TV",
-        "brand": "Samsung",
-        "category": "TV",
-        "price": 1199,
-        "rating": 4.7,
-        "marketplace": "ElectroBuy",
-    },
-    {
-        "id": 4,
-        "name": "Bose QC Ultra Earbuds",
-        "brand": "Bose",
-        "category": "Earbuds",
-        "price": 249,
-        "rating": 4.7,
-        "marketplace": "AudioWorld",
-    },
-]
-
-
-
-app.include_router(product_router)
+app.include_router(products.router)
 
 app.include_router(auth_router)
 app.include_router(seller_router)

@@ -14,8 +14,11 @@ class Product(BaseModel):
     price: float
     rating: float
     image_link: Optional[str] = None
+    image_url: Optional[str] = None
+    original_price: Optional[float] = None
     marketplace_name: str
     product_link: Optional[str] = None
     in_stock: bool = True
+    is_verified: bool = False
 
     model_config = ConfigDict(populate_by_name=True)
