@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CATEGORIES, validateListingForm } from "../../utils/listingValidation";
+import BlockedDatesCalendar from './BlockedDatesCalendar';
 
 const EMPTY_VALUES = {
   name: "",
@@ -9,6 +10,9 @@ const EMPTY_VALUES = {
   stock: "",
   description: "",
   image_link: "",
+  isRentable: false,
+  pricePerDay: "",
+  blockedDates: [],
 };
 
 // One form for both Add (initialValues omitted) and Edit (initialValues provided).
@@ -30,6 +34,12 @@ export default function ListingForm({
     e.preventDefault();
 
     const validationErrors = validateListingForm(values);
+
+    // Custom validation for Rental Settings
+    if (values.isRentable && (Number(values.pricePerDay) <= 0 || values.pricePerDay === '')) {
+      validationErrors.pricePerDay = "Price per day must be greater than zero.";
+    }
+
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -44,6 +54,10 @@ export default function ListingForm({
       stock: Number(values.stock),
       description: values.description.trim(),
       image_link: values.image_link.trim(),
+      // Append rental fields to the payload
+      isRentable: values.isRentable,
+      pricePerDay: values.isRentable ? Number(values.pricePerDay) : null,
+      blockedDates: values.isRentable ? values.blockedDates : [],
     });
   }
 
@@ -166,6 +180,63 @@ export default function ListingForm({
           onChange={(e) => handleChange("image_link", e.target.value)}
           className={inputClass("image_link")}
         />
+      </div>
+
+      {/* --- Rental Settings Section --- */}
+      <div className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Rental Options</h3>
+
+        <label className="flex items-center space-x-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={values.isRentable}
+            onChange={(e) => {
+              handleChange("isRentable", e.target.checked);
+              if (!e.target.checked) {
+                // Clear any rental errors if they uncheck the box
+                setErrors((prev) => ({ ...prev, pricePerDay: null }));
+              }
+            }}
+            className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+          />
+          <span className="font-medium text-gray-700">Available for rent</span>
+        </label>
+
+        {values.isRentable && (
+          <div className="mt-4 ml-8 animate-fade-in space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Price per day (৳)
+              </label>
+              <input
+                type="number"
+                min="0.01"
+                step="any"
+                value={values.pricePerDay}
+                onChange={(e) => handleChange("pricePerDay", e.target.value)}
+                className={`w-full max-w-[200px] p-2 border rounded-md shadow-sm ${
+                  errors.pricePerDay
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
+                placeholder="0.00"
+              />
+              {errors.pricePerDay && (
+                <p className="text-red-500 text-sm mt-1">{errors.pricePerDay}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Blocked Dates (Unavailable)
+              </label>
+              <BlockedDatesCalendar
+                blockedDates={values.blockedDates}
+                setBlockedDates={(dates) => handleChange("blockedDates", dates)}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="flex gap-3 pt-2">
