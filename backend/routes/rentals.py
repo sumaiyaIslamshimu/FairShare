@@ -1,53 +1,63 @@
-import re
-from typing import Optional
 
-from fastapi import APIRouter, Query, Request
+from fastapi import APIRouter, Query
 
-router = APIRouter()
+from config.database import db
 
 
-async def has_open_dates(db, product_id: str, days: int = 90) -> bool:
-    """
-    Should check whether this item has any open dates in the next `days` days.
-    The availability collection doesn't exist yet (story 2), so until then
-    every rentable item counts as available.
-    """
-    # TODO (story 2): query the availability collection for open dates
-    return True
+router = APIRouter(
+    prefix="/rentals",
+    tags=["Rentals"],
+)
 
 
-@router.get("/rentals/search")
+@router.get("/search")
 async def search_rentals(
-    request: Request,
-    q: Optional[str] = None,
-    category: Optional[str] = None,
-    maxPricePerDay: Optional[float] = Query(None, gt=0),
+    keyword: str | None = Query(default=None, min_length=1),
+    category: str | None = Query(default=None, min_length=1),
+    max_price_per_day: float | None = Query(default=None, gt=0),
 ):
-    db = request.app.mongodb
+    """
+    Search rentable products by keyword, category,
+    and maximum daily rental price.
+    """
 
-    # Only rentable products, ever
-    query = {"is_rentable": True}
+    query = {
+        "is_rentable": True,
+        "price_per_day": {"$ne": None},
+    }
 
-    # Optional keyword: matches name or category, case-insensitive
-    if q and q.strip():
-        pattern = {"$regex": re.escape(q.strip()), "$options": "i"}
-        query["$or"] = [{"name": pattern}, {"category": pattern}]
+    if keyword:
+        query["$or"] = [
+            {"name": {"$regex": keyword, "$options": "i"}},
+            {"category": {"$regex": keyword, "$options": "i"}},
+        ]
 
-    # Optional exact category (case-insensitive)
-    if category and category.strip():
+    if category:
         query["category"] = {
-            "$regex": f"^{re.escape(category.strip())}$",
+            "$regex": f"^{category}$",
             "$options": "i",
         }
 
-    # Optional maximum price per day
-    if maxPricePerDay is not None:
-        query["price_per_day"] = {"$lte": maxPricePerDay}
+    if max_price_per_day is not None:
+        query["price_per_day"]["$lte"] = max_price_per_day
+
+    cursor = db["products"].find(query)
+
+    products = await cursor.to_list(length=100)
 
     items = []
-    async for doc in db.products.find(query):
-        doc["id"] = str(doc.pop("_id"))
-        doc["is_available"] = await has_open_dates(db, doc["id"])
-        items.append(doc)
 
-    return items
+    for product in products:
+        items.append({
+            "id": str(product["_id"]),
+            "name": product.get("name", ""),
+            "image": product.get("image"),
+            "price_per_day": product["price_per_day"],
+            "location": product.get("location"),
+            "is_available": True,
+        })
+
+    return {
+        "items": items,
+        "total": len(items),
+    }
