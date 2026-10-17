@@ -1,20 +1,24 @@
+
+# Secrets
+.env
+*.env.local
+
 # Python
-.venv/
 __pycache__/
 *.pyc
+.venv/
+venv/
+.pytest_cache/
 
-# Environment variables
-.env
-backend/.env
+# Node
+node_modules/
+dist/
 
-# Node / React
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
+# Sensitive uploads
+private_uploads/*
+!private_uploads/.gitkeep
 
-# PyCharm
-.idea/
-
-# OS
+# OS / editor
 .DS_Store
-Thumbs.db
+.vscode/
+.idea/
