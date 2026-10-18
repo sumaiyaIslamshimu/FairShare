@@ -22,3 +22,14 @@ private_uploads/*
 .DS_Store
 .vscode/
 .idea/
+.env
+**/.env
+.venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+*.py[cod]
+
+.idea/
