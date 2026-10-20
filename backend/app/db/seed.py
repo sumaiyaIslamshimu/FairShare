@@ -5,26 +5,7 @@ from app.core.config import get_settings
 from app.core.security import hash_password
 from app.db.indexes import ensure_indexes
 from app.db.mongo import get_db
-
-TAXONOMY = {
-    "fashion-accessories": ("Fashion & Accessories", {
-        "clothing": "Clothing", "shoes": "Shoes", "bags": "Bags", "watches": "Watches", "jewelry": "Jewelry"}),
-    "electronics-gadgets": ("Electronics & Gadgets", {
-        "smartphones": "Smartphones", "laptops": "Laptops", "tablets": "Tablets",
-        "accessories": "Accessories", "audio-devices": "Audio Devices"}),
-    "home-household": ("Home & Household", {
-        "furniture": "Furniture", "kitchenware": "Kitchenware", "home-decor": "Home Decor",
-        "storage": "Storage", "bedding": "Bedding"}),
-    "groceries-food": ("Groceries & Food", {
-        "rice-grains": "Rice & Grains", "fruits-vegetables": "Fruits & Vegetables", "dairy": "Dairy",
-        "meat-fish": "Meat & Fish", "snacks": "Snacks"}),
-    "books-stationery": ("Books & Stationery", {
-        "academic-books": "Academic Books", "novels": "Novels", "reference-books": "Reference Books",
-        "notebooks": "Notebooks", "pens": "Pens"}),
-    "sports-fitness": ("Sports & Fitness", {
-        "gym-equipment": "Gym Equipment", "sports-accessories": "Sports Accessories", "balls": "Balls",
-        "outdoor-equipment": "Outdoor Equipment"}),
-}
+from app.db.taxonomy import TAXONOMY
 
 
 def _now():
@@ -39,11 +20,16 @@ def seed_categories(db) -> None:
             upsert=True,
         )
         for sub_slug, sub_name in subs.items():
+            # name/parent are kept in sync; is_active is only set on insert so an admin's choice is never overwritten.
             db.subcategories.update_one(
                 {"slug": sub_slug},
-                {"$setOnInsert": {"slug": sub_slug, "category_slug": slug, "name": sub_name, "is_active": True}},
+                {"$set": {"category_slug": slug, "name": sub_name},
+                 "$setOnInsert": {"slug": sub_slug, "is_active": True}},
                 upsert=True,
             )
+    keep = [s for _, (_, subs) in TAXONOMY.items() for s in subs]
+    # Old slugs from the first taxonomy are hidden, not deleted.
+    db.subcategories.update_many({"slug": {"$nin": keep}}, {"$set": {"is_active": False}})
 
 
 def seed_admin(db, email: str, password: str) -> bool:
