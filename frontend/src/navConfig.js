@@ -8,6 +8,7 @@ export const NAV = {
     // --- Member 1 ---
     { to: "/app", label: "Home", end: true },
     // --- Member 2 ---
+    { to: "/app/search", label: "Search & Compare" },
     // --- Member 3 ---
     // --- Member 4 ---
   ],
