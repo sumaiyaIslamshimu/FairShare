@@ -8,3 +8,19 @@ def ensure_indexes(db) -> None:
     db.categories.create_index("slug", unique=True)
     db.subcategories.create_index("slug", unique=True)
     db.subcategories.create_index("category_slug")
+
+    # --- Member 2 ---
+    db.seller_products.create_index("seller_id")
+    db.seller_products.create_index([("category_slug", 1), ("subcategory_slug", 1)])
+    db.seller_products.create_index("group_key")
+    db.external_products.create_index([("store", 1), ("store_product_id", 1)], unique=True)
+    db.external_products.create_index("normalized_key")
+    db.external_products.create_index("category_slug")
+    db.external_products.create_index("group_key")
+    db.price_observations.create_index([("external_product_id", 1), ("observed_at", 1)])
+    db.product_matches.create_index("group_key", unique=True)
+    db.scrape_sources.create_index("store", unique=True)
+    db.scrape_runs.create_index([("store", 1), ("started_at", 1)])
+
+    # --- Member 3 ---
+    # --- Member 4 ---

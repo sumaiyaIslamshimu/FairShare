@@ -8,7 +8,8 @@ from app.core.config import get_settings
 from app.core.errors import register_error_handlers
 from app.db.indexes import ensure_indexes
 from app.db.mongo import get_db, ping_db
-from app.routers import auth, categories
+from app.routers import auth, categories , compare, seller_products
+
 
 
 @asynccontextmanager
@@ -37,6 +38,8 @@ def health():
 # --- Member 1 routers ---
 app.include_router(auth.router, prefix="/api")
 app.include_router(categories.router, prefix="/api")
-# --- Member 2 routers: (added in Member 2's phase) ---
+# --- Member 2 routers ---
+app.include_router(compare.router, prefix="/api")
+app.include_router(seller_products.router, prefix="/api")
 # --- Member 3 routers: (added in Member 3's phase) ---
 # --- Member 4 routers: (added in Member 4's phase) ---
