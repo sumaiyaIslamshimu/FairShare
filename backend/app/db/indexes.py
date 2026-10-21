@@ -24,4 +24,7 @@ def ensure_indexes(db) -> None:
 
     # --- Member 3 ---
     db.promotions.create_index("seller_id")
+    # --- Member 3 ---
+    db.promotions.create_index("seller_id")
+    db.carts.create_index("user_id", unique=True)
     # --- Member 4 ---
