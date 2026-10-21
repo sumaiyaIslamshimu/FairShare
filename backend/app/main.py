@@ -53,4 +53,10 @@ from app.routers import seller_portal, cart, orders
 app.include_router(seller_portal.router, prefix="/api")
 app.include_router(cart.router, prefix="/api")
 app.include_router(orders.router, prefix="/api")
+# --- Member 3 routers: (added in Member 3's phase) ---
+from app.routers import seller_portal, cart, orders, messages
+app.include_router(seller_portal.router, prefix="/api")
+app.include_router(cart.router, prefix="/api")
+app.include_router(orders.router, prefix="/api")
+app.include_router(messages.router, prefix="/api")
 # --- Member 4 routers: (added in Member 4's phase) ---
