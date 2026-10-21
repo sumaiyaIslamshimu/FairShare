@@ -10,6 +10,8 @@ import RoleSelect from "./pages/public/RoleSelect.jsx";
 import Login from "./pages/public/Login.jsx";
 import Register from "./pages/public/Register.jsx";
 import AccountHome from "./pages/shared/AccountHome.jsx";
+import Search from "./pages/shopper/Search.jsx";
+import Compare from "./pages/shopper/Compare.jsx";
 
 export default function AppRoutes() {
   return (
@@ -32,6 +34,8 @@ export default function AppRoutes() {
         {/* --- Member 1 --- */}
         <Route index element={<AccountHome />} />
         {/* --- Member 2 --- */}
+        <Route path="search" element={<Search />} />
+        <Route path="compare/:groupKey" element={<Compare />} />
         {/* --- Member 3 --- */}
         {/* --- Member 4 --- */}
       </Route>
