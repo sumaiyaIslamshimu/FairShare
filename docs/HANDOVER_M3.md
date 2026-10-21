@@ -1,0 +1,1 @@
+M2 handed over without HANDOVER_M2.md and SCRAPER_STATUS.md, by M2’s agreement on 22 Oct 2026. Acceptance run by M3: 100 backend and 13 frontend tests passed on Python 3.12.10.
