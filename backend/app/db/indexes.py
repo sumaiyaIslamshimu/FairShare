@@ -23,4 +23,5 @@ def ensure_indexes(db) -> None:
     db.scrape_runs.create_index([("store", 1), ("started_at", 1)])
 
     # --- Member 3 ---
+    db.promotions.create_index("seller_id")
     # --- Member 4 ---
