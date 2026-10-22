@@ -1,5 +1,10 @@
 import AppRoutes from "./routes.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 
 export default function App() {
-  return <AppRoutes />;
+  return (
+    <CartProvider>
+      <AppRoutes />
+    </CartProvider>
+  );
 }
