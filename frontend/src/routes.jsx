@@ -13,6 +13,17 @@ import AccountHome from "./pages/shared/AccountHome.jsx";
 import Search from "./pages/shopper/Search.jsx";
 import Compare from "./pages/shopper/Compare.jsx";
 
+// --- Member 3 Imports ---
+import Cart from "./pages/shopper/Cart.jsx";
+import Checkout from "./pages/shopper/Checkout.jsx";
+import Orders from "./pages/shopper/Orders.jsx";
+import Insights from "./pages/seller/Insights.jsx";
+import Promotions from "./pages/seller/Promotions.jsx";
+import SellerOrders from "./pages/seller/SellerOrders.jsx";
+import Messages from "./pages/shared/Messages.jsx";
+import ShopperRentals from "./pages/shopper/Rentals.jsx";
+import SellerRentals from "./pages/seller/MyRentals.jsx";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -37,6 +48,11 @@ export default function AppRoutes() {
         <Route path="search" element={<Search />} />
         <Route path="compare/:groupKey" element={<Compare />} />
         {/* --- Member 3 --- */}
+        <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="messages" element={<Messages />} />
+        <Route path="rentals" element={<ShopperRentals />} />
         {/* --- Member 4 --- */}
       </Route>
 
@@ -52,6 +68,11 @@ export default function AppRoutes() {
         <Route index element={<AccountHome />} />
         {/* --- Member 2 --- */}
         {/* --- Member 3 --- */}
+        <Route path="insights" element={<Insights />} />
+        <Route path="promotions" element={<Promotions />} />
+        <Route path="orders" element={<SellerOrders />} />
+        <Route path="messages" element={<Messages />} />
+        <Route path="rentals" element={<SellerRentals />} />
         {/* --- Member 4 --- */}
       </Route>
 
