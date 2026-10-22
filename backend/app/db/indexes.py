@@ -33,4 +33,17 @@ def ensure_indexes(db) -> None:
     db.orders.create_index("user_id")
     db.order_items.create_index("order_id")
     db.order_items.create_index("seller_id")
+    # --- Member 3 ---
+    db.promotions.create_index("seller_id")
+    db.carts.create_index("user_id", unique=True)
+    db.orders.create_index("user_id")
+    db.order_items.create_index("order_id")
+    db.order_items.create_index("seller_id")
+    db.messages.create_index("participants")
+    db.messages.create_index("thread_id")
+    # --- Member 3 ---
+    db.rental_listings.create_index("owner_id")
+    db.rental_requests.create_index("listing_id")
+    db.rental_bookings.create_index("listing_id")
+    db.rental_events.create_index("listing_id")
     # --- Member 4 ---

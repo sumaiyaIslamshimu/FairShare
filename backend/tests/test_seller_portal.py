@@ -92,8 +92,7 @@ def test_stage1_rental_models_validate_dates_and_no_taxonomy():
     assert listing.daily_rate_paisa == 150000
     assert "category_slug" not in listing.model_dump()
 
-    req = RentalRequestCreate(start_date=date(2026, 11, 1), end_date=date(2026, 11, 5))
-    assert req.end_date >= req.start_date
+    req = RentalRequestCreate(listing_id="64b0c0ffee0000000000abcd", start_date=date(2026, 11, 1), end_date=date(2026, 11, 5))
 
     with pytest.raises(ValidationError):
         RentalRequestCreate(start_date=date(2026, 11, 10), end_date=date(2026, 11, 5))

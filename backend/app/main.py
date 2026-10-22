@@ -42,15 +42,10 @@ app.include_router(categories.router, prefix="/api")
 app.include_router(compare.router, prefix="/api")
 app.include_router(seller_products.router, prefix="/api")
 # --- Member 3 routers: (added in Member 3's phase) ---
-from app.routers import seller_portal
-app.include_router(seller_portal.router, prefix="/api")
-# --- Member 3 routers: (added in Member 3's phase) ---
-from app.routers import seller_portal, cart
-app.include_router(seller_portal.router, prefix="/api")
-app.include_router(cart.router, prefix="/api")
-# --- Member 3 routers: (added in Member 3's phase) ---
-from app.routers import seller_portal, cart, orders
+from app.routers import seller_portal, cart, orders, messages, rentals
 app.include_router(seller_portal.router, prefix="/api")
 app.include_router(cart.router, prefix="/api")
 app.include_router(orders.router, prefix="/api")
+app.include_router(messages.router, prefix="/api")
+app.include_router(rentals.router, prefix="/api")
 # --- Member 4 routers: (added in Member 4's phase) ---
