@@ -20,7 +20,9 @@ export class ApiError extends Error {
 
 export async function request(path, { method = "GET", body, auth = true } = {}) {
   const headers = { Accept: "application/json" };
-  if (body !== undefined) headers["Content-Type"] = "application/json";
+  // FormData (file uploads): the browser sets the multipart Content-Type and boundary itself.
+  const isForm = typeof FormData !== "undefined" && body instanceof FormData;
+  if (body !== undefined && !isForm) headers["Content-Type"] = "application/json";
   const token = tokenStore.get();
   if (auth && token) headers.Authorization = `Bearer ${token}`;
 
@@ -29,7 +31,7 @@ export async function request(path, { method = "GET", body, auth = true } = {}) 
     res = await fetch(`${BASE}${path}`, {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
     });
   } catch {
     throw new ApiError("Cannot reach the server. Check that the backend is running.", 0, "NETWORK_ERROR");
@@ -50,4 +52,25 @@ export async function request(path, { method = "GET", body, auth = true } = {}) 
     throw new ApiError(err.message || `Request failed (${res.status}).`, res.status, err.code || "ERROR", err.details || null);
   }
   return data;
+}
+
+// Authenticated download (e.g. an admin viewing a private document). Returns a Blob.
+export async function requestBlob(path) {
+  const token = tokenStore.get();
+  let res;
+  try {
+    res = await fetch(`${BASE}${path}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  } catch {
+    throw new ApiError("Cannot reach the server. Check that the backend is running.", 0, "NETWORK_ERROR");
+  }
+  if (!res.ok) {
+    let err = {};
+    try {
+      err = (await res.json()).error || {};
+    } catch {
+      err = {};
+    }
+    throw new ApiError(err.message || `Request failed (${res.status}).`, res.status, err.code || "ERROR");
+  }
+  return res.blob();
 }

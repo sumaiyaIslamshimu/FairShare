@@ -11,9 +11,9 @@ export default function SellerRentals() {
   const fetchData = async () => {
     try {
       const list = await getMyListings();
-      setListings(list.items);
+      setListings(Array.isArray(list?.items) ? list.items : []);
       const reqs = await getIncomingRequests();
-      setRequests(reqs.items);
+      setRequests(Array.isArray(reqs?.items) ? reqs.items : []);
     } catch (err) {
       console.error(err);
     }

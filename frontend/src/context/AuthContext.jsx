@@ -60,6 +60,18 @@ export function AuthProvider({ children }) {
     setUser(null);
   }, []);
 
-  const value = useMemo(() => ({ user, loading, login, register, logout }), [user, loading, login, register, logout]);
+   // Re-reads the account (e.g. after an admin approves the person's verification).
+  const refreshUser = useCallback(async () => {
+    try {
+      setUser(await meRequest());
+    } catch {
+      /* keep the current session; a real 401 is handled by the next request */
+    }
+  }, []);
+
+  const value = useMemo(
+    () => ({ user, loading, login, register, logout, refreshUser }),
+    [user, loading, login, register, logout, refreshUser]
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -33,7 +33,9 @@ export default function Checkout() {
         <p>Total Items: {cart.total_items}</p>
         <p><strong>Total Amount: {formatPrice(cart.total_paisa, cart.currency)}</strong></p>
       </div>
-
+          <div className="info-box" role="note" style={{ marginBottom: "1rem" }}>
+        <strong>Simulated payment.</strong> No real money is charged and no card or mobile-banking details are collected. This only places a demo order.
+      </div>
       {error && <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>}
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
