@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getMyOrders, cancelOrder } from "../../api/cart.js";
 import { formatPrice, formatDate } from "../../utils/format.js";
@@ -52,12 +53,17 @@ export default function Orders() {
             <ul>
               {order.items.map((item) => (
                 <li key={item.id}>
-                  {item.quantity}x {item.title_snapshot} - {formatPrice(item.line_total_paisa, order.currency)} ({item.item_status})
+                                    {item.quantity}x {item.title_snapshot} - {formatPrice(item.line_total_paisa, order.currency)} ({item.item_status})
+                  {item.item_status === "delivered" && (
+                      <> · <Link to={`/app/reviews?item=${item.id}`}>Write a review</Link> · <Link to={`/app/returns?item=${item.id}`}>Return this item</Link></>
+                  )}
                 </li>
               ))}
             </ul>
           </div>
-
+          <p style={{ marginTop: "10px" }}>
+            <Link to={`/app/complaints?type=order&id=${order.id}`}>Report a problem with this order</Link>
+          </p>
           {["pending", "confirmed"].includes(order.status) && (
             <Button onClick={() => handleCancel(order.id)} style={{ marginTop: "10px", background: "red" }}>
               Cancel Order
