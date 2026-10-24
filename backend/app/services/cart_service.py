@@ -25,8 +25,10 @@ def get_cart(db, user: dict) -> dict:
         except AppError:
             prod = None
 
-        # Silently drop items that were permanently removed from the database
-        if not prod or prod.get("status") == "removed":
+        # Silently drop items that were removed, deactivated, or hidden by an admin (Member 4 fix:
+        # checkout reads this view, so a hidden or inactive product can no longer be bought).
+        if (not prod or prod.get("status") != "active"
+                or prod.get("moderation_status", "visible") != "visible"):
             continue
 
         price, pct = effective_price(db, prod)

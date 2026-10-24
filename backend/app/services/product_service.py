@@ -122,10 +122,15 @@ def list_own(db, seller: dict, page: int, page_size: int) -> dict:
 
 def update_product(db, seller: dict, product_id: str, data) -> dict:
     old = get_owned(db, seller, product_id)
+    before, _ = effective_price(db, old)
     fields = {**_fields(db, data), "updated_at": utcnow()}
     db.seller_products.update_one({"_id": old["_id"]}, {"$set": fields})
     for key in {old.get("group_key"), fields["group_key"]}:
         sync_group(db, key)
+    after, _ = effective_price(db, db.seller_products.find_one({"_id": old["_id"]}))
+    if after != before:
+        from app.services import watch_service  # imported here: watch_service itself imports this module
+        watch_service.check_price(db, "fairshare", old["_id"], after)
     return serialize(db, db.seller_products.find_one({"_id": old["_id"]}), owner=True)
 
 
