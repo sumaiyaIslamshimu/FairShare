@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { browseRentals, submitRequest, getMyRequests } from "../../api/rentals.js";
 import { formatPrice } from "../../utils/format.js";
@@ -12,9 +13,9 @@ export default function ShopperRentals() {
   const fetchData = async () => {
     try {
       const pub = await browseRentals();
-      setListings(pub.items);
+      setListings(Array.isArray(pub?.items) ? pub.items : []);
       const reqs = await getMyRequests();
-      setRequests(reqs.items);
+      setRequests(Array.isArray(reqs?.items) ? reqs.items : []);
     } catch (err) {
       console.error(err);
     }
@@ -77,6 +78,7 @@ export default function ShopperRentals() {
           <p><strong>Dates:</strong> {req.start_date} to {req.end_date}</p>
           <p><strong>Total:</strong> {formatPrice(req.total_paisa, "BDT")}</p>
           <p><strong>Status:</strong> <span style={{ textTransform: "uppercase", fontWeight: "bold" }}>{req.status}</span></p>
+          <p><Link to={`/app/complaints?type=rental&id=${req.id}`}>Report a problem with this rental</Link></p>
         </div>
       ))}
     </div>
