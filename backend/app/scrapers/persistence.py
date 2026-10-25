@@ -3,7 +3,7 @@ from app.scrapers.category_map import map_category
 from app.scrapers.matcher import exact_group_key
 from app.services.match_service import sync_group
 from app.services.time_utils import utcnow
-
+from app.services import watch_service
 
 def _size_text(n):
     return f"{n.quantity:g} {n.unit}" if n.quantity is not None and n.unit else None
@@ -51,6 +51,8 @@ def save_normalized(db, products, now=None) -> dict:
             db.price_observations.insert_one({
                 "external_product_id": doc["_id"], "price_paisa": n.price_paisa,
                 "availability": n.availability, "observed_at": now})
+            if changed_price:
+                watch_service.check_price(db, "external", doc["_id"], n.price_paisa)
         for k in (existing.get("group_key") if existing else None, key):
             if k:
                 touched.add(k)

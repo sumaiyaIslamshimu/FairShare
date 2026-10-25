@@ -48,4 +48,12 @@ app.include_router(cart.router, prefix="/api")
 app.include_router(orders.router, prefix="/api")
 app.include_router(messages.router, prefix="/api")
 app.include_router(rentals.router, prefix="/api")
-# --- Member 4 routers: (added in Member 4's phase) ---
+# --- Member 4 routers ---
+from app.routers import admin, complaints, notifications, returns, reviews, verification, watches  # noqa: E402
+app.include_router(verification.router, prefix="/api")
+app.include_router(complaints.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
+app.include_router(reviews.router, prefix="/api")
+app.include_router(returns.router, prefix="/api")
+app.include_router(notifications.router, prefix="/api")
+app.include_router(watches.router, prefix="/api")

@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     private_upload_dir: str = "../private_uploads"
     admin_email: str = ""
     admin_password: str = ""
+    demo_password: str = ""  # used only by app.db.seed_demo (never committed)
 
     @property
     def cors_list(self) -> list[str]:

@@ -51,6 +51,9 @@ def serialize_promo(doc: dict) -> dict:
         "updated_at": iso(doc.get("updated_at"))
     }
 
+def _recheck_prices(db, product_ids) -> None:
+    from app.services import watch_service  # local import: watch_service imports product_service
+    watch_service.recheck_fairshare(db, product_ids)
 
 def create_promotion(db, seller: dict, data) -> dict:
     # 1. Verify the seller owns all provided product IDs
@@ -81,6 +84,7 @@ def create_promotion(db, seller: dict, data) -> dict:
         "updated_at": now
     }
     doc["_id"] = db.promotions.insert_one(doc).inserted_id
+    _recheck_prices(db, product_obj_ids)
     return serialize_promo(doc)
 
 
@@ -111,6 +115,7 @@ def update_promotion(db, seller: dict, promo_id: str, data) -> dict:
             updates[k] = dump[k]
 
     db.promotions.update_one({"_id": promo["_id"]}, {"$set": updates})
+    _recheck_prices(db, set(promo.get("product_ids", [])) | set(updates.get("product_ids", [])))
     return serialize_promo(db.promotions.find_one({"_id": promo["_id"]}))
 
 
@@ -119,6 +124,7 @@ def delete_promotion(db, seller: dict, promo_id: str) -> None:
     if not promo or promo["seller_id"] != seller["_id"]:
         raise AppError(404, "NOT_FOUND", "Promotion not found.")
     db.promotions.delete_one({"_id": promo["_id"]})
+    _recheck_prices(db, promo.get("product_ids", []))
 
 
 def get_insights(db, seller: dict) -> dict:
