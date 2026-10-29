@@ -29,7 +29,7 @@ def test_six_separate_adapters_exist():
 
 def test_unconfigured_adapters_report_unsupported_and_make_no_requests():
     f = CountingFetcher()
-    for store in SIX:
+    for store in [s for s in SIX if not get_scraper(s).configured]:   # configured stores are tested in their own file
         res = get_scraper(store).run("rice", f, robots=RobotsChecker(f))
         assert res.status == ScrapeStatus.unsupported and res.items_found == 0, store
         assert any("not configured" in n for n in res.notes), store
@@ -38,7 +38,10 @@ def test_unconfigured_adapters_report_unsupported_and_make_no_requests():
 
 def test_no_adapter_claims_verification_it_does_not_have():
     for s in SCRAPERS.values():
-        assert s.verified_on == "" and s.extraction_method == "unverified"
+        if s.configured:   # configured means verified from a real page: it must say when and how
+            assert s.verified_on != "" and s.extraction_method != "unverified"
+        else:
+            assert s.verified_on == "" and s.extraction_method == "unverified"
 
 
 class ConfiguredDemo(JsonLdSearchScraper):
