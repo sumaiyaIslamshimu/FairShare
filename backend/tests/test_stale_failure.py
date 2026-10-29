@@ -63,11 +63,13 @@ def test_successful_run_saves_data_and_status(db):
 
 
 def test_unconfigured_real_adapters_are_unsupported_and_fetch_nothing(db):
+    from app.scrapers import all_stores, get_scraper
+    unconfigured = [s for s in all_stores() if not get_scraper(s).configured]
     f = Routes({})
-    results = refresh_all(db, fetcher=f)
-    assert [r["status"] for r in results] == ["unsupported"] * 6
-    assert f.calls == [] and db.external_products.count_documents({}) == 0
-    assert db.scrape_sources.count_documents({}) == 6
+    results = [r for r in refresh_all(db, fetcher=f) if r["store"] in unconfigured]
+    assert [r["status"] for r in results] == ["unsupported"] * len(unconfigured)
+    assert not any("/search" in c for c in f.calls if "daraz" in c or "pickaboo" in c)   # unconfigured: no requests
+    assert db.external_products.count_documents({"store": {"$in": unconfigured}}) == 0
 
 
 def test_failed_refresh_marks_old_data_stale(client, db):

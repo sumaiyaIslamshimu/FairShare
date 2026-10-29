@@ -66,9 +66,16 @@ def test_group_not_found_and_search_reports_group_size(client, db):
 
 
 def test_sources_endpoint_is_honest(client, db):
+    from app.scrapers import get_scraper
+    from app.scrapers.base import FetchError, Fetcher
     from app.scrapers.runner import refresh_all
+
+    class NoNetwork(Fetcher):   # nothing may reach a real site from a test; robots.txt becomes unreadable -> unsupported
+        def get(self, url):
+            raise FetchError("network", "no network in tests")
+
     r = client.get("/api/compare/sources").json()
-    assert len(r) == 6 and all(s["status"] == "never_run" and s["configured"] is False for s in r)
-    refresh_all(db)    # unconfigured adapters: no network is used
+    assert len(r) == 6 and all(s["status"] == "never_run" and s["configured"] is get_scraper(s["store"]).configured for s in r)
+    refresh_all(db, fetcher=NoNetwork())
     r = client.get("/api/compare/sources").json()
     assert all(s["status"] == "unsupported" for s in r)
