@@ -2,16 +2,14 @@ import { Link, Outlet } from "react-router-dom";
 import Button from "../components/Button.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { HOME_PATH } from "../navConfig.js";
+import BrandLogo from "../components/BrandLogo.jsx";
 
 export default function PublicLayout() {
   const { user } = useAuth();
   return (
     <>
       <header className="public-nav">
-        <Link to="/" className="logo">
-          <span className="logo-mark">F</span>
-          FairShare
-        </Link>
+        <BrandLogo />
         <div className="actions">
           {user ? (
             <Button variant="primary" to={HOME_PATH[user.role]}>Go to my account</Button>
