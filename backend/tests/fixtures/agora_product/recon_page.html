@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<title>Agora Superstores - First Retail Superstore in Bangladesh</title>
+<!-- Favicon -->
+<link href="https://agorasuperstores.com/admin_assets/img/favicon.ico" rel="icon" type="image/x-icon"/>
+<!-- Custom fonts for this template-->
+<link href="https://agorasuperstores.com/admin_assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
+<!-- Custom styles for this template -->
+<link href="https://agorasuperstores.com/admin_assets/vendor/fontawesome-free/css/sb-admin-2.min.css" rel="stylesheet"/>
+<!-- DataTables -->
+<link href="https://agorasuperstores.com/admin_assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="https://agorasuperstores.com/admin_assets/css/sb-admin-2.min.css" rel="stylesheet"/>
+<link href="https://agorasuperstores.com/admin_assets/css/style.css?v=1791086052" rel="stylesheet"/>
+<link href="https://agorasuperstores.com/admin_assets/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<!-- Meta Pixel Code -->
+
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=2208686919898711&amp;ev=PageView&amp;noscript=1" width="1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+<!-- Google tag (gtag.js) -->
+
+
+</head>
+<body id="page-top">
+<!-- Full Width Navbar -->
+<style>
+    /* বাংলা ফন্ট ইমপোর্ট */
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+    /* ডিফল্ট ফন্ট সেটিংস */
+    body.lang-bn, body.lang-bn * {
+        font-family: 'Hind Siliguri', sans-serif !important;
+    }
+
+    /* আইকন এবং টেক্সটের মধ্যে গ্যাপ */
+    .navbar-btn i {
+        margin-right: 5px;
+    }
+
+    /* Dropdown panel */
+    .modern-dropdown {
+        border: 0.5px solid rgba(0,0,0,0.1) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important;
+        padding: 0 !important;
+        overflow: hidden;
+        min-width: 240px;
+    }
+
+    /* Dark header */
+    .dropdown-header-block {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        background: linear-gradient(135deg, #1a1a2e, #ff9901ed);
+    }
+    .dh-avatar {
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px; font-weight: 700; color: #fff;
+        border: 2px solid rgba(255,255,255,0.2);
+        flex-shrink: 0;
+    }
+    .dh-name  { font-size: 14px; font-weight: 600; color: #fff; }
+    .dh-email { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+    /* Menu items */
+    .modern-dropdown .modern-item {
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px !important;
+        border-radius: 10px;
+        margin: 2px 6px;
+        color: #212529 !important;
+        transition: background 0.15s;
+    }
+    .modern-item:hover { background: #f8f9fa !important; }
+    .mi-icon {
+        width: 32px; height: 32px;
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px; flex-shrink: 0;
+    }
+    .mi-blue  { background: #E6F1FB; color: #185FA5; }
+    .mi-green { background: #EAF3DE; color: #3B6D11; }
+    .mi-amber { background: #FAEEDA; color: #854F0B; }
+    .mi-red   { background: #FCEBEB; color: #E24B4A; }
+    .mi-label { font-size: 13px; font-weight: 500; }
+    .mi-sub   { font-size: 11px; color: #888; margin-top: 1px; }
+    .modern-item-danger .mi-label { color: #E24B4A !important; }
+    .modern-item-danger:hover { background: #FCEBEB !important; }
+
+    /* শুধুমাত্র মোবাইল ভিউ এর জন্য কাস্টম ডিজাইন */
+ @media (max-width: 991px) {
+        nav.topbar.static-top { display: none !important; }
+
+        .custom-mobile-banner {
+            background-color: #FFD200;
+            display: flex; justify-content: space-between; align-items: center; padding: 6px 12px;
+        }
+        .m-app-info { display: flex; align-items: center; gap: 8px; color: #333; font-weight: 700; font-size: 13px; }
+        .m-download-btn { background: #FF0000; color: #fff; border: none; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-decoration: none; }
+
+        .custom-mobile-nav {
+            background-color: #009933;
+            display: flex; align-items: center; padding: 8px 10px; gap: 8px;
+        }
+        .m-brand-logo { height: 28px; width: auto; flex-shrink: 0; }
+        .m-location-btn { color: #fff; font-size: 18px; padding: 0 5px; cursor: pointer; }
+
+        .m-search-wrap { flex-grow: 1; position: relative; }
+        .m-search-wrap input {
+            width: 100%; border-radius: 20px; border: none; padding: 6px 35px 6px 12px; font-size: 13px; height: 34px; outline: none;
+        }
+        .m-search-wrap .m-search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; }
+
+        .m-action-icons { display: flex; gap: 10px; color: #fff; align-items: center; }
+        .m-action-icons a { color: #fff; font-size: 18px; text-decoration: none; }
+
+        /* মোবাইল ড্রপডাউন এবং আইকন স্পেসিং */
+        .m-action-icons .dropdown-menu {
+            position: absolute !important; right: 0 !important; left: auto !important;
+            background-color: #ffffff !important; border-radius: 8px; border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important; min-width: 200px; z-index: 10000 !important;
+        }
+        .m-action-icons .dropdown-item {
+            color: #333 !important; font-weight: 500 !important; padding: 10px 15px !important;
+            display: flex !important; align-items: center;
+        }
+        /* আইকনের পাশে স্পেস (আপনার রিকোয়েস্ট অনুযায়ী) */
+        .m-action-icons .dropdown-item i {
+            margin-right: 12px !important; 
+            width: 20px; text-align: center;
+        }
+        
+        /* সার্চ সাজেশনের পজিশন ঠিক করা */
+      
+    }
+
+    @media (max-width: 991px) {
+    /* সাজেশনের পজিশন */
+
+    /* ড্রপডাউন আইটেম স্পেসিং (আপনার আগের রিকোয়েস্ট) */
+    .dropdown-item i {
+        margin-right: 12px !important;
+        width: 20px;
+        text-align: center;
+    }
+}
+@media (max-width: 991px) {
+    .m-search-wrap { position: relative; width: 100%; }
+    
+    #searchSuggestionsMobile {
+        position: absolute;
+        z-index: 9999;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        background: #fff;
+        top: 100%; /* ইনপুট বক্সের ঠিক নিচে */
+        left: 0;
+        border: 1px solid #ddd;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+        margin-top: 2px;
+    }
+}
+    @media (min-width: 992px) { .mobile-layout-wrapper { display: none !important; } }
+</style>
+<!-- Mobile Layout Wrapper Start -->
+<!-- Mobile Layout Wrapper -->
+<!-- --- মোবাইল লেআউট --- -->
+<div class="mobile-layout-wrapper">
+<div class="custom-mobile-banner">
+<div class="m-app-info">
+<span>Download Our App</span>
+</div>
+<a class="m-download-btn" href="#" id="smart-download-link" target="_blank">
+            Download Now <i class="fas fa-chevron-right ms-1"></i>
+</a>
+</div>
+<div class="custom-mobile-nav">
+<!-- Menu -->
+<button class="btn btn-link p-0 text-white" id="menu-toggle-m">
+<i class="fa fa-bars fa-lg"></i>
+</button>
+<!-- Logo -->
+<a href="https://agorasuperstores.com">
+<img alt="Logo" class="m-brand-logo" src="https://agorasuperstores.com/admin_assets/img/logo.png"/>
+</a>
+<!-- Location -->
+<div class="m-location-btn" data-bs-target="#locationModal" data-bs-toggle="modal">
+<i class="fas fa-map-marker-alt"></i>
+</div>
+<!-- Search -->
+<div class="m-search-wrap">
+<input autocomplete="off" class="form-control" data-default-image="https://agorasuperstores.com/admin_assets/img/products/default_img.png" data-i18n-placeholder="search_products" id="productSearchMobile" placeholder="Search products..." type="text"/>
+<i class="fas fa-search m-search-icon" id="search_btn_mobile"></i>
+<div id="searchSuggestionsMobile"></div>
+</div>
+<!-- Right Icons -->
+<div class="m-action-icons">
+<a class="text-white" href="https://agorasuperstores.com/login">
+<i class="fas fa-user"></i>
+</a>
+<div class="dropdown">
+<a class="text-white" data-bs-display="static" data-bs-toggle="dropdown" href="#">
+<i class="fas fa-ellipsis-v"></i>
+</a>
+<ul class="dropdown-menu dropdown-menu-end shadow border-0">
+<li>
+<a class="dropdown-item" href="https://agorasuperstores.com/feedback">
+<i class="fas fa-comment-dots text-info"></i>
+<span data-i18n="feedback">Feedback</span>
+</a>
+</li>
+<li>
+<a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.bd.agorasuperstores" target="_blank">
+<i class="fab fa-google-play text-success"></i>
+<span data-i18n="play_store">Play Store</span>
+</a>
+</li>
+<li>
+<a class="dropdown-item" href="https://apps.apple.com/us/app/agora-superstores/id6753671014" target="_blank">
+<i class="fab fa-app-store-ios text-dark"></i>
+<span data-i18n="app_store">App Store</span>
+</a>
+</li>
+<li>
+<a class="dropdown-item" href="javascript:void(0)" id="langSwitchM">
+<i class="fas fa-language"></i>
+<span id="langSwitchMText">
+                                        বাংলা
+                                    </span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<form action="https://agorasuperstores.com/logout" class="d-none" id="logout-form-m" method="POST">
+<input autocomplete="off" name="_token" type="hidden" value="OLsfBXNJ6fi8mhuCbiMwHiTm3q5qaDVaxTxl9dcl"/></form>
+<!-- Mobile Layout Wrapper End -->
+<nav class="navbar navbar-expand-lg navbar-light topbar static-top shadow">
+<button class="btn btn-link d-md-none rounded-circle mr-3" id="menu-toggle">
+<i class="fa fa-bars" style="color: #ffffff"></i>
+</button>
+<a class="navbar-brand mx-auto mx-lg-0 d-flex align-items-center justify-content-center justify-content-lg-start" href="https://agorasuperstores.com">
+<img alt="Company Logo" class="img-fluid" src="https://agorasuperstores.com/admin_assets/img/logo.png" style="height:60px; max-width:180px;"/>
+</a>
+<button class="navbar-toggler text-white border-white" data-bs-target="#navbarResponsive" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarResponsive">
+<ul class="navbar-nav align-items-center flex-grow-1">
+<li class="nav-item mx-2">
+<button class="btn btn-outline-warning navbar-btn" data-bs-target="#locationModal" data-bs-toggle="modal">
+<i class="fas fa-map-marker-alt"></i>
+<!-- Add ID: nav-location-text -->
+<span id="nav-location-text">Select Your Location</span>
+</button>
+</li>
+<li class="nav-item flex-grow-1 mx-2 position-relative">
+<div class="input-group w-100">
+<input class="form-control bg-light border-0 small" data-default-image="https://agorasuperstores.com/admin_assets/img/products/default_img.png" data-i18n-placeholder="search_products" id="productSearch" placeholder="Search products..." type="text"/>
+<div class="input-group-append">
+<button class="btn btn-success" id="search_btn" type="button">
+<i class="fas fa-search fa-sm"></i>
+</button>
+</div>
+</div>
+<div id="searchSuggestions" style="position:absolute; z-index:9999; width:100%; max-height:300px; overflow-y:auto; display:none; background:#fff; border:1px solid #ddd; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.1);"></div>
+</li>
+</ul>
+<ul class="navbar-nav ml-auto align-items-center mt-2 mt-lg-0">
+<li class="nav-item mx-1">
+<a class="btn btn-outline-warning btn-sm navbar-btn" href="https://play.google.com/store/apps/details?id=com.bd.agorasuperstores" target="_blank">
+<i class="fab fa-google-play"></i> <span data-i18n="play_store">Play Store</span>
+</a>
+</li>
+<li class="nav-item mx-1">
+<a class="btn btn-outline-warning btn-sm navbar-btn" href="https://apps.apple.com/us/app/agora-superstores/id6753671014" target="_blank">
+<i class="fab fa-app-store-ios"></i> <span data-i18n="app_store">App Store</span>
+</a>
+</li>
+<li class="nav-item mx-1">
+<a class="btn btn-outline-warning btn-sm navbar-btn" href="https://agorasuperstores.com/login">
+<i class="fas fa-user"></i> <span data-i18n="sign_in">Sign In</span>
+</a>
+</li>
+<li class="nav-item mx-1">
+<a class="btn btn-outline-warning btn-sm navbar-btn" href="https://agorasuperstores.com/feedback">
+<i class="fas fa-comment-dots"></i> <span data-i18n="feedback">Feedback</span>
+</a>
+</li>
+<li class="nav-item mx-1">
+<a class="btn btn-outline-warning btn-sm navbar-btn" href="javascript:void(0)" id="langSwitch">
+                    বাংলা
+                </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Cart Section -->
+<a href="javascript:void(0)" id="openCart">
+<div class="cart-icon">
+<i class="fas fa-shopping-bag"></i>
+<span data-i18n-qty="" data-qty="0" id="cartCount">0</span>
+</div>
+<div class="cart-info">
+<div class="cart-items">
+<span data-i18n-qty="" data-qty="0" id="totalItems">0</span>
+<span data-i18n="items">items</span>
+</div>
+<div class="cart-price">
+<span data-i18n-price="" data-price="0" id="totalPrice">৳0</span>
+</div>
+</div>
+</a>
+<!-- Location Modal -->
+<div aria-hidden="true" class="modal fade" id="locationModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content custom-location-modal">
+<!-- Close Button (Absolute Positioned for cleaner look) -->
+<button class="btn-close-custom" data-bs-dismiss="modal" type="button">
+<i class="fas fa-times"></i>
+</button>
+<div class="modal-body p-0">
+<!-- Header Section -->
+<div class="modal-header-section">
+<div class="icon-circle">
+<i class="fas fa-map-marker-alt"></i>
+</div>
+<div class="header-text">
+<h5 data-i18n="set_location">Delivery Address</h5>
+<p data-i18n="choose_city">Where should we send your order?</p>
+</div>
+</div>
+<div class="form-wrapper">
+<!-- City Selection -->
+<div class="input-group-custom mb-4">
+<label data-i18n="select_city">Select City</label>
+<div class="select-wrapper">
+<i class="fas fa-city icon-left"></i>
+<select class="form-select-modern" id="modalCitySelect">
+<option value="">-- Select City --</option>
+</select>
+</div>
+</div>
+<!-- Animated Section for Address -->
+<div id="sectionAddressForm" style="display:none;">
+<div class="divider-text"><span>Delivery Type</span></div>
+<form id="modalAddAddressForm">
+<!-- Address Type Pills -->
+<div class="address-type-container mb-4">
+<input checked="" id="mTypeHome" name="type_name" type="radio" value="Home"/>
+<label class="type-pill" for="mTypeHome">
+<i class="fas fa-home"></i>
+<span>HOME</span>
+</label>
+<input id="mTypeOffice" name="type_name" type="radio" value="O"/>
+<label class="type-pill" for="mTypeOffice">
+<i class="fas fa-briefcase"></i>
+<span>OFFICE</span>
+</label>
+<input id="mTypeOther" name="type_name" type="radio" value="OTHER"/>
+<label class="type-pill" for="mTypeOther">
+<i class="fas fa-thumbtack"></i>
+<span>OTHER</span>
+</label>
+</div>
+<div class="row"> <!-- g-3 adds the horizontal and vertical gap -->
+<!-- Name -->
+<div class="col-6 mb-3">
+<div class="floating-label">
+<input id="addr_name" name="name" placeholder=" " required="" type="text"/>
+<label for="addr_name">Name</label>
+</div>
+</div>
+<!-- Phone -->
+<div class="col-6 mb-3">
+<div class="floating-label">
+<input id="addr_phone" name="phone" placeholder=" " required="" type="text"/>
+<label for="addr_phone">Phone</label>
+</div>
+</div>
+<!-- Delivery Location -->
+<div class="col-12 mb-3">
+<div class="floating-label">
+<select id="modal_delivery_location" name="delivery_location" required="">
+<option hidden="" value=""></option>
+<!-- Options dynamic load -->
+</select>
+<label>Outlet Location</label>
+</div>
+</div>
+<!-- Address -->
+<div class="col-12 mb-3">
+<div class="floating-label">
+<input id="addr_text" name="address" placeholder=" " required="" type="text"/>
+<label for="addr_text">Address</label>
+</div>
+</div>
+<!-- State -->
+<div class="col-6 mb-3">
+<div class="floating-label">
+<input id="addr_state" name="state" placeholder=" " required="" type="text"/>
+<label for="addr_state">State</label>
+</div>
+</div>
+<!-- Postal Code -->
+<div class="col-6 mb-3">
+<div class="floating-label">
+<input id="addr_zip" name="postal_code" placeholder=" " required="" type="text"/>
+<label for="addr_zip">Postal Code</label>
+</div>
+</div>
+</div>
+<button class="btn-submit-modern mt-4" type="submit">
+<span>Save Address</span>
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div class="d-flex" id="wrapper">
+<!-- Include Sidebar -->
+<!-- Sidebar -->
+<div class="border-right" id="sidebar-wrapper">
+<!-- Sidebar Buttons -->
+<div class="d-flex flex-column align-items-stretch text-center py-2">
+<form action="https://agorasuperstores.com/buy-offer" method="POST">
+<input autocomplete="off" name="_token" type="hidden" value="OLsfBXNJ6fi8mhuCbiMwHiTm3q5qaDVaxTxl9dcl"/> <input name="cat_id" type="hidden" value="16"/>
+<button class="btn btn-block my-2 sidebar-btn" type="submit"> <span data-i18n="buy_get_offer">BUY &amp; GET OFFER</span></button>
+</form>
+<form action="https://agorasuperstores.com/best-saving" method="POST">
+<input autocomplete="off" name="_token" type="hidden" value="OLsfBXNJ6fi8mhuCbiMwHiTm3q5qaDVaxTxl9dcl"/> <input name="cat_id" type="hidden" value="17"/>
+<button class="btn btn-block my-2 sidebar-btn" type="submit"> <span data-i18n="best_saving">BEST SAVING</span></button>
+</form>
+<form action="https://agorasuperstores.com/special-offers" method="POST">
+<input autocomplete="off" name="_token" type="hidden" value="OLsfBXNJ6fi8mhuCbiMwHiTm3q5qaDVaxTxl9dcl"/> <input name="cat_id" type="hidden" value="18"/>
+<button class="btn btn-block my-2 sidebar-btn" type="submit"> <span data-i18n="special_offers">SPECIAL OFFERS</span></button>
+</form>
+<form action="https://agorasuperstores.com/hot-deal" method="POST">
+<input autocomplete="off" name="_token" type="hidden" value="OLsfBXNJ6fi8mhuCbiMwHiTm3q5qaDVaxTxl9dcl"/> <input name="cat_id" type="hidden" value="19"/>
+<button class="btn btn-block my-2 sidebar-btn" type="submit"><span data-i18n="hot_deal">HOT DEAL</span></button>
+</form>
+</div>
+<!-- Sidebar Menu -->
+<div class="list-group list-group-flush">
+<!-- Fish & Meat with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#fishMeatSubmenu" data-bs-toggle="collapse">
+<span>
+<img alt="Fish &amp; Meat" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/fish&amp;meat.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="fish_meat">Fish &amp; Meat</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="fishMeatSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="2" href="https://agorasuperstores.com/products/meat">
+<i class="fas fa-drumstick-bite mr-2"></i>
+<span data-i18n="meats">Meat</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="4" href="https://agorasuperstores.com/products/fish">
+<i class="fas fa-fish mr-2"></i>
+<span data-i18n="fishs">Fish</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="1" href="https://agorasuperstores.com/products/dry-fish">
+<i class="fas fa-wind mr-2"></i>
+<span data-i18n="dry_fish">Dry Fish</span>
+</a>
+</div>
+</div>
+<!-- Veg. & Fruits with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#vegFruitsSubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Veg &amp; Fruits" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/veg&amp;fru.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="veg_fruits">Veg. &amp; Fruits</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="vegFruitsSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="1" href="https://agorasuperstores.com/products/vegetables">
+<i class="fas fa-carrot mr-2"></i>
+<span data-i18n="vegetabless">Vegetables</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="5" href="https://agorasuperstores.com/products/fruits">
+<i class="fas fa-apple-alt mr-2"></i>
+<span data-i18n="fruits">Fruits</span>
+</a>
+</div>
+</div>
+<!-- Poultry -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" data-subcat="3" href="https://agorasuperstores.com/products/poultry">
+<img alt="Poultry" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/poultry.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="poultry">Poultry</span>
+</a>
+<!-- Dairy with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#dairySubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Dairy" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/dairy.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="dairy">Dairy</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="dairySubmenu">
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="26" href="https://agorasuperstores.com/products/dairy">
+<i class="fas fa-cheese mr-2"></i>
+<span data-i18n="dairy_products">Dairy Products</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="16" href="https://agorasuperstores.com/products/milk">
+<i class="fas fa-wine-bottle mr-2"></i>
+<span data-i18n="milk">Milk</span>
+</a>
+</div>
+</div>
+<!-- Baby Care with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#babyCareSubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Baby Care" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/baby.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="baby_care">Baby Care</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="babyCareSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="25" href="https://agorasuperstores.com/products/baby-food">
+<i class="fas fa-baby mr-2"></i>
+<span data-i18n="baby_food">Baby Food</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="27" href="https://agorasuperstores.com/products/baby-needs">
+<i class="fas fa-baby-carriage mr-2"></i>
+<span data-i18n="baby_needs">Baby Needs</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="24" href="https://agorasuperstores.com/products/cereals">
+<i class="fas fa-seedling mr-2"></i>
+<span data-i18n="cereals">Cereals</span>
+</a>
+</div>
+</div>
+<!-- Toys -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" data-subcat="28" href="https://agorasuperstores.com/products/toys">
+<img alt="Toys" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/toy.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="toys">Toys</span>
+</a>
+<!-- Condiments -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" data-subcat="23" href="https://agorasuperstores.com/products/condiments">
+<img alt="Condiments" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/condiments.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="condiments">Condiments</span>
+</a>
+<!-- Baking Needs -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" data-subcat="22" href="https://agorasuperstores.com/products/baking-needs">
+<img alt="Baking Needs" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/baking.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="baking_needs">Baking Needs</span>
+</a>
+<!-- Grocery Essentials with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#groceryEssentialsSubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Grocery Essentials" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/grocery.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="grocery_essentials">Grocery Essentials</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="groceryEssentialsSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="13" href="https://agorasuperstores.com/products/commodities">
+<i class="fas fa-boxes mr-2"></i> <span data-i18n="commodities">Commodities</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="15" href="https://agorasuperstores.com/products/beverage">
+<i class="fas fa-coffee mr-2"></i> <span data-i18n="beverage">Beverage</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="19" href="https://agorasuperstores.com/products/spices">
+<i class="fas fa-mortar-pestle mr-2"></i> <span data-i18n="spices">Spices</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" data-subcat="21" href="https://agorasuperstores.com/products/grocery-essentials">
+<i class="fas fa-store mr-2"></i><span data-i18n="grocery_essentials">Grocery Essentials</span>
+</a>
+</div>
+</div>
+<!-- Snacks with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#snacksSubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Snacks" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/snacks.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="snacks">Snacks</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="snacksSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/confectionary">
+<i class="fas fa-candy-cane mr-2"></i><span data-i18n="confectionary">Confectionary</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/quick-food">
+<i class="fas fa-hamburger mr-2"></i><span data-i18n="quick_food">Quick Food</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/frozen-food">
+<i class="fas fa-icicles mr-2"></i><span data-i18n="frozen_food">Frozen Food</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/canned-food">
+<i class="fas fa-utensils mr-2"></i> <span data-i18n="canned_food">Canned Food</span>
+</a>
+</div>
+</div>
+<!-- House & Cleaning with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#houseCleaningSubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="House &amp; Cleaning" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/house.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="house_cleaning">House &amp; Cleaning</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="houseCleaningSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/home-essential">
+<i class="fas fa-home mr-2"></i> <span data-i18n="home_essential">Home Essential</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/cleaning-needs">
+<i class="fas fa-pump-soap mr-2"></i> <span data-i18n="cleaning_needs">Cleaning Needs</span>
+</a>
+</div>
+</div>
+<!-- Beauty & Hygiene with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#beautyHygieneSubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Beauty &amp; Hygiene" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/beauty.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="beauty_hygiene">Beauty &amp; Hygiene</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="beautyHygieneSubmenu">
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/personal-care">
+<i class="fas fa-soap mr-2"></i>
+<span data-i18n="personal_care">Personal Care</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/shoe-accessories">
+<i class="fas fa-shoe-prints mr-2"></i>
+<span data-i18n="shoe_accessories">Shoe Accessories</span>
+</a>
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/beauty-products">
+<i class="fas fa-palette mr-2"></i>
+<span data-i18n="beauty_products">Beauty Products</span>
+</a>
+</div>
+</div>
+<!-- Stationary with Submenu -->
+<div class="list-group-item list-group-item-action sidebar-dropdown">
+<div aria-expanded="false" class="d-flex justify-content-between align-items-center" data-bs-target="#stationarySubmenu" data-bs-toggle="collapse">
+<span class="d-flex align-items-center">
+<img alt="Stationary" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/stationary.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="stationary">Stationary</span>
+</span>
+<i class="fas fa-chevron-down dropdown-arrow"></i>
+</div>
+<div class="collapse submenu" id="stationarySubmenu">
+<a class="list-group-item list-group-item-action submenu-item" href="https://agorasuperstores.com/products/education">
+<i class="fas fa-graduation-cap mr-2"></i>
+<span data-i18n="education">Education</span>
+</a>
+</div>
+</div>
+<!-- Living -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" href="https://agorasuperstores.com/products/living">
+<img alt="Living" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/living.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="living">Living</span>
+</a>
+<!-- Pharmacy -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" href="https://agorasuperstores.com/products/pharmacy">
+<img alt="Pharmacy" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/pharmacy.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="pharmacy">Pharmacy</span>
+</a>
+<!-- Pet Care -->
+<a class="list-group-item list-group-item-action d-flex align-items-center" href="https://agorasuperstores.com/products/petcare">
+<img alt="Pet Care" class="mr-2" src="https://agorasuperstores.com/admin_assets/img/sidebar/pet.png" style="width: 20px; height: 20px;"/>
+<span data-i18n="pet_care">Pet Care</span>
+</a>
+</div>
+<!-- Advertisement Sections -->
+<div class="sidebar-ads mt-4">
+<!-- Advertisement -->
+</div>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!-- Content Wrapper -->
+<div class="d-flex flex-column w-100" id="content-wrapper">
+<!-- Main Content -->
+<div id="content">
+<div class="container-fluid">
+<div class="d-sm-flex align-items-center justify-content-between mb-3">
+<h1 class="h3 mb-0 text-gray-800"></h1>
+</div>
+<div class="container mt-4 mb-5">
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb bg-white px-3">
+<li class="breadcrumb-item"><a href="https://agorasuperstores.com"> <span data-i18n="home">Home</span></a></li>
+<li aria-current="page" class="breadcrumb-item active"> <span data-i18n="product_details">Product Details</span></li>
+</ol>
+</nav>
+<div class="row mt-4">
+<!-- Left Side: Product Images -->
+<div class="col-md-4">
+<div class="border p-3 text-center">
+<div class="zoom-wrapper">
+<img class="zoom-image" loading="lazy" onerror="this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png'" src="https://agorastorageacount.blob.core.windows.net/img/product/10995.png"/>
+</div>
+<div class="d-flex gap-2 justify-content-center mt-3">
+<img class="img-thumbnail" loading="lazy" onerror="this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png'" src="https://agorastorageacount.blob.core.windows.net/img/product/10995.png" width="90"/>
+<img class="img-thumbnail" loading="lazy" onerror="this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png'" src="https://agorastorageacount.blob.core.windows.net/img/product/10995.png" width="90"/>
+<img class="img-thumbnail" loading="lazy" onerror="this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png'" src="https://agorastorageacount.blob.core.windows.net/img/product/10995.png" width="90"/>
+</div>
+</div>
+</div>
+<!-- Middle Side: Product Info -->
+<div class="col-md-4">
+<h4 class="fw-bold">
+                Green Field
+            </h4>
+<p class="text-danger fw-bold mb-1">
+               Green field sugar loose
+            </p>
+<!-- Price -->
+<p>
+<span class="similar_product-price" data-i18n-price="" data-price="110">
+                    ৳ 110
+                </span>
+</p>
+<!-- Add to cart -->
+<button class="similar_product-add-btn w-50 mb-3 add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10995.png" data-name="Green Field" data-price="110" data-prod-id="10995" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                            Add To Cart
+                                    </span>
+</button>
+<!-- Product tags -->
+<p class="fw-bold mb-1">Product Tags:</p>
+<span class="badge bg-warning">
+<a class="text-decoration-none text-dark" href="https://agorasuperstores.com/products/commodities">
+                    Commodities
+                </a>
+</span>
+<br/><br/>
+<!-- Delivery Note Box -->
+<div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 16px 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); font-family: sans-serif; width: 100%;">
+<div style="display: flex; align-items: center; margin-bottom: 8px;">
+<span style="background: #dbeafe; color: #1d4ed8; padding: 4px 8px; font-size: 12px; font-weight: bold; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Note</span>
+</div>
+<p style="margin: 0; color: #334155; font-size: 14px; line-height: 1.5;">
+                    Delivery will be made within <strong>2 KM</strong> from outlet to your specified address. Extra delivery charge applies beyond 2 KM. <span style="color: #dc2626; font-weight: 500;">Products over 15 kg incur additional delivery charges.</span>
+</p>
+</div>
+</div>
+<!-- Right Side: SKU + Wishlist -->
+<div class="col-md-4">
+<div class="border p-3 rounded">
+<p class="mb-1"><strong>Article:</strong> 10995</p>
+<p class="text-success">
+<i class="fas fa-check-circle"></i>
+<span data-i18n="in_stock">
+                        In-stock
+                    </span>
+</p>
+        
+                Green field sugar loose
+            </div>
+</div>
+</div>
+<!-- Page Title + Horizontal Line -->
+<div class="d-flex align-items-center my-4">
+<div class="flex-grow-1 border-top"></div>
+<h2 class="px-3 text-center fw-bold section-title mb-0" data-i18n="similar_products" style="font-family: 'SutonnyOMJ'; color: #000000ff; font-size: 24px; font-weight: bold;">
+            SIMILAR PRODUCTS
+        </h2>
+<div class="flex-grow-1 border-top"></div>
+</div>
+<!-- Similar products Scroll Section -->
+<div class="row mb-5">
+<div class="col-12">
+<!-- Horizontal Scroll Container -->
+<div class="similar_product-section-bg py-4 position-relative">
+<!-- Left Button -->
+<button class="similar_product-scroll-btn left-btn">
+<i class="fas fa-chevron-left"></i>
+</button>
+<!-- essential products -->
+<div class="similar_product-scroll-container">
+<div class="similar_product-scroll-wrapper">
+<!-- Product 1 -->
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11012">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11012.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field miniket rice premium</p>
+<p class="similar_product-price" data-i18n-price="" data-price="72">
+                                ৳ 72
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11012.png" data-name="Green Field" data-price="72" data-prod-id="11012" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11016">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11016.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field chinigura rice pre</p>
+<p class="similar_product-price" data-i18n-price="" data-price="213">
+                                ৳ 213
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11016.png" data-name="Green Field" data-price="213" data-prod-id="11016" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11017">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11017.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field nazirshail rice pre</p>
+<p class="similar_product-price" data-i18n-price="" data-price="84">
+                                ৳ 84
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11017.png" data-name="Green Field" data-price="84" data-prod-id="11017" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11018">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11018.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field miniket muzammel rashid loos</p>
+<p class="similar_product-price" data-i18n-price="" data-price="85">
+                                ৳ 85
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11018.png" data-name="Green Field" data-price="85" data-prod-id="11018" disabled="" style="background-color: #95a5a6 !important; border-color: #95a5a6 !important;">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="out_of_stock">
+                                                                    Out Of Stock
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11073">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11073.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field deshi moshur dal loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="139">
+                                ৳ 139
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11073.png" data-name="Green Field" data-price="139" data-prod-id="11073" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11174">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11174.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field biroi rice loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="88">
+                                ৳ 88
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11174.png" data-name="Green Field" data-price="88" data-prod-id="11174" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11796">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11796.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field nazirshail rice super premiu</p>
+<p class="similar_product-price" data-i18n-price="" data-price="96">
+                                ৳ 96
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11796.png" data-name="Green Field" data-price="96" data-prod-id="11796" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11828">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11828.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field pizam attop loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="85">
+                                ৳ 85
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11828.png" data-name="Green Field" data-price="85" data-prod-id="11828" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11910">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11910.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field moshur dal-loose- syria</p>
+<p class="similar_product-price" data-i18n-price="" data-price="99">
+                                ৳ 99
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11910.png" data-name="Green Field" data-price="99" data-prod-id="11910" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11933">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11933.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field standard miniket rice</p>
+<p class="similar_product-price" data-i18n-price="" data-price="60">
+                                ৳ 60
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11933.png" data-name="Green Field" data-price="60" data-prod-id="11933" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=11934">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/11934.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field stard nazirshail rice</p>
+<p class="similar_product-price" data-i18n-price="" data-price="67">
+                                ৳ 67
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/11934.png" data-name="Green Field" data-price="67" data-prod-id="11934" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=12293">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/12293.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field chola premium loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="85">
+                                ৳ 85
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/12293.png" data-name="Green Field" data-price="85" data-prod-id="12293" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=12743">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/12743.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field bashful rice loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="140">
+                                ৳ 140
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/12743.png" data-name="Green Field" data-price="140" data-prod-id="12743" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=12744">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/12744.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field aamon rice loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="86.0">
+                                ৳ 86.0
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/12744.png" data-name="Green Field" data-price="86.0" data-prod-id="12744" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/sugar-loose?prod_id=13660">
+<img alt="SUGAR LOOSE" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13660.png"/>
+<h5 class="similar_product-title">SUGAR LOOSE</h5>
+<p class="similar_product-subtext">DESHI SUGAR LOOSE (KG)</p>
+<p class="similar_product-price" data-i18n-price="" data-price="138">
+                                ৳ 138
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13660.png" data-name="SUGAR LOOSE" data-price="138" data-prod-id="13660" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/moshur-dal?prod_id=13661">
+<img alt="Moshur Dal" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13661.png"/>
+<h5 class="similar_product-title">Moshur Dal</h5>
+<p class="similar_product-subtext">Moshur dal (kangaroo) loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="187">
+                                ৳ 187
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13661.png" data-name="Moshur Dal" data-price="187" data-prod-id="13661" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=13662">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13662.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field moog dal loose premium</p>
+<p class="similar_product-price" data-i18n-price="" data-price="155">
+                                ৳ 155
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13662.png" data-name="Green Field" data-price="155" data-prod-id="13662" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/banglamoti-rice?prod_id=13663">
+<img alt="Banglamoti Rice" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13663.png"/>
+<h5 class="similar_product-title">Banglamoti Rice</h5>
+<p class="similar_product-subtext">Banglamoti rice loose</p>
+<p class="similar_product-price" data-i18n-price="" data-price="109">
+                                ৳ 109
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13663.png" data-name="Banglamoti Rice" data-price="109" data-prod-id="13663" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=13902">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13902.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field dabli dal loose premium bd</p>
+<p class="similar_product-price" data-i18n-price="" data-price="75">
+                                ৳ 75
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13902.png" data-name="Green Field" data-price="75" data-prod-id="13902" disabled="" style="background-color: #95a5a6 !important; border-color: #95a5a6 !important;">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="out_of_stock">
+                                                                    Out Of Stock
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=13905">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13905.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field bashmati rice premium</p>
+<p class="similar_product-price" data-i18n-price="" data-price="320">
+                                ৳ 320
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13905.png" data-name="Green Field" data-price="320" data-prod-id="13905" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=13906">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13906.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field kalijira rice loose premium</p>
+<p class="similar_product-price" data-i18n-price="" data-price="172">
+                                ৳ 172
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13906.png" data-name="Green Field" data-price="172" data-prod-id="13906" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/green-field?prod_id=13908">
+<img alt="Green Field" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/13908.png"/>
+<h5 class="similar_product-title">Green Field</h5>
+<p class="similar_product-subtext">Green field kataribogh rice loose premiu</p>
+<p class="similar_product-price" data-i18n-price="" data-price="90">
+                                ৳ 90
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/13908.png" data-name="Green Field" data-price="90" data-prod-id="13908" disabled="" style="background-color: #95a5a6 !important; border-color: #95a5a6 !important;">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="out_of_stock">
+                                                                    Out Of Stock
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/haradighi-aoush?prod_id=16040">
+<img alt="Haradighi Aoush" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/16040.png"/>
+<h5 class="similar_product-title">Haradighi Aoush</h5>
+<p class="similar_product-subtext">Haradighi aoush red rice loose/kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="90">
+                                ৳ 90
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/16040.png" data-name="Haradighi Aoush" data-price="90" data-prod-id="16040" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/haradighi-boro?prod_id=16041">
+<img alt="Haradighi Boro" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/16041.png"/>
+<h5 class="similar_product-title">Haradighi Boro</h5>
+<p class="similar_product-subtext">Haradighi boro red rice loose/kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="93">
+                                ৳ 93
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/16041.png" data-name="Haradighi Boro" data-price="93" data-prod-id="16041" disabled="" style="background-color: #95a5a6 !important; border-color: #95a5a6 !important;">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="out_of_stock">
+                                                                    Out Of Stock
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/haradighi-ganjia?prod_id=16042">
+<img alt="Haradighi Ganjia" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/16042.png"/>
+<h5 class="similar_product-title">Haradighi Ganjia</h5>
+<p class="similar_product-subtext">Haradighi ganjia red rice loose/kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="110">
+                                ৳ 110
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/16042.png" data-name="Haradighi Ganjia" data-price="110" data-prod-id="16042" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/teer-mustard?prod_id=10000103">
+<img alt="Teer Mustard" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000103.png"/>
+<h5 class="similar_product-title">Teer Mustard</h5>
+<p class="similar_product-subtext">Teer mustard oil 1ltr btl</p>
+<p class="similar_product-price" data-i18n-price="" data-price="340">
+                                ৳ 340
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000103.png" data-name="Teer Mustard" data-price="340" data-prod-id="10000103" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/nur-soya?prod_id=10000109">
+<img alt="Nur Soya" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000109.png"/>
+<h5 class="similar_product-title">Nur Soya</h5>
+<p class="similar_product-subtext">Nur soya sauce 250ml btl</p>
+<p class="similar_product-price" data-i18n-price="" data-price="50">
+                                ৳ 50
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000109.png" data-name="Nur Soya" data-price="50" data-prod-id="10000109" disabled="" style="background-color: #95a5a6 !important; border-color: #95a5a6 !important;">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="out_of_stock">
+                                                                    Out Of Stock
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/pran-mushur?prod_id=10000142">
+<img alt="Pran Mushur" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000142.png"/>
+<h5 class="similar_product-title">Pran Mushur</h5>
+<p class="similar_product-subtext">Pran mushur dal 1 kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="185">
+                                ৳ 185
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000142.png" data-name="Pran Mushur" data-price="185" data-prod-id="10000142" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/teer-soyabean?prod_id=10000149">
+<img alt="Teer Soyabean" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000149.png"/>
+<h5 class="similar_product-title">Teer Soyabean</h5>
+<p class="similar_product-subtext">Teer soyabean oil 2ltr btl</p>
+<p class="similar_product-price" data-i18n-price="" data-price="408">
+                                ৳ 408
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000149.png" data-name="Teer Soyabean" data-price="408" data-prod-id="10000149" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/aarong-natural?prod_id=10000226">
+<img alt="Aarong Natural" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000226.png"/>
+<h5 class="similar_product-title">Aarong Natural</h5>
+<p class="similar_product-subtext">Aarong natural nazirshail rice 5kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="535">
+                                ৳ 535
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000226.png" data-name="Aarong Natural" data-price="535" data-prod-id="10000226" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/aarong-natural?prod_id=10000227">
+<img alt="Aarong Natural" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000227.png"/>
+<h5 class="similar_product-title">Aarong Natural</h5>
+<p class="similar_product-subtext">Aarong natural katarivog rice 5kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="856">
+                                ৳ 856
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000227.png" data-name="Aarong Natural" data-price="856" data-prod-id="10000227" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/the-chefsynthetic?prod_id=10000244">
+<img alt="The Chefsynthetic" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000244.png"/>
+<h5 class="similar_product-title">The Chefsynthetic</h5>
+<p class="similar_product-subtext">The chefsynthetic white vinegar 300gm bd</p>
+<p class="similar_product-price" data-i18n-price="" data-price="45">
+                                ৳ 45
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000244.png" data-name="The Chefsynthetic" data-price="45" data-prod-id="10000244" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/molla-super?prod_id=10000278">
+<img alt="Molla Super" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000278.png"/>
+<h5 class="similar_product-title">Molla Super</h5>
+<p class="similar_product-subtext">Molla super salt 1kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="42">
+                                ৳ 42
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000278.png" data-name="Molla Super" data-price="42" data-prod-id="10000278" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/fresh-atta?prod_id=10000280">
+<img alt="Fresh Atta" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000280.png"/>
+<h5 class="similar_product-title">Fresh Atta</h5>
+<p class="similar_product-subtext">Fresh atta white 2kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="125">
+                                ৳ 125
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000280.png" data-name="Fresh Atta" data-price="125" data-prod-id="10000280" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/fresh-maida?prod_id=10000281">
+<img alt="Fresh Maida" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000281.png"/>
+<h5 class="similar_product-title">Fresh Maida</h5>
+<p class="similar_product-subtext">Fresh maida 2000g pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="165">
+                                ৳ 165
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000281.png" data-name="Fresh Maida" data-price="165" data-prod-id="10000281" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/pran-chinigura?prod_id=10000293">
+<img alt="Pran Chinigura" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000293.png"/>
+<h5 class="similar_product-title">Pran Chinigura</h5>
+<p class="similar_product-subtext">Pran chinigura rice 5kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="1125">
+                                ৳ 1125
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000293.png" data-name="Pran Chinigura" data-price="1125" data-prod-id="10000293" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/aarong-natural?prod_id=10000302">
+<img alt="Aarong Natural" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000302.png"/>
+<h5 class="similar_product-title">Aarong Natural</h5>
+<p class="similar_product-subtext">Aarong natural miniket rice 5kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="500">
+                                ৳ 500
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000302.png" data-name="Aarong Natural" data-price="500" data-prod-id="10000302" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/fresh-soyabean?prod_id=10000423">
+<img alt="Fresh Soyabean" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000423.png"/>
+<h5 class="similar_product-title">Fresh Soyabean</h5>
+<p class="similar_product-subtext">Fresh soyabean oil 5ltr ctnr</p>
+<p class="similar_product-price" data-i18n-price="" data-price="1000">
+                                ৳ 1000
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000423.png" data-name="Fresh Soyabean" data-price="1000" data-prod-id="10000423" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/fresh-soyabean?prod_id=10000424">
+<img alt="Fresh Soyabean" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000424.png"/>
+<h5 class="similar_product-title">Fresh Soyabean</h5>
+<p class="similar_product-subtext">Fresh soyabean oil 1ltr btl</p>
+<p class="similar_product-price" data-i18n-price="" data-price="204">
+                                ৳ 204
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000424.png" data-name="Fresh Soyabean" data-price="204" data-prod-id="10000424" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/pran-nazirshail?prod_id=10000455">
+<img alt="Pran Nazirshail" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000455.png"/>
+<h5 class="similar_product-title">Pran Nazirshail</h5>
+<p class="similar_product-subtext">Pran nazirshail rice 5kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="515">
+                                ৳ 515
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000455.png" data-name="Pran Nazirshail" data-price="515" data-prod-id="10000455" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/pran-miniket?prod_id=10000519">
+<img alt="Pran Miniket" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000519.png"/>
+<h5 class="similar_product-title">Pran Miniket</h5>
+<p class="similar_product-subtext">Pran miniket rice 5kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="470">
+                                ৳ 470
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000519.png" data-name="Pran Miniket" data-price="470" data-prod-id="10000519" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/ahmed-tomato?prod_id=10000566">
+<img alt="Ahmed Tomato" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000566.png"/>
+<h5 class="similar_product-title">Ahmed Tomato</h5>
+<p class="similar_product-subtext">Ahmed tomato sauce 1000g</p>
+<p class="similar_product-price" data-i18n-price="" data-price="310">
+                                ৳ 310
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000566.png" data-name="Ahmed Tomato" data-price="310" data-prod-id="10000566" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/mehran-kernel?prod_id=10000569">
+<img alt="Mehran Kernel" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000569.png"/>
+<h5 class="similar_product-title">Mehran Kernel</h5>
+<p class="similar_product-subtext">Mehran kernel basmati rice 1kg pkt</p>
+<p class="similar_product-price" data-i18n-price="" data-price="675">
+                                ৳ 675
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000569.png" data-name="Mehran Kernel" data-price="675" data-prod-id="10000569" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/mehran-kbasmati?prod_id=10000570">
+<img alt="Mehran K.Basmati" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000570.png"/>
+<h5 class="similar_product-title">Mehran K.Basmati</h5>
+<p class="similar_product-subtext">Mehran k.basmati rice 2kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="1350">
+                                ৳ 1350
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000570.png" data-name="Mehran K.Basmati" data-price="1350" data-prod-id="10000570" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/mehran-kernel?prod_id=10000571">
+<img alt="Mehran Kernel" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000571.png"/>
+<h5 class="similar_product-title">Mehran Kernel</h5>
+<p class="similar_product-subtext">Mehran kernel basmati rice 5kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="3350">
+                                ৳ 3350
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000571.png" data-name="Mehran Kernel" data-price="3350" data-prod-id="10000571" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/pran-chinigura?prod_id=10000610">
+<img alt="Pran Chinigura" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000610.png"/>
+<h5 class="similar_product-title">Pran Chinigura</h5>
+<p class="similar_product-subtext">Pran chinigura rice aromatic 2kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="450">
+                                ৳ 450
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000610.png" data-name="Pran Chinigura" data-price="450" data-prod-id="10000610" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/rupchanda-soyabean?prod_id=10000612">
+<img alt="Rupchanda Soyabean" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000612.png"/>
+<h5 class="similar_product-title">Rupchanda Soyabean</h5>
+<p class="similar_product-subtext">Rupchanda soyabean oil 2ltr</p>
+<p class="similar_product-price" data-i18n-price="" data-price="408">
+                                ৳ 408
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000612.png" data-name="Rupchanda Soyabean" data-price="408" data-prod-id="10000612" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/crown-mayonnaise?prod_id=10000705">
+<img alt="Crown Mayonnaise" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000705.png"/>
+<h5 class="similar_product-title">Crown Mayonnaise</h5>
+<p class="similar_product-subtext">Crown mayonnaise 473ml</p>
+<p class="similar_product-price" data-i18n-price="" data-price="750">
+                                ৳ 750
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000705.png" data-name="Crown Mayonnaise" data-price="750" data-prod-id="10000705" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/chashi-aromatic?prod_id=10000730">
+<img alt="Chashi Aromatic" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000730.png"/>
+<h5 class="similar_product-title">Chashi Aromatic</h5>
+<p class="similar_product-subtext">Chashi aromatic chinigura rice 5kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="1100">
+                                ৳ 1100
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000730.png" data-name="Chashi Aromatic" data-price="1100" data-prod-id="10000730" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+<div class="similar_product-item-card">
+<a class="text-decoration-none" href="https://agorasuperstores.com/product-details/chashi-aromatic?prod_id=10000732">
+<img alt="Chashi Aromatic" class="similar_product-image" loading="lazy" onerror="this.onerror=null; this.src='https://agorasuperstores.com/admin_assets/img/products/default_img.png';" src="https://agorastorageacount.blob.core.windows.net/img/product/10000732.png"/>
+<h5 class="similar_product-title">Chashi Aromatic</h5>
+<p class="similar_product-subtext">Chashi aromatic rice chinigura 1kg</p>
+<p class="similar_product-price" data-i18n-price="" data-price="230">
+                                ৳ 230
+                          </p>
+</a>
+<button class="similar_product-add-btn add-to-cart" data-image="https://agorastorageacount.blob.core.windows.net/img/product/10000732.png" data-name="Chashi Aromatic" data-price="230" data-prod-id="10000732" style="">
+<i class="fas fa-cart-plus mr-2"></i>
+<span data-i18n="add_to_cart">
+                                                                    Add To Cart
+                                                            </span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Button -->
+<button class="similar_product-scroll-btn right-btn">
+<i class="fas fa-chevron-right"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-5">
+<!-- Tab Buttons -->
+<div class="review-tabs d-flex align-items-center mb-3">
+<button class="review-tab-btn active" data-count="1" data-i18n="reviews" data-tab="reviews">
+            Reviews
+        </button>
+</div>
+<!-- Reviews Content -->
+<div class="review-content">
+<div class="tab-pane active" id="reviews">
+<div class="review-card mb-4 p-3 border rounded">
+<!-- Reviewer Info -->
+<div class="d-flex justify-content-between align-items-center mb-2">
+<div>
+<h6 class="mb-0 fw-bold">
+                                Abu Jafor Mohammad Khairul Anam
+                            </h6>
+<small class="text-muted">
+                                29 Jul 2026
+                            </small>
+</div>
+<!-- Rating -->
+<div class="review-rating text-warning fw-bold">
+                            ⭐ 3.0/5
+                        </div>
+</div>
+<!-- Review Message -->
+<div class="review-message">
+<p class="mb-0">Price should be less regarding quality</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+  footer p {
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  /* prevent line break only for short taglines */
+  .footer-tagline,
+  .footer-nowrap {
+    white-space: nowrap;
+  }
+  
+  .footer-qr {
+    height: 100px;
+  }
+
+  /* আইকনের সাথে টেক্সটের দূরত্ব */
+  footer i {
+    width: 20px;
+  }
+</style>
+<footer class="footer pt-4 footer-container">
+<div class="container">
+<div class="row">
+<!-- Logo & Contact -->
+<div class="col-md-3 col-sm-6">
+<img alt="Agora Logo" class="mb-3" src="https://agorasuperstores.com/admin_assets/img/logo.png" style="max-width: 150px;"/>
+<p class="footer-tagline">
+<strong>Quality You Can Trust</strong>
+</p>
+<!-- Address Section: Bold and wrapping enabled -->
+<p>
+<strong>Head Office:</strong> Ambon Complex (7th &amp; 8th Floor), 99, Mohakhali C/A, Dhaka 1212, Bangladesh
+        </p>
+<p>
+<i class="fas fa-phone-alt me-2"></i>
+<span data-i18n-qty="" data-qty="09612311211">09612311211</span>
+</p>
+<p>
+<i class="fas fa-envelope me-2"></i>
+<span>onlinesupport@agora-bd.com</span>
+</p>
+</div>
+<!-- Information -->
+<div class="col-md-2 col-sm-6">
+<h6 class="footer-title" data-i18n="information">Information</h6>
+<ul class="list-unstyled">
+<li><a data-i18n="privacy_policy" href="https://agorasuperstores.com/privacy-policy">Privacy Policy</a></li>
+<li><a data-i18n="returns_policy" href="https://agorasuperstores.com/return-policy">Returns Policy</a></li>
+<li><a data-i18n="about_us" href="https://agorasuperstores.com/about-us">About Us</a></li>
+<li><a data-i18n="terms_condition" href="https://agorasuperstores.com/terms-condition">Terms &amp; Condition</a></li>
+</ul>
+</div>
+<!-- Customer Service -->
+<div class="col-md-2 col-sm-6">
+<h6 class="footer-title" data-i18n="customer_service">Customer Service</h6>
+<ul class="list-unstyled">
+<li><a data-i18n="outlets" href="https://agorasuperstores.com/outlets">Agora Outlets</a></li>
+<li><a data-i18n="customer_feedback" href="https://agorasuperstores.com/feedback">Customer Feedback</a></li>
+<li><a data-i18n="contact_us" href="https://agorasuperstores.com/contact">Contact Us</a></li>
+</ul>
+</div>
+<!-- My Account -->
+<div class="col-md-2 col-sm-6">
+<h6 class="footer-title" data-i18n="my_account" style="margin-left:5px">My Account</h6>
+<img alt="QrCode" class="footer-qr" src="https://agorasuperstores.com/admin_assets/img/footer/Android_apple-01.png"/>
+</div>
+<!-- Payment & Social -->
+<div class="col-md-3 col-sm-12">
+<h6 class="footer-title" data-i18n="pay_with">Pay With</h6>
+<div class="mb-3 d-flex gap-2 flex-wrap">
+<img alt="Visa" src="https://agorasuperstores.com/admin_assets/img/footer/visa.png" style="height: 25px;"/>
+<img alt="Mastercard" src="https://agorasuperstores.com/admin_assets/img/footer/mc.png" style="height: 25px;"/>
+<img alt="American Express" src="https://agorasuperstores.com/admin_assets/img/footer/ae.png" style="height: 25px;"/>
+<img alt="bKash" src="https://agorasuperstores.com/admin_assets/img/footer/bkash.png" style="height: 25px;"/>
+<img alt="Nagad" src="https://agorasuperstores.com/admin_assets/img/footer/nagad.png" style="height: 25px;"/>
+</div>
+<h6 class="footer-title" data-i18n="follow_us">Follow Us</h6>
+<div class="d-flex gap-2">
+<a href="https://www.facebook.com/AgoraBD"><img alt="Facebook" src="https://agorasuperstores.com/admin_assets/img/footer/fb.png" style="height: 25px;"/></a>
+<a href="https://www.youtube.com/@agora_limited"><img alt="YouTube" src="https://agorasuperstores.com/admin_assets/img/footer/youtube.png" style="height: 25px;"/></a>
+<a href="https://www.instagram.com/agora.bd/"><img alt="Instagram" src="https://agorasuperstores.com/admin_assets/img/footer/insta.png" style="height: 30px;"/></a>
+<a href="https://www.tiktok.com/@agora_limited"><img alt="Tiktok" src="https://agorasuperstores.com/admin_assets/img/footer/tiktok.png" style="height: 30px;"/></a>
+<a href="https://www.linkedin.com/company/agoralimited/"><img alt="Linkedin" src="https://agorasuperstores.com/admin_assets/img/footer/linkedin.png" style="height: 40px;"/></a>
+</div>
+</div>
+</div>
+</div>
+</footer> </div>
+<!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+<!-- Cart Sidebar -->
+<div class="cart-sidebar" id="cartSidebar">
+<div class="cart-header">
+<span><i class="fas fa-shopping-cart"></i> <span id="cartItemCount">0</span> <span data-i18n="items">items</span></span>
+<button class="close-cart-btn" id="closeCart">×</button>
+</div>
+<div class="cart-items" id="cartItems">
+<!-- Static item will be added here -->
+<div class="empty-cart">
+<i class="fa fa-shopping-cart empty-icon"></i>
+<p>No items in cart</p>
+</div>
+</div>
+<div class="px-3 pb-2 text-danger fw-bold fs-5">
+<span data-i18n="max_note">* Note: Maximum 1 quantity soyabean oil per customer.</span>
+</div>
+<div class="cart-footer">
+<div class="d-flex justify-content-between">
+<button class="btn w-50 mr-1 cart-total-btn">
+<strong><span data-i18n="total">Total</span><span id="cartTotal">0</span></strong>
+</button>
+<a class="btn w-50 ml-1 cart-placeorder-btn" href="https://agorasuperstores.com/checkout">
+<strong data-i18n="place_order">Place Order</strong>
+</a>
+</div>
+</div>
+</div>
+<div id="cartOverlay"></div>
+<!-- jQuery ( AJAX er jonno) -->
+
+<!-- Bootstrap 5.3 Bundle (Popper included, modals/dropdowns/tooltips kaj korbe) -->
+
+<!-- Optional: jQuery easing & SB Admin scripts -->
+
+
+
+
+
+
+
+
+</body>
+</html>

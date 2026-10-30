@@ -12,6 +12,7 @@ Paste the printed report (it contains no secrets) back to your assistant so the 
 import argparse
 import re
 import sys
+import time
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -26,9 +27,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("url")
     ap.add_argument("--save", metavar="STORE", help="save cleaned HTML to tests/fixtures/<STORE>/recon_page.html")
+    ap.add_argument("--timeout", type=float, default=10.0, help="Timeout in seconds for the fetch operation")
     args = ap.parse_args()
 
-    fetcher = HttpxFetcher(min_interval=2.0)
+    # Pass the custom timeout and force 0 retries for recon
+    fetcher = HttpxFetcher(min_interval=2.0, timeout=args.timeout, retries=0)
     robots = RobotsChecker(fetcher)
     print(f"URL: {args.url}")
     allowed = robots.allowed(args.url)
@@ -36,10 +39,15 @@ def main() -> int:
     if not allowed:
         print("STOP: not fetching. Record this as 'unsupported (robots.txt)' for this store.")
         return 0
+
+    start_time = time.time()
     try:
         resp = fetcher.get(args.url)
+        elapsed = time.time() - start_time
+        print(f"FETCH SUCCESSFUL in {elapsed:.2f} seconds.")
     except FetchError as e:
-        print(f"FETCH FAILED: kind={e.kind} status={e.status_code} message={e}")
+        elapsed = time.time() - start_time
+        print(f"FETCH FAILED after {elapsed:.2f} seconds: kind={e.kind} status={e.status_code} message={e}")
         print("Not retrying and not working around it. Record this exact result for the store.")
         return 0
 

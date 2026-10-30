@@ -16,9 +16,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 from urllib.parse import urlparse
-from urllib.robotparser import RobotFileParser
 
 from bs4 import BeautifulSoup
+from app.scrapers.robot_parser import WildcardRobotParser
 
 USER_AGENT = "FairShareBot/0.1 (university project; price comparison; respects robots.txt)"
 
@@ -146,7 +146,7 @@ class RobotsChecker:
 
     def __init__(self, fetcher: Fetcher):
         self.fetcher = fetcher
-        self._cache: dict[str, RobotFileParser | bool] = {}
+        self._cache: dict[str, WildcardRobotParser | bool] = {}
 
     def allowed(self, url: str) -> bool:
         p = urlparse(url)
@@ -158,15 +158,15 @@ class RobotsChecker:
             return True
         if entry is False:      # robots.txt unreadable -> be conservative
             return False
-        return entry.can_fetch(USER_AGENT, url)
+        return entry.allowed(url)
 
     def _load(self, origin: str):
         try:
             resp = self.fetcher.get(origin + "/robots.txt")
         except FetchError as e:
             return True if e.kind == "not_found" else False
-        rp = RobotFileParser()
-        rp.parse(resp.text.splitlines())
+        rp = WildcardRobotParser(user_agent=USER_AGENT)
+        rp.parse(resp.text)
         return rp
 
 
