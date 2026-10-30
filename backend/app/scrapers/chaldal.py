@@ -81,7 +81,8 @@ class ChaldalScraper(BaseScraper):
                 product = RawProduct(
                     store=self.store,
                     name=hit.get("name"),
-                    product_url=f"{self.base_url}/p/{hit.get('slug')}",
+                    # FIX: Removed the /p/ right here so it points directly to the item slug!
+                    product_url=f"{self.base_url}/{hit.get('slug')}",
                     price=hit.get("price"),
                     currency="৳",
                     image_url=image_url,
@@ -99,6 +100,7 @@ class ChaldalScraper(BaseScraper):
         except httpx.HTTPStatusError as e:
             result.errors.append(f"API HTTP Error: {e.response.status_code}")
         except Exception as e:
+            # FIX: Cleaned up the formatting here so it doesn't break Python
             result.errors.append(f"API Parse Error: {type(e).__name__} - {str(e)}")
 
         return result

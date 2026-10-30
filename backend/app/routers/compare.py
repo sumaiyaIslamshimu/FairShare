@@ -32,15 +32,17 @@ def search(
         items_found = getattr(result, "items", getattr(result, "results", getattr(result, "products", [])))
 
     # 3. ON-DEMAND SCRAPING FALLBACK
-    if q and page == 1 and not items_found:
-        print(f"\n--- No local results for '{q}'. Triggering live on-demand scrape... ---")
+    # FIX: Changed from 'not items_found' to 'len(items_found) < 15'
+    # Now it scrapes if there are fewer than 15 results, bypassing random weak matches!
+    if q and page == 1 and len(items_found) < 15:
+        print(f"\n--- Low local results ({len(items_found)}) for '{q}'. Triggering live on-demand scrape... ---")
 
         try:
             # Use sys.executable to ensure we stay inside the virtual environment!
             subprocess.run(
                 [sys.executable, "-m", "app.scrapers.runner", "--query", q],
                 check=True,
-                timeout=120    # Give the scrapers up to 45 seconds to query all stores
+                timeout=120    # Give the scrapers up to 120 seconds to query all stores
             )
 
             # Re-query the database now that it has been populated with fresh items
