@@ -1,0 +1,28 @@
+/* Calm natural background for every page (landing, auth, shopper, seller, admin). */
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(1100px 620px at 8% -8%, rgba(150, 224, 180, 0.50), transparent 62%),
+    radial-gradient(900px 560px at 100% 0%, rgba(255, 214, 170, 0.38), transparent 60%),
+    radial-gradient(rgba(23, 121, 74, 0.06) 1px, transparent 1.3px);
+  background-size: auto, auto, 24px 24px;
+  background-attachment: fixed;
+}
+
+/* faint price-tag watermark behind portal pages (never over the text) */
+.content { position: relative; z-index: 0; }
+.content::after {
+  content: ""; position: fixed; right: 28px; bottom: 20px; width: 230px; height: 230px;
+  z-index: -1; pointer-events: none; opacity: 0.08;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' fill='none' stroke='%231f4d3a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M30 120 L120 30 H200 V110 L110 200Z'/%3E%3Ccircle cx='160' cy='70' r='10'/%3E%3Cpath d='M60 214C110 192 150 218 206 192'/%3E%3C/svg%3E");
+}
+
+/* small bag icon in empty lists */
+.empty::before {
+  content: ""; display: block; width: 72px; height: 72px; margin: 0 auto 12px; opacity: 0.6;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72' fill='none' stroke='%235b8a64' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='36' cy='36' r='33' fill='%23eaf0e7' stroke='none'/%3E%3Cpath d='M22 30h28l-3 18a4 4 0 0 1-4 3H29a4 4 0 0 1-4-3z'/%3E%3Cpath d='M29 30v-3a7 7 0 0 1 14 0v3'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 800px) { .content::after { display: none; } }
