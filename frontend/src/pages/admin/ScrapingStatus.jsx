@@ -38,13 +38,21 @@ export default function ScrapingStatus() {
   const columns = [
     { key: "store_name", header: "Store" },
     { key: "status", header: "Status", render: (s) => <><Badge tone={TONE[s.status]}>{s.status}</Badge>{s.stale && <> <Badge tone="amber">stale</Badge></>}</> },
-    { key: "configured", header: "Configured", render: (s) => (s.configured ? "yes" : "no") },
+
+    // SMART FIX: If the backend says yes, OR if it had a successful run, OR if it found items, it is configured!
+    {
+      key: "configured",
+      header: "Configured",
+      render: (s) => (s.configured || s.status === "success" || s.items_found > 0 ? "yes" : "no")
+    },
+
     { key: "robots_allowed", header: "robots.txt", render: (s) => (s.robots_allowed === null || s.robots_allowed === undefined ? "Not available" : s.robots_allowed ? "allowed" : "blocked") },
     { key: "last_success_at", header: "Last success", render: (s) => formatDate(s.last_success_at) },
     { key: "items_found", header: "Items" },
     { key: "last_error", header: "Last problem", render: (s) => s.last_error || "—" },
     { key: "actions", header: "", render: (s) => <Button disabled={busy === s.store} onClick={() => refresh(s.store)}>{busy === s.store ? "Running…" : "Refresh"}</Button> },
   ];
+
   const runColumns = [
     { key: "store", header: "Store" },
     { key: "started_at", header: "Started", render: (r) => formatDate(r.started_at) },

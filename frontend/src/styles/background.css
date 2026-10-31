@@ -26,3 +26,88 @@ body {
 }
 
 @media (max-width: 800px) { .content::after { display: none; } }
+
+/* ===== Subtle wavy dots (mint + beige) on sidebars and top bars ===== */
+.sidebar,
+.topbar,
+.public-nav {
+  background-color: var(--surface);
+  background-image:
+    /* white veil keeps text readable and the dots subtle */
+    linear-gradient(180deg, var(--veil-a), var(--veil-b)),
+    /* layer A: mint dots */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='6' cy='6' r='1.4' fill='%237cc9a0' fill-opacity='.55'/%3E%3Ccircle cx='18' cy='18' r='1.8' fill='%237cc9a0' fill-opacity='.55'/%3E%3C/svg%3E"),
+    /* layer B: beige dots */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Ccircle cx='9' cy='27' r='1.3' fill='%23d9c49a' fill-opacity='.75'/%3E%3Ccircle cx='27' cy='9' r='1.8' fill='%23d9c49a' fill-opacity='.75'/%3E%3C/svg%3E");
+  background-size: 100% 100%, 24px 24px, 36px 36px;
+  background-repeat: no-repeat, repeat, repeat;
+  background-position: 0 0, 0 0, 0 0;
+  animation: dot-wave 20s linear infinite;
+}
+
+/* the two dot layers drift in opposite directions and bob up and down,
+   so the dots appear to ripple like a gentle wave */
+@keyframes dot-wave {
+  0%   { background-position: 0 0, 0 0,     0 0; }
+  25%  { background-position: 0 0, 12px 5px,  -9px -4px; }
+  50%  { background-position: 0 0, 24px 0,   -18px 0; }
+  75%  { background-position: 0 0, 36px -5px, -27px 4px; }
+  100% { background-position: 0 0, 48px 0,   -36px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar, .topbar, .public-nav { animation: none; }
+}
+
+/* ===== Theme toggle button ===== */
+.theme-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, background 0.2s;
+}
+.theme-toggle:hover { transform: scale(1.08) rotate(12deg); }
+
+/* ===== Veil colours for the sidebar / top bar dot pattern ===== */
+:root {
+  color-scheme: light;
+  --veil-a: rgba(255, 255, 255, 0.55);
+  --veil-b: rgba(255, 255, 255, 0.82);
+}
+
+/* ===== Dark theme ===== */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1a15;
+  --surface: #16231c;
+  --border: #26392f;
+  --text: #e6f2ea;
+  --muted: #9bb3a5;
+  --navy: #4cc38a;
+  --blue: #7db8ff;
+  --red: #ff6b6b;
+  --hover: #1d2e25;
+  --active-bg: #1f3a2d;
+  --veil-a: rgba(22, 35, 28, 0.55);
+  --veil-b: rgba(22, 35, 28, 0.82);
+}
+
+:root[data-theme="dark"] body {
+  background-image:
+    radial-gradient(1100px 620px at 8% -8%, rgba(40, 120, 80, 0.35), transparent 62%),
+    radial-gradient(900px 560px at 100% 0%, rgba(150, 110, 60, 0.18), transparent 60%),
+    radial-gradient(rgba(150, 230, 190, 0.06) 1px, transparent 1.3px);
+}
+
+:root[data-theme="dark"] .logo-mark { color: #0b1a12; }

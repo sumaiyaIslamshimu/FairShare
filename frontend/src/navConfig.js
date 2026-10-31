@@ -10,7 +10,7 @@ export const NAV = {
     // --- Member 2 ---
     { to: "/app/search", label: "Search & Compare" },
     // --- Member 3 ---
-    // { to: "/app/cart", label: "Cart" },
+    { to: "/app/cart", label: "Cart" },
     { to: "/app/orders", label: "My Orders" },
     { to: "/app/rentals", label: "Rentals" },
     // { to: "/app/messages", label: "Messages" },

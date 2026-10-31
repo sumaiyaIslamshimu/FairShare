@@ -1,83 +1,166 @@
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getSellerProduct } from "../../api/shopping.js";
-import { listProductReviews } from "../../api/reviews.js";
-import Badge from "../../components/Badge.jsx";
-import Button from "../../components/Button.jsx";
-import Card from "../../components/Card.jsx";
-import ErrorBox from "../../components/ErrorBox.jsx";
-import Loading from "../../components/Loading.jsx";
-import Pagination from "../../components/Pagination.jsx";
-import Stars from "../../components/Stars.jsx";
+import { request } from "../../api/client.js";
 import { useCart } from "../../context/CartContext.jsx";
-import useLoad from "../../hooks/useLoad.js";
-import { formatDate, formatPrice, formatSize } from "../../utils/format.js";
+import Button from "../../components/Button.jsx";
+import ErrorBox from "../../components/ErrorBox.jsx";
+import "../../styles/shopping.css";
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const [page, setPage] = useState(1);
-  const [notice, setNotice] = useState(null);
-  const [addError, setAddError] = useState(null);
-  const { add: addItem } = useCart();
-  const product = useLoad(() => getSellerProduct(id), [id]);
-  const reviews = useLoad(() => listProductReviews(id, page), [id, page]);
+  const navigate = useNavigate();
+  const { refresh } = useCart();
 
-  const add = async () => {
-    setAddError(null);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [isAdding, setIsAdding] = useState(false);
+  const [isBuying, setIsBuying] = useState(false);
+  const [cartError, setCartError] = useState(null);
+  const [notice, setNotice] = useState(null);
+
+  useEffect(() => {
+    getSellerProduct(id)
+      .then(setProduct)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  // Reusable helper to send the exact payload FastAPI needs
+  const addToBackendCart = async () => {
+    await request('/cart/items', {
+      method: "POST",
+      body: {
+        product_id: id,
+        seller_product_id: id,
+        source: "fairshare",
+        quantity: 1
+      }
+    });
+    // Force the frontend cart context to sync with the new database cart
+    await refresh();
+  };
+
+  const handleAddToCart = async () => {
+    setCartError(null);
     setNotice(null);
+    setIsAdding(true);
     try {
-      await addItem(id, 1);
-      setNotice("Added to your cart.");
+      await addToBackendCart();
+      setNotice("Added to cart successfully!");
     } catch (err) {
-      setAddError(err);
+      setCartError(err);
+    } finally {
+      setIsAdding(false);
     }
   };
 
-  if (product.loading && !product.data) return <Loading />;
-  if (product.error) return <ErrorBox error={product.error} />;
-  const p = product.data;
-  if (!p) return null;
-  const inStock = p.availability === "in_stock";
-  const size = formatSize(p.quantity, p.unit);
-  const attrs = Object.entries(p.attributes || {});
-  const r = reviews.data;
+  const handleBuyNow = async () => {
+    setCartError(null);
+    setNotice(null);
+    setIsBuying(true);
+    try {
+      await addToBackendCart();
+      // Instantly jump to the cart page so the user can enter their shipping address
+      navigate('/app/cart');
+    } catch (err) {
+      setCartError(err);
+      setIsBuying(false); // Only reset if it fails, otherwise let it navigate
+    }
+  };
+
+  if (loading) return <div>Loading product details...</div>;
+  if (error) return <ErrorBox error={error} />;
+  if (!product) return <div>Product not found.</div>;
 
   return (
-    <>
-      <p><Link to="/app/search">← Back to search</Link></p>
-      <h1>{p.title}</h1>
-      <p className="subtitle">Sold on FairShare{p.seller_name ? ` by ${p.seller_name}` : ""}{p.brand ? ` · ${p.brand}` : ""}</p>
+    <div className="product-detail fade-in-up">
+      <Button variant="secondary" onClick={() => navigate(-1)} style={{ marginBottom: "1rem" }}>
+        &larr; Back
+      </Button>
 
-      <Card style={{ marginBottom: 16 }}>
-        {p.images?.[0] && <img src={p.images[0]} alt={p.title} style={{ maxWidth: 240 }} />}
-        <p>
-          <strong>{formatPrice(p.effective_price_paisa, p.currency)}</strong>
-          {p.discount_percent ? <> <s>{formatPrice(p.price_paisa, p.currency)}</s> <Badge tone="amber">{p.discount_percent}% off</Badge></> : null}
-        </p>
-        <p><Badge tone={inStock ? "green" : "red"}>{inStock ? "In Stock" : "Out of stock"}</Badge>{size && <> · Size: {size}</>}</p>
-        {p.description && <p>{p.description}</p>}
-        {attrs.length > 0 && (
-          <dl>
-            {attrs.map(([k, v]) => (<div key={k}><dt>{k}</dt><dd>{String(v)}</dd></div>))}
-          </dl>
-        )}
-        <ErrorBox error={addError} />
-        {notice && <p role="status">{notice}</p>}
-        <Button variant="primary" onClick={add} disabled={!inStock}>Add to cart</Button>
-      </Card>
+      <div className="detail-card" style={{ display: "flex", gap: "2rem", flexWrap: "wrap", background: "#fff", padding: "2rem", borderRadius: "8px", border: "1px solid #eee" }}>
 
-      <h2>Reviews</h2>
-      {r && r.count > 0 && <p><Stars value={r.average} /> {r.average} out of 5 · {r.count} {r.count === 1 ? "review" : "reviews"}</p>}
-      <ErrorBox error={reviews.error} />
-      {reviews.loading && !r ? <Loading /> : null}
-      {r && r.items.length === 0 && <p>No reviews yet. Only shoppers who received this product can review it.</p>}
-      {(r?.items || []).map((rv) => (
-        <Card key={rv.id} style={{ marginBottom: 12 }}>
-          <p><Stars value={rv.rating} /> <strong>{rv.reviewer_name || "A shopper"}</strong> <small>{formatDate(rv.created_at)}</small></p>
-          {rv.comment && <p>{rv.comment}</p>}
-        </Card>
-      ))}
-      {r && <Pagination page={r.page} pageSize={r.page_size} total={r.total} onChange={setPage} />}
-    </>
+        {/* Image Display */}
+        <div className="image-container" style={{ flex: "1 1 300px", maxWidth: "400px" }}>
+          {product.image_url || (product.images && product.images.length > 0) ? (
+            <img
+              src={product.image_url || product.images[0]}
+              alt={product.name}
+              style={{ width: "100%", borderRadius: "8px", objectFit: "contain", maxHeight: "400px" }}
+            />
+          ) : (
+            <div style={{ width: "100%", height: "300px", background: "#f3f4f6", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "8px" }}>
+              No Image Available
+            </div>
+          )}
+        </div>
+
+        {/* Product Info */}
+        <div className="info-container" style={{ flex: "2 1 400px" }}>
+          <h1 style={{ margin: "0 0 0.5rem 0" }}>{product.name}</h1>
+          <p style={{ color: "#666", marginBottom: "1.5rem" }}>
+            Sold by: <strong>{product.seller_name || "FairShare Seller"}</strong>
+          </p>
+
+          <h2 style={{ color: "var(--primary)", fontSize: "1.8rem", marginBottom: "1rem" }}>
+            {product.currency} {product.price_paisa / 100}
+          </h2>
+
+          <div style={{ display: "flex", gap: "1rem", marginBottom: "1.5rem" }}>
+            <span style={{ padding: "0.25rem 0.75rem", background: "var(--green-light, #d1fae5)", color: "var(--green-dark, #065f46)", borderRadius: "20px", fontSize: "0.9rem" }}>
+              {product.availability === "in_stock" ? "In Stock" : "Unavailable"}
+            </span>
+            {product.unit && (
+              <span style={{ padding: "0.25rem 0.75rem", background: "#f3f4f6", color: "#4b5563", borderRadius: "20px", fontSize: "0.9rem" }}>
+                Unit: {product.unit}
+              </span>
+            )}
+          </div>
+
+          <p style={{ lineHeight: "1.6", color: "#4b5563", marginBottom: "2rem" }}>
+            {product.description || "No description available for this product."}
+          </p>
+
+          <ErrorBox error={cartError} />
+          {notice && <div style={{ color: "var(--green-dark)", background: "var(--green-light)", padding: "0.75rem", borderRadius: "4px", marginBottom: "1rem" }}>{notice}</div>}
+
+          {/* Side-by-Side Action Buttons */}
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <Button
+              variant="primary"
+              onClick={handleBuyNow}
+              disabled={isAdding || isBuying || product.availability !== "in_stock"}
+              style={{
+                padding: "0.75rem 2rem",
+                fontSize: "1.1rem",
+                background: "#f97316", // A distinct orange color for Buy Now
+                color: "#fff",
+                border: "none",
+                flex: "1 1 auto"
+              }}
+            >
+              {isBuying ? "Processing..." : "Buy Now"}
+            </Button>
+
+            <Button
+              variant="primary"
+              onClick={handleAddToCart}
+              disabled={isAdding || isBuying || product.availability !== "in_stock"}
+              style={{
+                padding: "0.75rem 2rem",
+                fontSize: "1.1rem",
+                flex: "1 1 auto"
+              }}
+            >
+              {isAdding ? "Adding..." : "Add to Cart"}
+            </Button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   );
 }

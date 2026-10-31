@@ -1,8 +1,10 @@
 import Button from "../../components/Button.jsx";
 import { CompareArt, StepCompare, StepSearch, StepTrack } from "../../components/art/Illustrations.jsx";
+import WavyDots from "../../components/WavyDots.jsx";
 import "../../styles/landing.css";
 
-const STORES = ["Daraz", "Pickaboo", "Chaldal", "Shwapno", "Agora", "Rokomari"];
+
+const STORES = ["Chaldal", "Shwapno", "Agora", "Rokomari"];
 
 const STEPS = [
   { no: "01", art: <StepSearch />, title: "Search",
@@ -20,7 +22,7 @@ const Icon = ({ children }) => (
 
 const FEATURES = [
   { title: "Compare prices",
-    text: "See listings from Daraz, Pickaboo, Chaldal, Shwapno, Agora and Rokomari next to FairShare sellers, with clear freshness labels.",
+    text: "See listings from Chaldal, Shwapno, Agora and Rokomari next to FairShare sellers, with clear freshness labels.",
     icon: <Icon><path d="M12 3v18M7 21h10M5 7h14" /><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z" /></Icon> },
   { title: "Sell on FairShare",
     text: "Sellers list products, manage stock and promotions, and handle orders in one portal after admin approval.",
@@ -32,8 +34,22 @@ const FEATURES = [
 
 export default function Landing() {
   return (
-    <main className="landing">
-      <div className="l-wrap">
+    <main className="landing" style={{ position: "relative", overflow: "hidden" }}>
+      {/* Animated wavy dots background (hero area) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 760, // adjust to taste
+          pointerEvents: "none",
+        }}
+      >
+        <WavyDots />
+      </div>
+
+      <div className="l-wrap" style={{ position: "relative", zIndex: 1 }}>
         <section className="l-hero">
           <span className="l-eyebrow">Price comparison for Bangladesh</span>
           <h1 className="l-title">Buy, Sell, Rent—<em>Redefined</em></h1>
