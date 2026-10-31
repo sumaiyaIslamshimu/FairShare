@@ -10,13 +10,10 @@ from app.db.indexes import ensure_indexes
 from app.db.mongo import get_db, ping_db
 from app.routers import auth, categories , compare, seller_products
 
-
-
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     ensure_indexes(get_db())
     yield
-
 
 app = FastAPI(title="FairShare API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
@@ -28,12 +25,10 @@ app.add_middleware(
 )
 register_error_handlers(app)
 
-
 @app.get("/api/health", tags=["System"])
 def health():
     up = ping_db()
     return {"status": "ok" if up else "degraded", "database": "up" if up else "down"}
-
 
 # --- Member 1 routers ---
 app.include_router(auth.router, prefix="/api")
