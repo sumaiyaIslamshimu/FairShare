@@ -18,3 +18,153 @@
 .diff-list { margin: 6px 0 0; padding-left: 18px; color: var(--muted); }
 .possible-row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .back-link { display: inline-block; margin-bottom: 12px; }
+
+
+/* --- PLAYFUL UI ANIMATIONS --- */
+
+/* 1. Bouncy Button Hover */
+button {
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+button:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0px 6px 15px rgba(0, 150, 255, 0.2); /* Soft cyan/blue glow */
+}
+button:active {
+  transform: scale(0.98) translateY(0);
+}
+
+/* 2. Smooth Page & Grid Transitions */
+.fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3. Smooth Spinning */
+.spin-anim {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* --- PLAYFUL UI ANIMATIONS --- */
+
+button {
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+button:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0px 6px 15px rgba(0, 150, 255, 0.2);
+}
+button:active {
+  transform: scale(0.98) translateY(0);
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.spin-anim {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* --- PRODUCT CARD HOVER EFFECT --- */
+.product-card, .shopping-card, div[class*="product-card"] {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.product-card:hover, .shopping-card:hover, div[class*="product-card"]:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* --- CHALDAL-STYLE PRODUCT MODAL ANIMATION --- */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeInBackdrop 0.25s ease-out forwards;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  animation: zoomInModal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f0f2f5;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close-btn:hover {
+  background: #e4e6eb;
+}
