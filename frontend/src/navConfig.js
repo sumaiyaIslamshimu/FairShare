@@ -30,15 +30,15 @@ export const NAV = {
     { to: "/seller/profile", label: "Business Profile" },
     // --- Member 3 ---
     { to: "/seller/insights", label: "Insights" },
-    { to: "/seller/promotions", label: "Promotions" },
+    //{ to: "/seller/promotions", label: "Promotions" },
     { to: "/seller/orders", label: "Orders" },
     { to: "/seller/rentals", label: "My Rentals" },
     { to: "/seller/messages", label: "Messages" },
     // --- Member 4 ---
     { to: "/seller/verification", label: "Verification" },
-    { to: "/seller/complaints", label: "Complaints" },
-    { to: "/seller/reviews", label: "Reviews" },
-    { to: "/seller/returns", label: "Returns" },
+    //{ to: "/seller/complaints", label: "Complaints" },
+    //{ to: "/seller/reviews", label: "Reviews" },
+    //{ to: "/seller/returns", label: "Returns" },
     { to: "/seller/notifications", label: "Notifications" },
   ],
   admin: [
