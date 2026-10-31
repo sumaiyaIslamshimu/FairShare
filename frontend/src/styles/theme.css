@@ -2,7 +2,7 @@
 :root {
   --navy: #0f172a;
   --navy-2: #1e293b;
-  --bg: #f8fafc;
+  --bg: #fffdf7; /* <-- Changed to your custom warm background */
   --surface: #ffffff;
   --border: #e2e8f0;
   --text: #0f172a;
@@ -18,7 +18,7 @@
   --shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
   font-family: Inter, Roboto, "Segoe UI", system-ui, -apple-system, sans-serif;
 }
-* { box-sizing: border-box; }
+* { box-sizing: border-box; } /* Fixed '-' to '*' */
 body { margin: 0; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
 h1, h2, h3 { margin: 0; line-height: 1.2; }
 a { color: var(--blue); text-decoration: none; }

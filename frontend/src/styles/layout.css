@@ -54,7 +54,7 @@
 
 /* Portal shell (shopper / seller / admin) */
 .shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-.sidebar { background: #fff; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 16px 12px; position: sticky; top: 0; height: 100vh; }
+.sidebar { background: #f4fefe; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 16px 12px; position: sticky; top: 0; height: 100vh; }
 .sidebar .brand { padding: 4px 8px 16px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
 .sidebar .brand small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; }
 .sidebar nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
@@ -74,7 +74,7 @@
 }
 .signout { border: 0; background: none; text-align: left; padding: 10px 12px; color: var(--muted); cursor: pointer; border-top: 1px solid var(--border); font: inherit; }
 .main { display: flex; flex-direction: column; min-width: 0; }
-.topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 28px; background: #fff; border-bottom: 1px solid var(--border); }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 28px; background: #f4fefe; border-bottom: 1px solid var(--border); }
 .user-chip { display: flex; align-items: center; gap: 10px; }
 .avatar { width: 34px; height: 34px; border-radius: 50%; background: #e2e8f0; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
 .user-chip small { display: block; color: var(--muted); text-transform: capitalize; }
