@@ -52,8 +52,8 @@ export const NAV = {
     { to: "/admin/complaints", label: "Complaints" },
     { to: "/admin/scraping", label: "Scraping Monitor" },
     { to: "/admin/audit", label: "Audit Log" },
-    { to: "/admin/reviews", label: "Review Moderation" },
-    { to: "/admin/returns", label: "Returns" },
+    //{ to: "/admin/reviews", label: "Review Moderation" },
+    //{ to: "/admin/returns", label: "Returns" },
     { to: "/admin/notifications", label: "Notifications" },
   ],
 };
