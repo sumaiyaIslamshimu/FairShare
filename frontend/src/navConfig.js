@@ -10,15 +10,15 @@ export const NAV = {
     // --- Member 2 ---
     { to: "/app/search", label: "Search & Compare" },
     // --- Member 3 ---
-    { to: "/app/cart", label: "Cart" },
+    // { to: "/app/cart", label: "Cart" },
     { to: "/app/orders", label: "My Orders" },
     { to: "/app/rentals", label: "Rentals" },
     { to: "/app/messages", label: "Messages" },
     // --- Member 4 ---
     { to: "/app/verification", label: "Verification" },
-    { to: "/app/complaints", label: "Complaints" },
-    { to: "/app/reviews", label: "My Reviews" },
-    { to: "/app/returns", label: "My Returns" },
+    // { to: "/app/complaints", label: "Complaints" },
+    // { to: "/app/reviews", label: "My Reviews" },
+    // { to: "/app/returns", label: "My Returns" },
     { to: "/app/pricewatch", label: "Price Watch" },
     { to: "/app/notifications", label: "Notifications" },
   ],
