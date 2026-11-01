@@ -8,8 +8,8 @@ import ProductModal from "../../components/shopping/ProductModal.jsx";
 import { searchProducts } from "../../api/shopping.js";
 import "../../styles/shopping.css";
 
-// Added fairshareOnly to the default form state
-const EMPTY = { q: "", category: "", subcategory: "", store: "", sort: "price_asc", fairshareOnly: false };
+// Changed default sort to relevance
+const EMPTY = { q: "", category: "", subcategory: "", store: "", sort: "relevance", fairshareOnly: false };
 
 const Spinner = ({ size = 20, color = "#888", style }) => (
   <svg
@@ -73,6 +73,14 @@ export default function Search() {
     setPage(1);
   }
 
+  // Trigger search instantly when sort option changes
+  function handleSortChange(e) {
+    const newSort = e.target.value;
+    setForm({ ...form, sort: newSort });
+    setApplied({ ...applied, sort: newSort });
+    setPage(1);
+  }
+
   return (
     <>
       <h1>Search &amp; Compare</h1>
@@ -120,7 +128,7 @@ export default function Search() {
           </Button>
         </div>
 
-        {/* NEW: Tick Style Checkbox directly under the search bar */}
+        {/* Tick Style Checkbox directly under the search bar */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.25rem" }}>
           <input
             type="checkbox"
@@ -167,22 +175,46 @@ export default function Search() {
 
       {data && data.items.length > 0 && (
         <div key={`${page}-${applied.q}-${applied.category}-${applied.fairshareOnly}`} className="fade-in-up">
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem", alignItems: "center", gap: "0.5rem" }}>
-            <label htmlFor="pageSizeSelect" style={{ fontSize: "0.9rem", color: "var(--text-muted, #666)" }}>
-              Products per page:
-            </label>
-            <select
-              id="pageSizeSelect"
-              className="input"
-              value={pageSize}
-              onChange={handlePageSizeChange}
-              style={{ width: "auto", padding: "0.3rem 0.5rem", minHeight: "unset" }}
-            >
-              <option value={12}>12</option>
-              <option value={24}>24</option>
-              <option value={36}>36</option>
-              <option value={48}>48</option>
-            </select>
+
+          {/* Top Controls: Sort By and Products Per Page */}
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <label htmlFor="sortSelect" style={{ fontSize: "0.9rem", color: "var(--text-muted, #666)" }}>
+                Sort by:
+              </label>
+              <select
+                id="sortSelect"
+                className="input"
+                value={applied.sort}
+                onChange={handleSortChange}
+                style={{ width: "auto", padding: "0.3rem 0.5rem", minHeight: "unset" }}
+              >
+                <option value="relevance">Relevance</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="newest">Recently Updated</option>
+              </select>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <label htmlFor="pageSizeSelect" style={{ fontSize: "0.9rem", color: "var(--text-muted, #666)" }}>
+                Products per page:
+              </label>
+              <select
+                id="pageSizeSelect"
+                className="input"
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                style={{ width: "auto", padding: "0.3rem 0.5rem", minHeight: "unset" }}
+              >
+                <option value={12}>12</option>
+                <option value={24}>24</option>
+                <option value={36}>36</option>
+                <option value={48}>48</option>
+              </select>
+            </div>
+
           </div>
 
           <div className="product-grid" style={loading ? { opacity: 0.5, pointerEvents: "none" } : {}}>
