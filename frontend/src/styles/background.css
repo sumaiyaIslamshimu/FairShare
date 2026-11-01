@@ -42,7 +42,7 @@ body {
   background-size: 100% 100%, 24px 24px, 36px 36px;
   background-repeat: no-repeat, repeat, repeat;
   background-position: 0 0, 0 0, 0 0;
-  animation: dot-wave 20s linear infinite;
+  animation: dot-wave 3s linear infinite;
 }
 
 /* the two dot layers drift in opposite directions and bob up and down,

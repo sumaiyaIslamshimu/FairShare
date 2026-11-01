@@ -39,38 +39,48 @@ export default function Orders() {
   return (
     <div>
       <h2>My Orders</h2>
-      {orders.map((order) => (
-        <div key={order.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-            <h3>Order: {order.order_number}</h3>
-            <span style={{ fontWeight: "bold", textTransform: "uppercase" }}>{order.status}</span>
-          </div>
-          <p>Date: {formatDate(order.created_at)}</p>
-          <p>Total: {formatPrice(order.total_paisa, order.currency)}</p>
+      {orders.map((order) => {
+        // Dynamically calculate if the entire order is delivered
+        const isFullyDelivered = order.items?.length > 0 && order.items.every(item => item.item_status === "delivered");
 
-          <div style={{ marginTop: "1rem", padding: "1rem", background: "#f9f9f9" }}>
-            <h4>Items:</h4>
-            <ul>
-              {order.items.map((item) => (
-                <li key={item.id}>
-                                    {item.quantity}x {item.title_snapshot} - {formatPrice(item.line_total_paisa, order.currency)} ({item.item_status})
-                  {item.item_status === "delivered" && (
-                      <> · <Link to={`/app/reviews?item=${item.id}`}>Write a review</Link> · <Link to={`/app/returns?item=${item.id}`}>Return this item</Link></>
-                  )}
-                </li>
-              ))}
-            </ul>
+        return (
+          <div key={order.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+              <h3>Order: {order.order_number}</h3>
+
+              {/* This is the updated line */}
+              <span style={{ fontWeight: "bold", textTransform: "uppercase" }}>
+                {isFullyDelivered ? "DELIVERED" : order.status}
+              </span>
+
+            </div>
+            <p>Date: {formatDate(order.created_at)}</p>
+            <p>Total: {formatPrice(order.total_paisa, order.currency)}</p>
+
+            <div style={{ marginTop: "1rem", padding: "1rem", background: "#f9f9f9" }}>
+              <h4>Items:</h4>
+              <ul>
+                {order.items.map((item) => (
+                  <li key={item.id}>
+                    {item.quantity}x {item.title_snapshot} - {formatPrice(item.line_total_paisa, order.currency)} ({item.item_status})
+                    {item.item_status === "delivered" && (
+                        <> · <Link to={`/app/reviews?item=${item.id}`}>Write a review</Link> · <Link to={`/app/returns?item=${item.id}`}>Return this item</Link></>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p style={{ marginTop: "10px" }}>
+              <Link to={`/app/complaints?type=order&id=${order.id}`}>Report a problem with this order</Link>
+            </p>
+            {["pending", "confirmed"].includes(order.status) && !isFullyDelivered && (
+              <Button onClick={() => handleCancel(order.id)} style={{ marginTop: "10px", background: "red" }}>
+                Cancel Order
+              </Button>
+            )}
           </div>
-          <p style={{ marginTop: "10px" }}>
-            <Link to={`/app/complaints?type=order&id=${order.id}`}>Report a problem with this order</Link>
-          </p>
-          {["pending", "confirmed"].includes(order.status) && (
-            <Button onClick={() => handleCancel(order.id)} style={{ marginTop: "10px", background: "red" }}>
-              Cancel Order
-            </Button>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

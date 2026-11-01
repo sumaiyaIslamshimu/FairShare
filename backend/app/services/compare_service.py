@@ -193,9 +193,18 @@ def search(db, q, category, subcategory, store, sort, page, page_size, now=None,
             except Exception as e:
                 print(f"Skipped a FairShare product due to mapping error: {e}")
 
-    seed_value = hash(q) if q else (hash(category) if category else 42)
-    random.Random(seed_value).shuffle(items)
+    # === SORTING LOGIC ===
+    if sort == "price_asc":
+        items.sort(key=lambda x: x.get("price_paisa") or float('inf'))
+    elif sort == "price_desc":
+        items.sort(key=lambda x: x.get("price_paisa") or 0, reverse=True)
+    elif sort == "newest":
+        items.sort(key=lambda x: x.get("last_updated", ""), reverse=True)
+    else:
+        seed_value = hash(q) if q else (hash(category) if category else 42)
+        random.Random(seed_value).shuffle(items)
 
+    # === IN-MEMORY PAGINATION ===
     window = items[(page - 1) * page_size: page * page_size]
     _attach_group_sizes(db, window)
 

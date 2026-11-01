@@ -18,7 +18,7 @@ def search(
         subcategory: Optional[str] = None,
         store: Optional[str] = None,
         source: Optional[str] = None, # Added source parameter for FairShare filter
-        sort: Literal["price_asc", "price_desc"] = "price_asc",
+        sort: Literal["relevance", "price_asc", "price_desc", "newest"] = "relevance",
         page: int = Query(1, ge=1),
         page_size: int = Query(20, ge=1, le=50),
         db=Depends(get_db),
