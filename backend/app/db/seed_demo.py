@@ -17,7 +17,6 @@ from app.services import product_service, rental_service
 
 DEMO_USERS = [
     ("demo.shopper@fairshare.test", "Demo Shopper", "user", "none", None),
-    ("demo.renter@fairshare.test", "ShareIt Rentals", "user", "approved", None),
     ("sabbeer1@gmail.com", "FairShare All-in-One Store", "seller", "approved", "approved"),
     ("demo.pending.seller@fairshare.test", "Pending Seller", "seller", "none", "pending"),
 ]
@@ -133,13 +132,14 @@ def seed_demo(db, password: str) -> dict:
     users = {}
 
     # === AGGRESSIVE CLEANUP OF OLD DEMO ACCOUNTS ===
-    # This deletes all products from the old test accounts to fix the duplicates
     old_emails = ["demo.tech@fairshare.test", "demo.care@fairshare.test",
-                  "demo.general@fairshare.test", "demo.seller@fairshare.test"]
+                  "demo.general@fairshare.test", "demo.seller@fairshare.test",
+                  "demo.renter@fairshare.test"] # Added demo renter here for cleanup
     for o_email in old_emails:
         ou = db.users.find_one({"email": o_email})
         if ou:
             db.seller_products.delete_many({"seller_id": ou["_id"]})
+            db.rental_listings.delete_many({"owner_id": ou["_id"]})
 
     # Cleanup pictureless items
     db.seller_products.delete_many({
@@ -167,7 +167,8 @@ def seed_demo(db, password: str) -> dict:
                 product_service.create_product(db, seller, SellerProductCreate(**p, description=desc))
                 created["products"] += 1
 
-    renter_owner = users["demo.renter@fairshare.test"]
+    # MAPPED EXCLUSIVELY TO YOUR ACCOUNT
+    renter_owner = users.get("sabbeer1@gmail.com")
     if renter_owner:
         db.rental_listings.delete_many({"owner_id": renter_owner["_id"]})
         for r in DEMO_RENTALS:

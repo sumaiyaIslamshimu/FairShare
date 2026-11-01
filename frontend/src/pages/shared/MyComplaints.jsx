@@ -14,14 +14,12 @@ import { formatDate } from "../../utils/format.js";
 const TONE = { open: "red", in_review: "amber", resolved: "green", dismissed: "neutral" };
 const HINT = {
   order: "The order id (shown on your orders page).",
-  seller: "The seller's account id.",
-  rental: "The rental request id (shown on your rentals page).",
 };
 
 export default function MyComplaints() {
-  const [params] = useSearchParams(); // lets other pages link here with ?type=order&id=...
+  const [params] = useSearchParams(); // lets other pages link here with ?id=...
   const [form, setForm] = useState({
-    target_type: params.get("type") || "order", target_id: params.get("id") || "", description: "",
+    target_type: "order", target_id: params.get("id") || "", description: "",
   });
   const [formError, setFormError] = useState(null);
   const [sent, setSent] = useState(false);
@@ -52,17 +50,15 @@ export default function MyComplaints() {
   return (
     <>
       <h1>Complaints</h1>
-      <p className="subtitle">Tell us about a problem with an order, a seller or a rental. An administrator will review it.</p>
+      <p className="subtitle">Tell us about a problem with an order. An administrator will review it.</p>
       <Card>
         <h2>File a complaint</h2>
         <form onSubmit={submit}>
           <ErrorBox error={formError} />
           {sent && <div className="info-box">Your complaint was sent.</div>}
           <FormField label="About" id="c-type">
-            <select id="c-type" className="input" value={form.target_type} onChange={(e) => setForm({ ...form, target_type: e.target.value })}>
+            <select id="c-type" className="input" value={form.target_type} disabled onChange={(e) => setForm({ ...form, target_type: e.target.value })}>
               <option value="order">An order</option>
-              <option value="seller">A seller</option>
-              <option value="rental">A rental</option>
             </select>
           </FormField>
           <FormField label={`Id — ${HINT[form.target_type]}`} id="c-id" value={form.target_id} required

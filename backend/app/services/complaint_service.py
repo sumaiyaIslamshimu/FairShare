@@ -18,34 +18,56 @@ def serialize(doc: dict) -> dict:
 
 def _check_target(db, user: dict, target_type: str, target_id: str):
     """The filer must really be part of the thing they complain about."""
-    oid = to_object_id(target_id, "Complaint target")
+
     if target_type == "order":
-        order = db.orders.find_one({"_id": oid})
-        mine = order and order["user_id"] == user["_id"]
-        sold = order and db.order_items.find_one({"order_id": oid, "seller_id": user["_id"]})
+        # Check if the user pasted the human-readable order number
+        if target_id.startswith("ORD-"):
+            order = db.orders.find_one({"order_number": target_id.strip()})
+            if not order:
+                raise AppError(404, "NOT_FOUND", "Order not found.")
+            oid = order["_id"]
+        # Otherwise fall back to the internal MongoDB ID
+        else:
+            oid = to_object_id(target_id, "Complaint target")
+            order = db.orders.find_one({"_id": oid})
+            if not order:
+                raise AppError(404, "NOT_FOUND", "Order not found.")
+
+        mine = order["user_id"] == user["_id"]
+        sold = db.order_items.find_one({"order_id": oid, "seller_id": user["_id"]})
         if not (mine or sold):
             raise AppError(404, "NOT_FOUND", "Order not found.")
+
+        return oid
+
     elif target_type == "seller":
+        oid = to_object_id(target_id, "Complaint target")
         profile = db.seller_profiles.find_one({"user_id": oid})
         if not profile:
             raise AppError(404, "NOT_FOUND", "Seller not found.")
         if oid == user["_id"]:
             raise AppError(400, "BAD_REQUEST", "You cannot file a complaint about yourself.")
+        return oid
+
     else:  # rental: a request that the filer owns or made
+        oid = to_object_id(target_id, "Complaint target")
         req = db.rental_requests.find_one({"_id": oid})
         if not req or user["_id"] not in (req["owner_id"], req["renter_id"]):
             raise AppError(404, "NOT_FOUND", "Rental request not found.")
-    return oid
+        return oid
 
 
 def file_complaint(db, user: dict, data) -> dict:
     if user["role"] == "admin":
         raise AppError(403, "FORBIDDEN", "Admins manage complaints; they do not file them.")
+
     oid = _check_target(db, user, data.target_type, data.target_id)
+
     duplicate = db.complaints.find_one({"filer_id": user["_id"], "target_type": data.target_type, "target_id": oid,
                                         "status": {"$in": list(OPEN_STATES)}})
     if duplicate:
         raise AppError(409, "DUPLICATE_COMPLAINT", "You already have an open complaint about this.")
+
     now = utcnow()
     doc = {"filer_id": user["_id"], "target_type": data.target_type, "target_id": oid,
            "description": data.description, "status": "open", "admin_note": None,
