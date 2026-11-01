@@ -8,9 +8,11 @@ from app.services.cart_service import clear_cart, get_cart
 from app.services.time_utils import iso, utcnow
 from app.services import notification_service
 
+
 def _generate_order_number(user_id: str) -> str:
     now = utcnow()
-    return f"ORD-{now.strftime('%y%m%d')}-{user_id[-6:].upper()}"
+    # Added %H%M%S (Hours, Minutes, Seconds) so every checkout is completely unique!
+    return f"ORD-{now.strftime('%y%m%d-%H%M%S')}-{user_id[-4:].upper()}"
 
 
 def serialize_order_item(doc: dict) -> dict:
@@ -72,7 +74,7 @@ def checkout(db, user: dict, data) -> dict:
     if not cart["items"]:
         raise AppError(400, "CART_EMPTY", "Your cart is empty.")
 
-    # 1. Quick check against the cart view, for a clear message (the real guard is the reservation in step 2).
+    # 1. Quick check against the cart view, for a clear message
     for item in cart["items"]:
         if item["quantity"] > item["stock_qty"]:
             raise AppError(409, "OUT_OF_STOCK", f"Not enough stock for {item['title']}. Available: {item['stock_qty']}")
@@ -80,52 +82,79 @@ def checkout(db, user: dict, data) -> dict:
     # 2. Reserve the stock atomically BEFORE anything else is written.
     taken = _reserve_stock(db, cart["items"])
     now = utcnow()
-    try:
-        # 3. Create the master Order
-        order_doc = {
-            "user_id": user["_id"],
-            "order_number": _generate_order_number(str(user["_id"])),
-            "status": OrderStatus.pending.value,
-            "subtotal_paisa": cart["subtotal_paisa"],
-            "total_paisa": cart["total_paisa"],
-            "payment": {"mode": "simulated", "status": "paid"},
-            "shipping_address": data.shipping_address,
-            "phone": data.phone,
-            "notes": data.notes,
-            "created_at": now,
-            "updated_at": now
-        }
-        order_id = db.orders.insert_one(order_doc).inserted_id
 
-        # 4. Snapshot prices and create the order items (stock was already taken in step 2)
-        for item in cart["items"]:
-            db.order_items.insert_one({
-                "order_id": order_id,
-                "seller_id": to_object_id(item["seller_id"], "Seller"),
-                "seller_product_id": to_object_id(item["seller_product_id"], "Product"),
-                "title_snapshot": item["title"],
-                "unit_price_paisa": item["effective_price_paisa"],
-                "quantity": item["quantity"],
-                "line_total_paisa": item["line_total_paisa"],
-                "item_status": OrderStatus.confirmed.value,
-            })
+    base_order_number = _generate_order_number(str(user["_id"]))
+
+    # === NEW LOGIC: Group items by seller_id to split the cart into sub-orders ===
+    items_by_seller = {}
+    for item in cart["items"]:
+        seller_id = item["seller_id"]
+        if seller_id not in items_by_seller:
+            items_by_seller[seller_id] = []
+        items_by_seller[seller_id].append(item)
+
+    created_order_ids = []
+
+    try:
+        suffix_counter = 1
+        is_multi_seller = len(items_by_seller) > 1
+
+        # 3. Create a distinct Order document per seller
+        for seller_id_str, seller_items in items_by_seller.items():
+            seller_subtotal = sum(i["line_total_paisa"] for i in seller_items)
+
+            # Append -1, -2, etc. if the cart is split between multiple sellers
+            order_num = f"{base_order_number}-{suffix_counter}" if is_multi_seller else base_order_number
+            suffix_counter += 1
+
+            order_doc = {
+                "user_id": user["_id"],
+                "order_number": order_num,
+                "status": OrderStatus.pending.value,
+                "subtotal_paisa": seller_subtotal,
+                "total_paisa": seller_subtotal,
+                "payment": {"mode": "simulated", "status": "paid"},
+                "shipping_address": data.shipping_address,
+                "phone": data.phone,
+                "notes": data.notes,
+                "created_at": now,
+                "updated_at": now
+            }
+            order_id = db.orders.insert_one(order_doc).inserted_id
+            created_order_ids.append(order_id)
+
+            # 4. Snapshot prices and create the order items linked to this specific sub-order
+            for item in seller_items:
+                db.order_items.insert_one({
+                    "order_id": order_id,
+                    "seller_id": to_object_id(item["seller_id"], "Seller"),
+                    "seller_product_id": to_object_id(item["seller_product_id"], "Product"),
+                    "title_snapshot": item["title"],
+                    "unit_price_paisa": item["effective_price_paisa"],
+                    "quantity": item["quantity"],
+                    "line_total_paisa": item["line_total_paisa"],
+                    "item_status": OrderStatus.confirmed.value,
+                })
+
+            # 5. Tell this specific seller they have a new order
+            notification_service.notify(
+                db, to_object_id(seller_id_str, "Seller"), "order", "You have a new order",
+                f"Order {order_num} includes your items.", "orders"
+            )
+
     except Exception:
-        # Could not finish the order: give the stock back and remove any half-written order.
+        # Could not finish the order: give the stock back and remove any half-written split orders.
         _release_stock(db, taken)
-        if "order_id" in locals():
-            db.order_items.delete_many({"order_id": order_id})
-            db.orders.delete_one({"_id": order_id})
+        if created_order_ids:
+            db.order_items.delete_many({"order_id": {"$in": created_order_ids}})
+            db.orders.delete_many({"_id": {"$in": created_order_ids}})
         raise
 
-    # 5. Clear the cart
+    # 6. Clear the cart
     clear_cart(db, user)
 
-    # 6. Tell each seller they have a new order
-    for seller_id in {to_object_id(i["seller_id"], "Seller") for i in cart["items"]}:
-        notification_service.notify(db, seller_id, "order", "You have a new order",
-                                    f"Order {order_doc['order_number']} includes your items.", "orders")
-
-    return serialize_order(db, db.orders.find_one({"_id": order_id}))
+    # Return the first created order so the frontend has an object to acknowledge
+    return serialize_order(db, db.orders.find_one({"_id": created_order_ids[0]}))
 
 
 def get_shopper_orders(db, user: dict, page: int, page_size: int) -> dict:

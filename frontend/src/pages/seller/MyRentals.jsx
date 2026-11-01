@@ -11,9 +11,12 @@ export default function SellerRentals() {
   const fetchData = async () => {
     try {
       const list = await getMyListings();
-      setListings(Array.isArray(list?.items) ? list.items : []);
+      // FIX: Handle direct array from backend for listings
+      setListings(Array.isArray(list) ? list : (list?.items || []));
+
       const reqs = await getIncomingRequests();
-      setRequests(Array.isArray(reqs?.items) ? reqs.items : []);
+      // FIX: Handle direct array from backend for incoming requests
+      setRequests(Array.isArray(reqs) ? reqs : (reqs?.items || []));
     } catch (err) {
       console.error(err);
     }

@@ -14,8 +14,10 @@ export default function ShopperRentals() {
     try {
       const pub = await browseRentals();
       setListings(Array.isArray(pub?.items) ? pub.items : []);
+
       const reqs = await getMyRequests();
-      setRequests(Array.isArray(reqs?.items) ? reqs.items : []);
+      // FIX: FastAPI returns a direct array for requests, so 'reqs' IS the array.
+      setRequests(Array.isArray(reqs) ? reqs : (reqs?.items || []));
     } catch (err) {
       console.error(err);
     }
@@ -36,7 +38,7 @@ export default function ShopperRentals() {
       alert("Rental requested successfully!");
       setActiveListing(null);
       setDates({ start_date: "", end_date: "" });
-      fetchData();
+      fetchData(); // This will now correctly render the new request
     } catch (err) {
       alert(err.message);
     }
