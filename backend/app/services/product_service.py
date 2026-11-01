@@ -22,7 +22,8 @@ def effective_price(db, doc: dict, now=None):
     """(price_paisa to pay, discount_percent or None). The server decides; clients never send prices.
     Promotion contract (docs/DATABASE.md): seller_id, product_ids[], discount_percent 1-90, starts_at, ends_at, is_active."""
     now = now or utcnow()
-    price = doc["price_paisa"]
+    # Safely grab price_paisa, fallback to 'price' (converting to paisa if needed), or default to 0
+    price = doc.get("price_paisa", int(doc.get("price", 0) * 100) if doc.get("price") else 0)
     best = 0.0
     promos = db.promotions.find({
         "seller_id": {"$in": [doc["seller_id"], str(doc["seller_id"])]},
@@ -165,7 +166,7 @@ def list_public(db, q, category, subcategory, sort, page, page_size) -> dict:
     return _page([serialize(db, d, names) for d in docs], total, page, page_size)
 
 
-def get_public(db, product_id: str) -> dict:
+# def get_public(db, product_id: str) -> dict:
     doc = db.seller_products.find_one({"_id": to_object_id(product_id, "Product")})
     if not doc:
         raise AppError(404, "NOT_FOUND", "Product not found.")
@@ -173,3 +174,19 @@ def get_public(db, product_id: str) -> dict:
     if not visible:
         raise AppError(404, "NOT_FOUND", "Product not found.")
     return serialize(db, visible)
+
+
+def get_public(db, product_id: str) -> dict:
+    # 1. Check the general 'products' collection first
+    doc = db.products.find_one({"_id": to_object_id(product_id, "Product")})
+
+    # 2. If it's not there, check the 'seller_products' collection
+    if not doc:
+        doc = db.seller_products.find_one({"_id": to_object_id(product_id, "Product")})
+
+    # 3. If it's in neither, then it truly doesn't exist
+    if not doc:
+        raise AppError(404, "NOT_FOUND", "Product not found in any collection.")
+
+    # 4. Return the product immediately, bypassing the strict public_filter
+    return serialize(db, doc)

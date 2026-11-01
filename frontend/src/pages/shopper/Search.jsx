@@ -8,9 +8,9 @@ import ProductModal from "../../components/shopping/ProductModal.jsx";
 import { searchProducts } from "../../api/shopping.js";
 import "../../styles/shopping.css";
 
-const EMPTY = { q: "", category: "", subcategory: "", store: "", sort: "price_asc" };
+// Added fairshareOnly to the default form state
+const EMPTY = { q: "", category: "", subcategory: "", store: "", sort: "price_asc", fairshareOnly: false };
 
-// Playful SVG Spinner Component
 const Spinner = ({ size = 20, color = "#888", style }) => (
   <svg
     className="spin-anim"
@@ -32,7 +32,6 @@ export default function Search() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // State for the Chaldal-style product detail modal
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
@@ -40,7 +39,19 @@ export default function Search() {
     setLoading(true);
     setError(null);
 
-    searchProducts({ ...applied, page, page_size: pageSize })
+    // Build the query parameters based on what was ACTUALLY submitted via the form
+    const searchParams = {
+      q: applied.q,
+      category: applied.category,
+      subcategory: applied.subcategory,
+      store: applied.store,
+      sort: applied.sort,
+      page,
+      page_size: pageSize,
+      ...(applied.fairshareOnly && { source: "fairshare" })
+    };
+
+    searchProducts(searchParams)
       .then((d) => !cancelled && setData(d))
       .catch((e) => !cancelled && setError(e))
       .finally(() => !cancelled && setLoading(false));
@@ -53,6 +64,7 @@ export default function Search() {
   function onSubmit(e) {
     e.preventDefault();
     setPage(1);
+    // Apply the form state (including the checkbox) to trigger the search
     setApplied(form);
   }
 
@@ -70,10 +82,10 @@ export default function Search() {
         Store prices are labelled with how recent they are.
       </p>
 
-      <form onSubmit={onSubmit}>
-        <div className="search-bar" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+      {/* Form wraps both the inputs and the checkbox so they submit together */}
+      <form onSubmit={onSubmit} style={{ marginBottom: "1.5rem" }}>
+        <div className="search-bar" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "0.75rem" }}>
 
-          {/* Input wrapper to hold the absolute position spinner */}
           <div style={{ position: "relative", flex: "1", minWidth: "200px" }}>
             <input
               className="input"
@@ -84,7 +96,6 @@ export default function Search() {
               onChange={(e) => setForm({ ...form, q: e.target.value })}
               style={{ width: "100%", paddingRight: loading ? "40px" : "15px" }}
             />
-            {/* Inline search bar spinner */}
             {loading && (
               <div style={{ position: "absolute", right: "12px", top: "50%", marginTop: "-10px", pointerEvents: "none" }}>
                 <Spinner size={20} color="var(--primary, #007bff)" />
@@ -108,11 +119,37 @@ export default function Search() {
             Search
           </Button>
         </div>
+
+        {/* NEW: Tick Style Checkbox directly under the search bar */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.25rem" }}>
+          <input
+            type="checkbox"
+            id="fairshareOnlyToggle"
+            checked={form.fairshareOnly}
+            onChange={(e) => setForm({ ...form, fairshareOnly: e.target.checked })}
+            style={{
+              width: "16px",
+              height: "16px",
+              cursor: "pointer",
+              accentColor: "var(--primary, #10b981)"
+            }}
+          />
+          <label
+            htmlFor="fairshareOnlyToggle"
+            style={{
+              fontSize: "0.95rem",
+              color: "var(--text, #374151)",
+              cursor: "pointer",
+              userSelect: "none"
+            }}
+          >
+            Show FairShare Sellers Only
+          </label>
+        </div>
       </form>
 
       <ErrorBox error={error} />
 
-      {/* Playful Loading State with side-by-side Spinner */}
       {loading && !data && (
         <div className="fade-in-up" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "12px", padding: "4rem 0", color: "#666" }}>
           <Spinner size={28} color="var(--primary, #007bff)" />
@@ -128,9 +165,8 @@ export default function Search() {
         </div>
       )}
 
-      {/* Renders the grid conditionally and uses a dynamic key to re-trigger the animation on page change */}
       {data && data.items.length > 0 && (
-        <div key={`${page}-${applied.q}-${applied.category}`} className="fade-in-up">
+        <div key={`${page}-${applied.q}-${applied.category}-${applied.fairshareOnly}`} className="fade-in-up">
           <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem", alignItems: "center", gap: "0.5rem" }}>
             <label htmlFor="pageSizeSelect" style={{ fontSize: "0.9rem", color: "var(--text-muted, #666)" }}>
               Products per page:
@@ -170,7 +206,6 @@ export default function Search() {
         </div>
       )}
 
-      {/* Chaldal-style popup modal component */}
       <ProductModal item={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </>
   );

@@ -49,18 +49,13 @@ def external_item(doc: dict, now) -> dict:
     url = str(url).strip() if url else ""
     item_freshness = compute_freshness(doc, now)
 
-    # --- AGGRESSIVE CHALDAL ROUTING FIX ---
     if store == "chaldal" and url:
         url = url.replace("/p/", "/", 1)
 
-    # --- SHWAPNO SMART HYBRID ROUTING ---
-    # If the item is stale, Shwapno likely deleted it (causing a redirect to home).
-    # We route stale Shwapno items to search, but keep fresh ones direct!
     if store == "shwapno" and item_freshness == "stale":
         encoded_name = urllib.parse.quote(name.strip())
         url = f"https://www.shwapno.com/search?q={encoded_name}"
     else:
-        # STRICT DIRECT ROUTING for everything else (and fresh Shwapno items)
         if url.startswith("/"):
             domains = {
                 "chaldal": "https://chaldal.com",
@@ -92,7 +87,9 @@ def seller_item(db, doc: dict, now, names: dict) -> dict:
     try:
         price, pct = product_service.effective_price(db, doc, now)
     except Exception:
-        price, pct = doc.get("price_paisa", 0), 0
+        # Fallback to get price if price_paisa missing
+        price = doc.get("price_paisa", int(doc.get("price", 0) * 100) if doc.get("price") else 0)
+        pct = 0
 
     try:
         avail = product_service.availability_of(doc)
@@ -124,7 +121,7 @@ def _attach_group_sizes(db, items: list) -> None:
         i["group_size"] = sizes.get(i["group_key"], 1)
 
 
-def search(db, q, category, subcategory, store, sort, page, page_size, now=None) -> dict:
+def search(db, q, category, subcategory, store, sort, page, page_size, now=None, source=None) -> dict:
     now = now or utcnow()
     if store and store not in STORE_NAMES:
         raise AppError(422, "INVALID_STORE", "Unknown store.")
@@ -171,7 +168,8 @@ def search(db, q, category, subcategory, store, sort, page, page_size, now=None)
         return {"$and": and_clauses} if and_clauses else {}
 
 
-    if store != "fairshare":
+    # 1. External Products (SKIP if source is exactly 'fairshare')
+    if store != "fairshare" and source != "fairshare":
         flt = _build_filter({"store": store} if store else {}, is_external=True)
         total += db.external_products.count_documents(flt)
         for d in db.external_products.find(flt):
@@ -180,10 +178,13 @@ def search(db, q, category, subcategory, store, sort, page, page_size, now=None)
             except Exception:
                 continue
 
+    # 2. Internal FairShare Products (Always get these unless an external store was specifically requested)
     if not store or store == "fairshare":
         flt = _build_filter({}, is_external=False)
-        total += db.products.count_documents(flt)
-        docs = list(db.products.find(flt))
+
+        # We must query the seller_products collection directly since FairShare products live here
+        total += db.seller_products.count_documents(flt)
+        docs = list(db.seller_products.find(flt))
         names = product_service.business_names(db, [d.get("seller_id") for d in docs if d.get("seller_id")])
 
         for d in docs:
@@ -202,6 +203,7 @@ def search(db, q, category, subcategory, store, sort, page, page_size, now=None)
 
 
 def get_group(db, group_key: str, now=None) -> dict:
+    # ... rest of file unchanged ...
     now = now or utcnow()
     match = db.product_matches.find_one({"group_key": group_key})
     if not match:
@@ -209,7 +211,7 @@ def get_group(db, group_key: str, now=None) -> dict:
 
     exact = [external_item(d, now) for d in db.external_products.find({"_id": {"$in": match.get("external_product_ids", [])}})]
 
-    sel_docs = list(db.products.find({"_id": {"$in": match.get("seller_product_ids", [])}}))
+    sel_docs = list(db.seller_products.find({"_id": {"$in": match.get("seller_product_ids", [])}}))
     names = product_service.business_names(db, [d.get("seller_id") for d in sel_docs if d.get("seller_id")])
     exact += [seller_item(db, d, now, names) for d in sel_docs]
 
@@ -229,7 +231,7 @@ def get_group(db, group_key: str, now=None) -> dict:
         taken = {i["id"] for i in exact}
 
         pool = [external_item(d, now) for d in db.external_products.find({"brand": brx}).limit(60)]
-        sdocs = list(db.products.find({"brand": brx}).limit(60))
+        sdocs = list(db.seller_products.find({"brand": brx}).limit(60))
         snames = product_service.business_names(db, [d.get("seller_id") for d in sdocs if d.get("seller_id")])
 
         pool += [seller_item(db, d, now, snames) for d in sdocs]
@@ -246,6 +248,7 @@ def get_group(db, group_key: str, now=None) -> dict:
 
 
 def store_sources(db) -> list:
+    # ... rest of file unchanged ...
     docs = {d["store"]: d for d in db.scrape_sources.find({})}
     out = []
     for store in all_stores():

@@ -16,3 +16,10 @@ export const getSources = () => request("/compare/sources", { auth: false });
 export const getCategories = () => request("/categories", { auth: false });
 export const browseSellerProducts = (params) => request(`/seller-products${qs(params)}`, { auth: false });
 export const getSellerProduct = (id) => request(`/seller-products/${id}`, { auth: false });
+export const placeDirectOrder = (data) => request("/orders/place", { method: "POST", data });
+export const processCheckout = (data) => request("/checkout", { method: "POST", data });
+// frontend/src/api/shopping.js
+export const getCart = () => request("/cart");
+export const addToCart = (data) => request("/cart/items", { method: "POST", data });
+export const updateCartItem = (itemId, data) => request(`/cart/items/${itemId}`, { method: "PATCH", data });
+export const removeCartItem = (itemId) => request(`/cart/items/${itemId}`, { method: "DELETE" });
